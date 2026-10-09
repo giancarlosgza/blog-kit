@@ -4,14 +4,9 @@ import { createApp } from 'vue'
 import WidgetError from '#blog/app/widgets/WidgetError.vue'
 import BlogCodeBlock from './BlogCodeBlock.vue'
 
-// createApp() hydration below — not multiple SFC components.
-/* eslint-disable vue/one-component-per-file */
+/* eslint-disable vue/one-component-per-file -- createApp() hydration, not extra SFCs */
 
-/**
- * Renders the server-sanitized post body (SSR `v-html`) and, on the client, upgrades
- * `[data-blog-widget]` placeholders and `<pre><code>` blocks into live components.
- * Each is its own app sharing the Nuxt context; torn down on unmount / HTML change.
- */
+/** Props */
 const props = defineProps<{ html: string }>()
 
 const bodyHtml = computed(() => decorateBlogLinks(props.html))
@@ -32,28 +27,27 @@ function teardown() {
   mountedApps = []
 }
 
-/** Mount a freshly-created app onto `host`, sharing the Nuxt app context. */
+/** Mounts an app on `host` with the Nuxt context */
 function mountInContext(app: App, host: HTMLElement) {
-  // Share Nuxt context so the subtree resolves auto-imports / plugins.
   Object.assign(app._context, nuxtApp.vueApp._context)
   app.mount(host)
   mountedApps.push(app)
 }
 
-/** Read a `language-xxx` / `lang-xxx` hint from the code or pre element, if any. */
+/** Language hint from `language-xxx` / `lang-xxx` classes */
 function detectLang(pre: HTMLElement, code: HTMLElement | null): string | null {
   const classes = `${code?.className || ''} ${pre.className || ''}`
   return classes.match(/(?:language|lang)-([\w#+-]+)/i)?.[1] ?? null
 }
 
-/** Upgrade `<pre><code>` blocks into theme-aware Shiki code blocks with a copy button. */
+/** Upgrades `<pre><code>` blocks into Shiki code blocks */
 function hydrateCodeBlocks() {
   if (!root.value)
     return
 
   const blocks = root.value.querySelectorAll<HTMLElement>('pre')
   blocks.forEach((pre) => {
-    // Skip code inside a widget subtree.
+    // Widgets render their own code
     if (pre.closest('[data-blog-widget]'))
       return
 
@@ -77,7 +71,7 @@ function hydrateWidgets() {
   const placeholders = root.value.querySelectorAll<HTMLElement>('[data-blog-widget]')
   placeholders.forEach((el) => {
     const key = el.dataset.blogWidget || ''
-    const widget = widgets[key]
+    const widget = Object.hasOwn(widgets, key) ? widgets[key] : undefined
 
     let app: App
     if (!widget) {
