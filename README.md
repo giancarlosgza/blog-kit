@@ -21,6 +21,11 @@ Which one to install:
 
 The Firestore data contract is in [`docs/schema.md`](docs/schema.md).
 
+To start a new blog, create repos from the starters, which only hold the brand and deploy setup:
+[blog-starter](https://github.com/giancarlosgza/blog-starter) (the public blog) and
+[blog-admin-starter](https://github.com/giancarlosgza/blog-admin-starter) (the admin, plus the Firebase
+rules, indexes and functions).
+
 ## Layout
 
 ```
@@ -70,7 +75,8 @@ Installs only take versions published at least a day ago (`minimumReleaseAge` in
    dependencies between packages are published as `^<version>`.
 3. Approve each version in the npmjs.com **Staged Packages** tab in dependency order: blog-core, then
    blog-layer, blog-admin-layer and blog-firebase, then blog-site-layer.
-4. In each site, bump the package and deploy as usual.
+4. In each site, bump the package (`npm run install:latest`) and push once the release is a day old:
+   the sites' `npm audit signatures` (CI and Dockerfile) follows the same one-day rule as installs.
 
 ### Upgrading a site to 0.2.0
 Models, widget types and the shared helpers moved from the layers' `shared/` to `@giancarlosgza/blog-core`:
