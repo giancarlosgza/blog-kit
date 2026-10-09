@@ -12,7 +12,7 @@ export interface IAuthor {
   description?: string
   photoURL?: string
   profileLink?: string
-  /** Legacy handle shown on the author page; not managed by blog-admin. */
+  /** Legacy handle shown on the author page; not managed by the admin. */
   username?: string
   createdAt?: IFirestoreDateValue
   updatedAt?: IFirestoreDateValue

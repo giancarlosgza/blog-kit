@@ -1,11 +1,7 @@
 import type { IPost } from '../models/post'
 import { toBlogUrl } from './blog-path'
 
-/**
- * Per-post SEO resolution shared by blog-admin (editor previews) and the public blog
- * (post page meta). DUPLICATED byte-identically into blog/shared/utils/post-seo.ts so the
- * editor preview always matches what the blog outputs.
- */
+/** Per-post SEO resolution shared by the admin (editor previews) and the blog (post page meta), so previews match the output. */
 
 /** Constants */
 export const SEO_TITLE_MAX = 60
@@ -15,7 +11,7 @@ export const SEO_DESCRIPTION_MAX = 160
 export type IPostSeoSource = Pick<IPost, 'slug' | 'id' | 'title' | 'shortText' | 'imageURL' | 'imageAlt' | 'seoTitle' | 'seoDescription' | 'ogImageURL' | 'canonicalURL' | 'noindex'>
 
 export interface IPostSeoOptions {
-  /** Public site origin, e.g. https://blog.colorffy.com */
+  /** Public site origin, e.g. https://blog.example.com */
   siteUrl: string
   /** Where the blog mounts on that site (`blog.basePath`); defaults to the root. */
   basePath?: string

@@ -1,11 +1,6 @@
 /**
- * Interactive blog widget contract.
- *
- * This file is the single source of truth for widget metadata and is DUPLICATED
- * byte-identically into blog-admin/shared/widgets/ (two independent repos). Keep it
- * free of Vue/runtime imports so both the public renderer and the admin editor can
- * consume it. The public site maps each `key` to an actual Vue component separately
- * (app/widgets/component-map.ts).
+ * Interactive blog widget contract shared by the blog renderer and the admin editor.
+ * Free of Vue/runtime imports; each site maps a widget `key` to its own component.
  */
 export type WidgetPropType = 'string' | 'number' | 'boolean' | 'color' | 'enum'
 

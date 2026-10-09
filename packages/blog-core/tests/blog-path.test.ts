@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { joinBlogPath, normalizeBasePath, toBlogUrl } from '#blog/shared/utils/blog-path'
+import { joinBlogPath, normalizeBasePath, toBlogUrl } from '../src'
 
 describe('normalizeBasePath', () => {
   it('maps the root to an empty prefix', () => {

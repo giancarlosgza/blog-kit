@@ -1,0 +1,39 @@
+{
+  "name": "@giancarlosgza/blog-core",
+  "version": "0.1.2",
+  "description": "Shared models, URL, date, SEO and text helpers and the post HTML sanitizer for the Firebase blog packages",
+  "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./sanitize": "./src/sanitize.ts"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
+      },
+      "./sanitize": {
+        "import": "./dist/sanitize.js",
+        "require": "./dist/sanitize.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "prepack": "tsdown",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "sanitize-html": "2.18.0"
+  },
+  "devDependencies": {
+    "@types/sanitize-html": "2.16.2",
+    "tsdown": "0.23.0"
+  }
+}
