@@ -54,20 +54,10 @@ watch(copied, (val) => {
   }
 })
 
-/** Mounted */
+/** Lifecycle */
 onMounted(async () => {
   isClient.value = true
   await initializeHighlighter()
-
-  // Re-theme on system theme changes when color mode is set to "system".
-  if (import.meta.client) {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    mediaQuery.addEventListener('change', () => {
-      if (colorMode.value === 'system' && highlighter.value) {
-        updateHighlightedCode()
-      }
-    })
-  }
 })
 
 /** Methods */
@@ -110,7 +100,7 @@ function handleCopyCode(): void {
 
 <template>
   <div>
-    <!-- Code block container -->
+    <!-- Code block -->
     <div
       :class="containerClasses"
       role="region"
@@ -135,7 +125,7 @@ function handleCopyCode(): void {
         </template>
       </UiButton>
 
-      <!-- Pre-highlight fallback: render the raw source so text is readable before Shiki loads -->
+      <!-- Raw source until Shiki loads -->
       <pre
         v-if="isLoading"
         class="code-loading-placeholder"
