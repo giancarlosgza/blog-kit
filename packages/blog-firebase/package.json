@@ -3,6 +3,13 @@
   "version": "0.2.0",
   "description": "Firebase backend for the blog packages: Firestore and Storage rules, indexes and the scheduled-publish Cloud Function",
   "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giancarlosgza/blog-kit.git",
+    "directory": "packages/blog-firebase"
+  },
+  "homepage": "https://github.com/giancarlosgza/blog-kit/tree/main/packages/blog-firebase#readme",
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
@@ -36,6 +43,14 @@
   "peerDependencies": {
     "firebase-admin": "^13.0.0 || ^14.0.0",
     "firebase-functions": "^6.0.0 || ^7.0.0"
+  },
+  "peerDependenciesMeta": {
+    "firebase-admin": {
+      "optional": true
+    },
+    "firebase-functions": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@giancarlosgza/blog-core": "workspace:^"

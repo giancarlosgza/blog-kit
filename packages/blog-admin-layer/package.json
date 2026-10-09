@@ -3,6 +3,13 @@
   "version": "0.2.0",
   "description": "Nuxt layer for a Firebase blog admin: post editor and workflow, media, authors, tags, settings, analytics and AI tools",
   "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giancarlosgza/blog-kit.git",
+    "directory": "packages/blog-admin-layer"
+  },
+  "homepage": "https://github.com/giancarlosgza/blog-kit/tree/main/packages/blog-admin-layer#readme",
   "type": "module",
   "main": "./nuxt.config.ts",
   "bin": {

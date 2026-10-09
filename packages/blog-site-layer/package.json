@@ -3,6 +3,13 @@
   "version": "0.2.0",
   "description": "Nuxt layer for a standalone blog site: the blog layer plus app shell, navbar/footer, PWA, robots, fonts and analytics",
   "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giancarlosgza/blog-kit.git",
+    "directory": "packages/blog-site-layer"
+  },
+  "homepage": "https://github.com/giancarlosgza/blog-kit/tree/main/packages/blog-site-layer#readme",
   "type": "module",
   "main": "./nuxt.config.ts",
   "bin": {
