@@ -1,6 +1,6 @@
 {
   "name": "@giancarlosgza/blog-firebase",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Firebase backend for the blog packages: Firestore and Storage rules, indexes and the scheduled-publish Cloud Function",
   "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
   "type": "module",

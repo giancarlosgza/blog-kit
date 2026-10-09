@@ -1,6 +1,6 @@
 {
   "name": "@giancarlosgza/blog-layer",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Nuxt layer that adds a Firestore-backed blog to a site under a configurable base path: pages, cached API, RSS, sitemap and SEO",
   "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
   "type": "module",
