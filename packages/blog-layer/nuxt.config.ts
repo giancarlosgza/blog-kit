@@ -4,23 +4,19 @@ import blogModule from './blog-module'
 
 const layerDir = dirname(fileURLToPath(import.meta.url))
 
-/** Blog layer: pages under `blog.basePath`, `/api/blog/*`, RSS, sitemap and SEO */
+/** Blog Layer */
 export default defineNuxtConfig({
   compatibilityDate: '2026-01-01',
 
   alias: {
     '#blog': layerDir
   },
-
-  // Pages come from blog-module, no pages/ dir
   pages: true,
-
   blog: {
     basePath: '/'
   },
 
   nitro: {
-    // fs cache breaks on Windows with ?query keys
     devStorage: {
       cache: { driver: 'memory' }
     }
@@ -53,7 +49,7 @@ export default defineNuxtConfig({
     sources: ['/api/blog/_sitemap-urls']
   },
 
-  // Color mode (`.dark-mode` class)
+  // Color mode
   colorMode: {
     preference: 'system',
     classSuffix: '-mode'

@@ -29,7 +29,6 @@ export default defineNuxtConfig({
 
   ssr: true,
   compatibilityDate: '2026-01-01',
-
   alias: {
     '#blog-site': layerDir
   },
@@ -110,7 +109,7 @@ export default defineNuxtConfig({
     ]
   },
 
-  // Fonts (sites add their own families)
+  // Fonts
   fonts: {
     assets: {
       prefix: '/fonts/'
@@ -129,7 +128,7 @@ export default defineNuxtConfig({
     processCSSVariables: 'font-prefixed-only'
   },
 
-  // PWA (sites add manifest and cacheId)
+  // PWA
   pwa: {
     registerType: 'prompt',
     workbox: {
