@@ -6,6 +6,20 @@ export default defineConfig({
     projects: [
       {
         test: {
+          name: 'blog-core',
+          include: ['packages/blog-core/tests/**/*.test.ts'],
+          environment: 'node'
+        }
+      },
+      {
+        test: {
+          name: 'blog-firebase',
+          include: ['packages/blog-firebase/tests/*.test.ts'],
+          environment: 'node'
+        }
+      },
+      {
+        test: {
           name: 'blog-layer',
           include: ['packages/blog-layer/tests/unit/**/*.test.ts'],
           environment: 'node',

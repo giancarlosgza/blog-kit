@@ -13,11 +13,12 @@
     "build:site": "pnpm --filter playground-site build",
     "build:landing": "pnpm --filter playground-landing build",
     "build:admin": "pnpm --filter playground-admin build",
-    "typecheck": "pnpm --filter \"./playground/*\" typecheck",
+    "typecheck": "pnpm --filter \"./packages/blog-{core,firebase}\" typecheck && pnpm --filter \"./playground/*\" typecheck",
     "postinstall": "pnpm --filter \"./playground/*\" exec nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "vitest run",
+    "test:rules": "pnpm --filter @giancarlosgza/blog-firebase test:rules",
     "test:watch": "vitest",
     "publish:layers": "pnpm --filter \"./packages/*\" publish --access public"
   },
