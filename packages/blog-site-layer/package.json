@@ -1,0 +1,33 @@
+{
+  "name": "@giancarlosgza/blog-site-layer",
+  "version": "0.1.0",
+  "description": "Nuxt layer for a standalone blog site: the blog layer plus app shell, navbar/footer, PWA, robots, fonts and analytics",
+  "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "bin": {
+    "blog-layer-subset-icons": "./scripts/subset-icons.mjs"
+  },
+  "files": [
+    "app",
+    "nuxt.config.ts",
+    "routeRules.ts",
+    "scripts"
+  ],
+  "peerDependencies": {
+    "nuxt": "^4.5.0",
+    "vue": "^3.5.0",
+    "vue-router": "^5.0.0"
+  },
+  "dependencies": {
+    "@colorffy/css": "3.0.0",
+    "@colorffy/ui": "3.0.0",
+    "@giancarlosgza/blog-layer": "workspace:^",
+    "@nuxt/fonts": "0.14.0",
+    "@nuxt/scripts": "1.3.12",
+    "@nuxtjs/robots": "6.2.4",
+    "@vite-pwa/nuxt": "1.1.1",
+    "floating-vue": "5.4.0",
+    "sass": "1.105.1"
+  }
+}

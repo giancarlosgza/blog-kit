@@ -1,0 +1,27 @@
+/**
+ * External CSS integrations imported as layers
+ */
+
+// Tooltip and popover positioning library
+@import url("floating-vue/dist/style.css") layer(reset.floating-vue);
+
+// Material Design icon font (rounded style, weight 700)
+@layer base.symbols {
+  .material-symbols-rounded {
+    font-family: "Material Symbols Rounded";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga";
+  }
+}

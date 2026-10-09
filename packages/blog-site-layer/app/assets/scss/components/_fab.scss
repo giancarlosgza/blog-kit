@@ -1,0 +1,40 @@
+// Scroll-to-top button, revealed after the first scroll
+@layer pages {
+  .fab-group > .fab-scroll {
+    @supports (animation-timeline: scroll()) {
+      visibility: hidden;
+      opacity: 0;
+      translate: 0 2rem;
+      scale: 0;
+      transform-origin: center;
+      animation: show-fab linear both;
+      animation-timeline: scroll();
+      animation-range: 0px 150px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+      visibility: visible;
+      opacity: 1;
+      translate: 0 0;
+      scale: 1;
+      transition: none;
+    }
+  }
+
+  @keyframes show-fab {
+    from {
+      visibility: hidden;
+      opacity: 0;
+      translate: 0 2rem;
+      scale: 0;
+    }
+
+    to {
+      visibility: visible;
+      opacity: 1;
+      translate: 0 0;
+      scale: 1;
+    }
+  }
+}
