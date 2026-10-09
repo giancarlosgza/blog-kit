@@ -9,8 +9,10 @@
   "scripts": {
     "dev:site": "pnpm --filter playground-site dev",
     "dev:landing": "pnpm --filter playground-landing dev",
+    "dev:admin": "pnpm --filter playground-admin dev",
     "build:site": "pnpm --filter playground-site build",
     "build:landing": "pnpm --filter playground-landing build",
+    "build:admin": "pnpm --filter playground-admin build",
     "typecheck": "pnpm --filter \"./playground/*\" typecheck",
     "postinstall": "pnpm --filter \"./playground/*\" exec nuxt prepare",
     "lint": "eslint .",
