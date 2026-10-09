@@ -9,7 +9,16 @@ definePageMeta({
 })
 
 /** Constants */
-const tag = computed(() => decodeURIComponent(route.params.tag?.toString() || ''))
+const tag = computed(() => safeDecode(route.params.tag?.toString() || ''))
+
+// Malformed escapes (e.g. a bare `%`) keep the raw value instead of a 500
+function safeDecode(value: string): string {
+  try {
+    return decodeURIComponent(value)
+  } catch {
+    return value
+  }
+}
 
 /** Composables */
 const { brand } = useBlogBrand()
@@ -24,13 +33,12 @@ await ready
 if (!data.value)
   throw resourceError(error.value, 'Tag not found')
 
-/** Dynamic SEO properties */
+/** SEO */
 const tagLabel = computed(() => `#${tag.value}`)
 const seoTitle = computed(() => `Articles tagged “${tag.value}”`)
 const seoDescription = computed(() => `Browse ${brand.shortName} articles tagged ${tag.value}.`)
 const canonicalUrl = computed(() => blogUrl(`/tags/${encodeURIComponent(tag.value)}`))
 
-/** SEO & Structured Data */
 defineOgImage('BlogPost', {
   kind: 'Tag',
   title: computed(() => tagLabel.value),
