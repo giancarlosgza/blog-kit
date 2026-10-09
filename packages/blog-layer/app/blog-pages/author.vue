@@ -27,12 +27,11 @@ if (!data.value)
 
 const author = computed<IAuthor>(() => data.value?.author ?? { name: '' })
 
-/** Dynamic SEO properties */
+/** SEO */
 const authorName = computed(() => author.value?.name || 'Author')
 const seoDescription = computed(() => author.value?.description || `Articles by ${authorName.value} on ${brand.shortName}.`)
 const canonicalUrl = computed(() => blogUrl(`/authors/${slug.value}`))
 
-/** SEO & Structured Data */
 defineOgImage('BlogPost', {
   kind: 'Author',
   title: computed(() => authorName.value),

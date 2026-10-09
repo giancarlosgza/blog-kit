@@ -1,7 +1,6 @@
 <script setup lang="ts">
 /** Interfaces */
 export type LogoType = 'icon' | 'wordmark'
-
 interface IAppLogoProps {
   type?: LogoType
   width?: string | number

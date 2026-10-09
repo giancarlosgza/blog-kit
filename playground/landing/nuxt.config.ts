@@ -1,7 +1,4 @@
-/**
- * A landing page with the blog embedded at `/blog`: it extends only the blog layer and keeps its
- * own app shell (app.vue, layout, header and footer). The site loads `@colorffy/css` itself.
- */
+/** Landing page with the blog at `/blog` */
 export default defineNuxtConfig({
   extends: ['@giancarlosgza/blog-layer'],
 

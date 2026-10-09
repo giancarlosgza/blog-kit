@@ -1,4 +1,3 @@
-// Scroll-to-top button, revealed after the first scroll
 @layer pages {
   .fab-group > .fab-scroll {
     @supports (animation-timeline: scroll()) {

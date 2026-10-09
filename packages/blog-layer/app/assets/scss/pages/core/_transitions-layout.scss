@@ -28,7 +28,7 @@
     object-fit: cover;
   }
 
-  // Color-mode circle reveal, scoped so page nav keeps its cross-fade
+  // Color mode circle reveal
   html.theme-transition {
     &::view-transition-group(root) {
       animation-timing-function: var(--cffy-ease-emphasized);

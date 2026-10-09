@@ -11,7 +11,6 @@ const { showLabels = true } = defineProps<IColorModeProps>()
 
 /** Data */
 const colorMode = useColorMode()
-// Scoped ids keep tab buttons unique when two pickers share a page
 const idPrefix = useId()
 const colorModes = [
   { id: 'system', label: 'System', icon: '&#xe31e;' },
@@ -30,7 +29,6 @@ function selectColorMode(tabId: string): void {
     colorMode.preference = mode
   }
 
-  // The circle reveal in _transitions-layout.scss runs only when the browser supports view transitions and motion is allowed
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   if (!document.startViewTransition || reduceMotion) {
     apply()

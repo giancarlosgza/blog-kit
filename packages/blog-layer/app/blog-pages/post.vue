@@ -43,7 +43,7 @@ const olderPost = computed(() => data.value?.older ?? null)
 const newerPost = computed(() => data.value?.newer ?? null)
 const series = computed(() => data.value?.series ?? null)
 
-/** Dynamic SEO properties */
+/** SEO */
 const authorUrl = computed(() => (author.value?.slug ? blogUrl(`/authors/${author.value.slug}`) : ''))
 const publishedTime = computed(() => {
   const published = normalizeDateValue(post.value?.createdAt)
@@ -53,8 +53,6 @@ const modifiedTime = computed(() => {
   const modified = normalizeDateValue(post.value?.updatedAt || post.value?.createdAt)
   return modified ? new Date(modified).toISOString() : undefined
 })
-
-/** SEO & Structured Data */
 const seoSource = computed(() => ({ ...(post.value ?? { title: '' }), slug: slug.value }))
 const seoOptions = computed(() => ({ siteUrl, basePath, bodyExcerpt: data.value?.excerpt ?? '' }))
 const baseSeo = computed(() => resolvePostSeo(seoSource.value, seoOptions.value))

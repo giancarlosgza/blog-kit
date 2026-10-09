@@ -26,7 +26,7 @@ const {
   headingTag = 'h2'
 } = defineProps<IProps>()
 
-/** Emits */
+/** Emit */
 const emit = defineEmits<{ loadMore: [] }>()
 
 /** Composables */

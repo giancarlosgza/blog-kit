@@ -46,7 +46,7 @@ function onTagFilter(value: string | string[] | null): void {
   selectedTag.value = tag || null
 }
 
-/** SEO & Structured Data */
+/** SEO */
 defineOgImage('BlogPost', {
   kind: 'Blog',
   title: brand.name,

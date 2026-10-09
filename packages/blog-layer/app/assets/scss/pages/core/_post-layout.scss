@@ -23,7 +23,7 @@
     }
   }
 
-  // Post card: borderless cover, then badge + date, title, excerpt and tags (+ author when featured)
+  // Post card
   .card-post {
     --_card-bg-color: transparent;
     --cffy-card-padding-inline: 0;
@@ -101,7 +101,7 @@
       gap: var(--cffy-space-8);
     }
 
-    // Series and tag links sit above the stretched title link
+    // Links above the stretched title link
     & :is(.card-post-chip, .card-post-author) {
       position: relative;
       z-index: 2;

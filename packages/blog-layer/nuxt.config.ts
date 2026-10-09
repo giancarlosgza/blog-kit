@@ -4,14 +4,7 @@ import blogModule from './blog-module'
 
 const layerDir = dirname(fileURLToPath(import.meta.url))
 
-/**
- * Blog layer: Firestore-backed blog pages mounted under `blog.basePath` (see `blog-module.ts`),
- * cached read endpoints under `/api/blog/*`, RSS, sitemap source and per-page SEO. It can be added
- * to any Nuxt site that already loads `@colorffy/css`; for a standalone blog, extend
- * `@giancarlosgza/blog-site-layer` instead, which adds the app shell around it.
- *
- * Inside the layer, import its own files through `#blog/...`: `~` and `#shared` resolve to the site.
- */
+/** Blog layer: pages under `blog.basePath`, `/api/blog/*`, RSS, sitemap and SEO */
 export default defineNuxtConfig({
   compatibilityDate: '2026-01-01',
 
@@ -19,7 +12,7 @@ export default defineNuxtConfig({
     '#blog': layerDir
   },
 
-  // Blog pages are registered by the module, so the router must be on even without a pages/ dir
+  // Pages come from blog-module, no pages/ dir
   pages: true,
 
   blog: {
@@ -27,7 +20,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    // In-memory dev cache for the cached endpoints (the fs driver breaks on Windows with ?query keys)
+    // fs cache breaks on Windows with ?query keys
     devStorage: {
       cache: { driver: 'memory' }
     }
@@ -60,7 +53,7 @@ export default defineNuxtConfig({
     sources: ['/api/blog/_sitemap-urls']
   },
 
-  // Color mode (@colorffy/css dark tokens hang off `.dark-mode`)
+  // Color mode (`.dark-mode` class)
   colorMode: {
     preference: 'system',
     classSuffix: '-mode'

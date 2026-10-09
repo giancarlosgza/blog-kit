@@ -9,7 +9,7 @@ definePageMeta({
   pageTitle: 'All articles'
 })
 
-// Paginated archive (<basePath>/page/2, …) giving every post a crawlable link; page 1 → the blog home.
+// Page 1 is the blog home
 const raw = computed(() => route.params.page?.toString() || '')
 const page = computed(() => (/^\d+$/.test(raw.value) ? Number.parseInt(raw.value, 10) : Number.NaN))
 
@@ -26,7 +26,7 @@ const { data, pending, error, ready } = useCachedResource<IPostListResponse>(
 )
 await ready
 
-/** A page beyond the last one (e.g. /page/999) has no posts → 404. */
+// Pages past the last one are 404s
 if (page.value >= 2 && !data.value?.posts.length)
   throw resourceError(data.value ? null : error.value, 'Page not found')
 
@@ -39,11 +39,10 @@ const nextPath = computed(() => blogPath(`/page/${page.value + 1}`))
 const pageUrl = computed(() => blogUrl(`/page/${page.value}`))
 const prevUrl = computed(() => blogUrl(page.value <= 2 ? '/' : `/page/${page.value - 1}`))
 
-/** Dynamic SEO properties */
+/** SEO */
 const seoTitle = computed(() => `All articles — Page ${page.value}`)
 const seoDescription = computed(() => `${brand.archive.description || `More articles from ${brand.shortName}`} — page ${page.value}.`)
 
-/** SEO & Structured Data */
 defineOgImage('BlogPost', {
   kind: 'Blog',
   title: 'All articles',

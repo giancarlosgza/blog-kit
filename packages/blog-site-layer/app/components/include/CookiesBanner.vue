@@ -71,7 +71,7 @@ onMounted(() => {
   }
 })
 
-/** Watchers */
+/** Watch */
 watch(isCookiesAccepted, (newValue, oldValue) => {
   if (newValue && !oldValue) {
     emit('onAcceptCookies', newValue)

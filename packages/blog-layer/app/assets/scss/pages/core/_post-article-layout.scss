@@ -1,8 +1,7 @@
 @use '@colorffy/css/scss/abstracts/mixins' as m;
 
 @layer pages {
-  // Shared by the header and the body so both line up on one centered reading column;
-  // from xl the side columns hold the action and "on this page" rails
+  // Centered reading column, side rails from xl
   .post-article-grid {
     --_post-column: 42rem;
 
@@ -26,7 +25,7 @@
     }
   }
 
-  // A single shrinkable track, so wide code blocks or widgets can't stretch the column
+  // Shrinkable track for wide code and widgets
   .post-article-main {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -99,7 +98,7 @@
     }
   }
 
-  // Compact text links: a dot marks the current section, no pane rows
+  // Compact links, a dot marks the current section
   .post-article-rail-link {
     display: flex;
     align-items: flex-start;
@@ -179,14 +178,14 @@
     }
   }
 
-  // The xl rail lists the parts; the inline block keeps only its summary
+  // Parts in the xl rail, summary inline
   .post-article-series-parts {
     @include m.media-breakpoint-up(xl) {
       display: none;
     }
   }
 
-  // Part number in the list icon slot, following the icon color (inverted when active)
+  // Part number in the icon slot
   .post-article-series-number {
     min-inline-size: 1.75rem;
     text-align: center;

@@ -30,14 +30,13 @@ const posts = computed(() => data.value?.posts ?? [])
 const seriesName = computed(() => data.value?.series.name || 'Series')
 const partsLabel = computed(() => `${posts.value.length} ${posts.value.length === 1 ? 'part' : 'parts'}`)
 
-/** Dynamic SEO properties */
+/** SEO */
 const seoTitle = computed(() => `${seriesName.value} series`)
 const seoDescription = computed(() =>
   data.value?.series.description || `Read the ${seriesName.value} series on the ${brand.shortName}, ${partsLabel.value} in order.`
+
 )
 const canonicalUrl = computed(() => blogUrl(`/series/${encodeURIComponent(slug.value)}`))
-
-/** SEO & Structured Data */
 defineOgImage('BlogPost', {
   kind: 'Series',
   title: computed(() => seriesName.value),

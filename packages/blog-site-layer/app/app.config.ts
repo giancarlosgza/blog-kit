@@ -1,4 +1,3 @@
-/** A labelled link for the default navbar and footer (`to` for internal routes, `href` for external URLs). */
 export interface IBlogLink {
   text: string
   to?: string
@@ -11,16 +10,13 @@ export interface IBlogLink {
  */
 export default defineAppConfig({
   blog: {
-    /** `NuxtLoadingIndicator` color (any CSS background). */
     loadingColor: 'var(--cffy-secondary-base-fixed)',
     pwa: {
       installDescription: 'Read the latest articles from your home screen.'
     },
     legal: {
-      /** Cookie policy linked from the cookies banner (the link is hidden when empty). */
       cookiesUrl: ''
     },
-    /** Default navbar and footer links (sites with their own TheNavbar/TheFooter ignore them). */
     navLinks: [] as IBlogLink[],
     footerLinks: [] as IBlogLink[]
   }

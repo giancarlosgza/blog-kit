@@ -11,10 +11,10 @@ useHead({
   link: [{ rel: 'alternate', type: 'application/rss+xml', title: brand.name, href: blogPath('/rss.xml') }]
 })
 
-/** Site-wide Organization + WebSite structured data */
+/** Structured data */
 useSiteSchemaLd()
 
-/** Analytics Scripts */
+/** Analytics */
 const plausibleEndpoint = computed(() => {
   const scriptUrl = runtimeConfig.public.plausibleScript
   if (!scriptUrl)

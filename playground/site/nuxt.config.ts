@@ -1,8 +1,4 @@
-/**
- * Standalone blog on the site layer (blog at `/`), for developing the layers. A real blog site looks
- * the same: `extends` the site layer, sets its brand in `app/app.config.ts` and points `.env` at its
- * Firebase project.
- */
+/** Standalone blog at `/` */
 export default defineNuxtConfig({
   extends: ['@giancarlosgza/blog-site-layer'],
 

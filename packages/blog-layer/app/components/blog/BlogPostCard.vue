@@ -101,7 +101,7 @@ function markActive(): void {
           <UiBaseSkeleton width="10rem" />
         </div>
 
-        <!-- Post Details -->
+        <!-- Details -->
         <div
           v-else
           class="card-post-details"

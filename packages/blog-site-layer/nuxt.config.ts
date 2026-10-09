@@ -11,11 +11,6 @@ const shellCss = [
 
 const toPosix = (path: string) => path.replace(/\\/g, '/')
 
-/**
- * Merged configs list the site's `css` before the layers'. Reorder to framework (this layer), then
- * the other layers (the blog styles), then the site, so brand tokens declared by the site in the
- * same cascade layers (later in source order) override the framework defaults.
- */
 function shellStylesFirst(_options: unknown, nuxt: Nuxt) {
   nuxt.hook('modules:done', () => {
     const layerDirs = nuxt.options._layers
@@ -28,12 +23,7 @@ function shellStylesFirst(_options: unknown, nuxt: Nuxt) {
   })
 }
 
-/**
- * Standalone blog site: the blog layer plus the app shell (app.vue, error page, default layout,
- * navbar/footer, cookie banner, PWA, robots, fonts, analytics) and the `@colorffy/css` framework.
- * The site that extends it supplies the brand (`app.config.ts`), head meta, fonts, PWA manifest and
- * public assets, and can replace TheNavbar/TheFooter with components of the same name.
- */
+/** Layer */
 export default defineNuxtConfig({
   extends: ['@giancarlosgza/blog-layer'],
 
@@ -139,7 +129,7 @@ export default defineNuxtConfig({
     processCSSVariables: 'font-prefixed-only'
   },
 
-  // PWA (sites add the manifest, `workbox.cacheId` and runtime caching)
+  // PWA (sites add manifest and cacheId)
   pwa: {
     registerType: 'prompt',
     workbox: {
