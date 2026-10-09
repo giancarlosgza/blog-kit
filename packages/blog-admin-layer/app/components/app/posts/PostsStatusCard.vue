@@ -38,7 +38,7 @@ const emit = defineEmits<IEmits>()
 const reply = ref<string>('')
 
 /** Composables */
-const { formatDate, formatDateTime, formatTitleDate } = useDateFormat()
+const { formatDate, formatDateTime, formatTitleDate } = useAdminDateFormat()
 
 /** Computed */
 const status = computed(() => resolvePostStatus(props.post))

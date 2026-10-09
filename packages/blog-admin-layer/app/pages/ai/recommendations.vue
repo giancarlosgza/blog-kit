@@ -53,7 +53,7 @@ const historyOpen = ref<boolean>(false)
 
 /** Composables */
 const { onToastMessage } = useToast(toast)
-const { formatDate } = useDateFormat()
+const { formatDate } = useAdminDateFormat()
 const { runs, isLoading: isLoadingRuns, error: runsError, fetchRuns, prependRun, savePins, removeRun } = useRecommendationRuns()
 const { coverage, isLoadingCoverage, coverageError, loadCoverage, createRun, isLoading: isRunning, error, errorSafetyRating, resetErrors } = useRecommendationsAi()
 

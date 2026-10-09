@@ -39,7 +39,7 @@ const modeOptions = [
 const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
 /** Composables */
-const { formatDateTime } = useDateFormat()
+const { formatDateTime } = useAdminDateFormat()
 
 /** Computed */
 const title = computed(() => {

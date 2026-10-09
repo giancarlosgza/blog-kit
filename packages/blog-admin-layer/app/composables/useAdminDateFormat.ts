@@ -6,7 +6,7 @@ import { formatTimeAgo } from '@vueuse/core'
  * - formatTitleDate: locale date string for title tooltips
  * - formatDateTime: locale date + time (scheduled publish times)
  */
-export function useDateFormat() {
+export function useAdminDateFormat() {
   /**
    * Converts Firestore Timestamp to Date if needed
    */

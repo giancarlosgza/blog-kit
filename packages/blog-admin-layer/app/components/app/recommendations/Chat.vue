@@ -35,7 +35,7 @@ const draft = defineModel<string>('draft', { default: '' })
 /** Composables */
 const { models } = useGeminiAi()
 const selectedModel = useGeminiModel()
-const { formatDate } = useDateFormat()
+const { formatDate } = useAdminDateFormat()
 
 /** Computed */
 const runTitle = computed(() => {

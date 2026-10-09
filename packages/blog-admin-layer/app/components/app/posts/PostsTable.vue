@@ -51,7 +51,7 @@ const isMobile = breakpoints.smallerOrEqual('sm')
 
 /** Composables */
 const { blogUrl } = useBlogUrl()
-const { formatDate, formatTitleDate } = useDateFormat()
+const { formatDate, formatTitleDate } = useAdminDateFormat()
 
 /** Computed */
 const tableItems = computed<ITableItem[]>(() => {

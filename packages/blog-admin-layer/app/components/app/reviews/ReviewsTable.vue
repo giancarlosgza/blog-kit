@@ -64,7 +64,7 @@ const breakpoints = useBreakpoints(breakpointsBootstrapV5)
 const isMobile = breakpoints.smallerOrEqual('sm')
 
 /** Composables */
-const { formatDate, formatDateTime, formatTitleDate } = useDateFormat()
+const { formatDate, formatDateTime, formatTitleDate } = useAdminDateFormat()
 
 /** Computed */
 const tableItems = computed<ITableItem[]>(() => (props.posts ?? []).map(post => ({

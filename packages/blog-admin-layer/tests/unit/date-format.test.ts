@@ -1,8 +1,8 @@
 import { Timestamp } from 'firebase/firestore'
 import { describe, expect, it } from 'vitest'
-import { useDateFormat } from '#admin/app/composables/useDateFormat'
+import { useAdminDateFormat } from '#admin/app/composables/useAdminDateFormat'
 
-const { toDate, formatDate, formatTitleDate } = useDateFormat()
+const { toDate, formatDate, formatTitleDate } = useAdminDateFormat()
 const SAMPLE = new Date('2026-09-22T12:00:00Z')
 
 describe('toDate', () => {

@@ -29,7 +29,7 @@ const active = useState('activePost', () => null as string | null)
 
 /** Composables */
 const { blogUrl } = useBlogUrl()
-const { formatTitleDate } = useDateFormat()
+const { formatTitleDate } = useAdminDateFormat()
 
 /** Methods */
 function publicUrl(post: IPost): string {

@@ -47,7 +47,7 @@ const eventIcons: Record<PostEventType, string> = {
 }
 
 /** Composables */
-const { toDate } = useDateFormat()
+const { toDate } = useAdminDateFormat()
 
 /** Computed */
 const days = computed<IHistoryDay[]>(() => {

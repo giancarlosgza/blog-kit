@@ -38,7 +38,7 @@ const tableColumns: IDatatableColumn[] = [
 /** Composables */
 const breakpoints = useBreakpoints(breakpointsBootstrapV5)
 const isMobile = breakpoints.smallerOrEqual('sm')
-const { formatDate, formatTitleDate } = useDateFormat()
+const { formatDate, formatTitleDate } = useAdminDateFormat()
 
 /** Computed */
 const tableItems = computed(() => {

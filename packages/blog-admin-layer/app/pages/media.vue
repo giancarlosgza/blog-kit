@@ -59,7 +59,7 @@ const uploadDialog = useTemplateRef<InstanceType<typeof AppMediaUploadDialog>>('
 const apiFetch = useApiFetch()
 const toast = ref<InstanceType<typeof UiAlertToast> | null>(null)
 const { onToastMessage } = useToast(toast)
-const { formatDate } = useDateFormat()
+const { formatDate } = useAdminDateFormat()
 
 /** Computed */
 const isAdmin = computed<boolean>(() => adminRole.value === 'admin')

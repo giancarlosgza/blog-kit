@@ -39,7 +39,7 @@ const usageIcons: Record<IMediaUsage['kind'], string> = {
 }
 
 /** Composables */
-const { formatTitleDate } = useDateFormat()
+const { formatTitleDate } = useAdminDateFormat()
 
 /** Computed */
 const isInUse = computed<boolean>(() => props.usages.length > 0)

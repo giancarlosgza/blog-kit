@@ -47,7 +47,7 @@ const tableColumns: IDatatableColumn[] = [
 ]
 
 /** Composables */
-const { formatDate, formatTitleDate } = useDateFormat()
+const { formatDate, formatTitleDate } = useAdminDateFormat()
 
 /** Computed */
 const tableItems = computed<ITableItem[]>(() => props.files.map(file => ({
