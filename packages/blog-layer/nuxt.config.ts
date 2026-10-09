@@ -22,6 +22,14 @@ export default defineNuxtConfig({
     }
   },
 
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: { sourceMapIncludeSources: true }
+      }
+    }
+  },
+
   runtimeConfig: {
     siteUrl: '',
 
