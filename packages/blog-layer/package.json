@@ -14,7 +14,8 @@
     "nuxt.config.ts",
     "scripts",
     "server",
-    "shared"
+    "shared",
+    "!server/tsconfig.json"
   ],
   "peerDependencies": {
     "nuxt": "^4.5.0",
