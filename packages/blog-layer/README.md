@@ -9,7 +9,7 @@ It only adds the blog. The site keeps its own app shell (app.vue, layout, header
 load `@colorffy/css` itself. For a standalone blog site, install
 [`@giancarlosgza/blog-site-layer`](../blog-site-layer) instead, which wraps this layer in a full shell.
 
-The Firestore schema it reads is in [`docs/schema.md`](../../docs/schema.md); content is written by
+The Firestore schema it reads is in [`docs/schema.md`](https://github.com/giancarlosgza/blog-kit/blob/main/docs/schema.md); content is written by
 the blog admin.
 
 ## Add a blog to a site
