@@ -1,0 +1,11 @@
+// The site's own framework setup; the blog layer only adds its blog styles
+@use '@colorffy/css/scss/main';
+
+.landing-header,
+.landing-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 1rem;
+}

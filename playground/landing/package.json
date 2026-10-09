@@ -1,0 +1,25 @@
+{
+  "name": "playground-landing",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "blog-layer-subset-icons",
+    "dev": "nuxt dev",
+    "prebuild": "blog-layer-subset-icons",
+    "build": "nuxt build",
+    "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@colorffy/css": "3.0.0",
+    "@giancarlosgza/blog-layer": "workspace:*",
+    "nuxt": "4.5.2",
+    "sass": "1.105.1",
+    "vue": "3.5.43",
+    "vue-router": "5.3.1"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "3.4.2"
+  }
+}
