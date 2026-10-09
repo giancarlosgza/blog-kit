@@ -46,12 +46,16 @@ PWA icons (optionally generated with `pwa: { pwaAssets: { config: true } }` and 
   links, AI prompt context and recommendation chips). Every key is documented in this package's `app/app.config.ts`.
 - **Login aside:** the layer shows a gradient with the blog name; replace it with an
   `app/components/auth/CardWall.vue` of your own.
+- **Models and helpers:** add `@giancarlosgza/blog-core` to the site's own dependencies when site code
+  imports its types (e.g. `WidgetDescriptor`) or calls its auto-imported helpers; with pnpm a layer's
+  dependencies are not visible to the site.
 - **Widgets:** editors can insert the widgets the site registers by providing `blogWidgetRegistry`
   (`{ descriptors, preview? }`) from a plugin. Without one, "Insert widget" is hidden.
 - **Styles:** the layer loads `@colorffy/css` and the admin styles first, so site tokens in the same
   cascade layers (e.g. `@layer abstracts.tokens { :root { ... } }`) override the defaults.
 
-Firestore and Storage rules, indexes and the scheduled-publish Cloud Function are not part of this
-package yet; deploy them from the admin site.
+Firestore and Storage rules, indexes and the scheduled-publish Cloud Function are in
+[`@giancarlosgza/blog-firebase`](https://github.com/giancarlosgza/blog-kit/tree/main/packages/blog-firebase); deploy them from the admin repo.
 
-Inside the layer, files import each other through the `#admin/...` alias.
+Inside the layer, files import each other through the `#admin/...` alias. Shared models and helpers come
+from `@giancarlosgza/blog-core`; its helpers are auto-imported in app and server code.

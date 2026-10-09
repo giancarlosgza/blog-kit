@@ -63,6 +63,9 @@ Blog pages use the site's `default` layout; set `blog.layout` to use another one
 - **`blog.layout`** (`nuxt.config`, optional): layout for the blog pages.
 - **Brand:** override `blog.*` in the site's `app/app.config.ts`. Every key is documented in this
   package's `app/app.config.ts`. `settings/general` in Firestore overrides the name and description.
+- **Models and helpers:** add `@giancarlosgza/blog-core` to the site's own dependencies when site code
+  imports its types (e.g. `WidgetDescriptor`) or calls its auto-imported helpers; with pnpm a layer's
+  dependencies are not visible to the site.
 - **Widgets:** posts can embed `<div data-blog-widget="key" data-props='{...}'>`. A site registers
   widgets by providing `blogWidgets` (`{ [key]: { descriptor, component } }`) from a plugin; without
   one, placeholders render an "unavailable" fallback.
@@ -71,4 +74,5 @@ Blog pages use the site's `default` layout; set `blog.layout` to use another one
   `app/assets/css/material-symbols.generated.css` in the site.
 
 Inside the layer, files import each other through the `#blog/...` alias: `~` and `#shared` resolve
-to the site.
+to the site. Shared models and helpers come from `@giancarlosgza/blog-core`; its helpers (`toBlogUrl`,
+`toDateMs`, `resolvePostSeo`...) are auto-imported in app and server code.

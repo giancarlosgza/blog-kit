@@ -1,8 +1,8 @@
 # Firestore Database Schema - Colorffy Blog
 
 Collections and documents of the **Colorffy Blog** project (`colorffy-blog`). The data is written by
-[`blog-admin`](../../blog-admin), which also owns `firestore.rules` and `firestore.indexes.json`; this
-blog only reads it. TypeScript models live in `packages/blog-layer/shared/models/` (kept in sync with blog-admin).
+the admin (`@giancarlosgza/blog-admin-layer`); the blog only reads it. Rules and indexes ship in
+`@giancarlosgza/blog-firebase`; the TypeScript models in `@giancarlosgza/blog-core` (`packages/blog-core/src/models/`).
 
 **Dates**: older documents store Unix-ms numbers, blog-admin writes Firestore `Timestamp`s.
 Readers must accept both (`useDateValue().normalizeDateValue` handles Date, Timestamp,
@@ -87,7 +87,7 @@ Published HTML body, split from `posts` to keep metadata queries small.
 
 | Field Name | Type | Description |
 | :--- | :--- | :--- |
-| `contents` | `string` | HTML body, sanitized by blog-admin on publish (`sanitizePostHtml`). |
+| `contents` | `string` | HTML body, sanitized on publish (`sanitizePostHtml` from `@giancarlosgza/blog-core/sanitize`). |
 | `updatedAt` | `number` \| `Timestamp` | Last publish time. |
 
 ---
@@ -150,7 +150,7 @@ Site-wide configuration.
 ---
 
 ## Security rules (summary)
-Source: `blog-admin/firestore.rules`. Staff = authenticated user whose `admins/{uid}` doc has `role` `admin` or `editor`; admin = `role == 'admin'`.
+Source: `packages/blog-firebase/firestore.rules`. Staff = authenticated user whose `admins/{uid}` doc has `role` `admin` or `editor`; admin = `role == 'admin'`.
 
 | Collection | Read | Write |
 | :--- | :--- | :--- |
