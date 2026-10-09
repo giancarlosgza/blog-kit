@@ -2,6 +2,7 @@ import type { IFirestoreDateValue } from '#blog/shared/models/date'
 import type { IPost } from '#blog/shared/models/post'
 import { htmlToExcerpt, resolveAuthorName } from '#blog/shared/utils/blog'
 import { toBlogUrl } from '#blog/shared/utils/blog-path'
+import { toDateMs } from '#blog/shared/utils/date'
 import { sanitizeBlogHtml } from '#blog/shared/utils/sanitize'
 
 /**
@@ -15,7 +16,6 @@ export const RSS_ITEM_LIMIT = 20
 export const RSS_QUERY_LIMIT = 50
 export const RSS_DESCRIPTION_MAX = 300
 
-const MIN_SECONDS_TIMESTAMP = 10_000_000_000
 // Characters XML 1.0 forbids even when escaped (C0 controls except tab/LF/CR, U+FFFE/U+FFFF).
 // eslint-disable-next-line no-control-regex
 const INVALID_XML_CHARS = /[\u0000-\u0008\v\f\u000E-\u001F\u{FFFE}\u{FFFF}]/gu
@@ -108,27 +108,6 @@ export function htmlToPlainExcerpt(html: string, maxLength = RSS_DESCRIPTION_MAX
 }
 
 /** Dates */
-export function toDateMs(value: IFirestoreDateValue): number | null {
-  if (value == null || value === '')
-    return null
-
-  let ms: number
-  if (value instanceof Date)
-    ms = value.getTime()
-  else if (typeof value === 'number')
-    ms = value < MIN_SECONDS_TIMESTAMP ? value * 1000 : value
-  else if (typeof value === 'string')
-    ms = Date.parse(value)
-  else if ('toDate' in value && typeof value.toDate === 'function')
-    ms = value.toDate().getTime()
-  else if ('seconds' in value && typeof value.seconds === 'number')
-    ms = value.seconds * 1000
-  else
-    return null
-
-  return Number.isFinite(ms) && ms > 0 ? ms : null
-}
-
 /** RFC 822 date (`Tue, 14 Nov 2023 22:13:20 GMT`); `toUTCString` already emits that format. */
 export function toRfc822Date(value: IFirestoreDateValue): string | null {
   const ms = toDateMs(value)
