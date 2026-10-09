@@ -2,7 +2,7 @@
 
 Collections and documents of the **Colorffy Blog** project (`colorffy-blog`). The data is written by
 [`blog-admin`](../../blog-admin), which also owns `firestore.rules` and `firestore.indexes.json`; this
-blog only reads it. TypeScript models live in `layers/blog/shared/models/` (kept in sync with blog-admin).
+blog only reads it. TypeScript models live in `packages/blog-layer/shared/models/` (kept in sync with blog-admin).
 
 **Dates**: older documents store Unix-ms numbers, blog-admin writes Firestore `Timestamp`s.
 Readers must accept both (`useDateValue().normalizeDateValue` handles Date, Timestamp,
