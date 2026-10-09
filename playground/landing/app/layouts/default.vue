@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { blogPath } = useBlogPath()
+</script>
+
 <template>
   <div>
     <header class="container landing-header">
@@ -23,7 +27,7 @@
 
     <footer class="container landing-footer text-muted">
       <span>Acme landing</span>
-      <a href="/blog/rss.xml">RSS</a>
+      <a :href="blogPath('/rss.xml')">RSS</a>
     </footer>
   </div>
 </template>
