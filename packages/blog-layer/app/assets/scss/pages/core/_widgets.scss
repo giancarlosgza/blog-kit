@@ -1,0 +1,17 @@
+@layer pages {
+  // Fallback for unknown or unregistered widgets
+  .widget-error {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 1.25rem;
+    border-radius: var(--corner-radius-large);
+    background: var(--cffy-surface-body-pane);
+    font-size: var(--cffy-fs-sm);
+
+    & .material-symbols-rounded {
+      font-size: 20px;
+      opacity: 0.7;
+    }
+  }
+}

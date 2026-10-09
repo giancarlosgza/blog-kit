@@ -1,0 +1,70 @@
+@layer pages {
+  .vt-post-image {
+    view-transition-name: selected-post-image;
+    contain: paint;
+  }
+
+  .vt-post-header {
+    view-transition-name: selected-post-header;
+    contain: paint;
+    padding-block-end: .15em;
+    margin-block-end: -.15em;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 200ms;
+  }
+
+  ::view-transition-group(selected-post-image),
+  ::view-transition-group(selected-post-header) {
+    animation-duration: 350ms;
+    animation-timing-function: var(--cffy-ease-emphasized);
+  }
+
+  ::view-transition-old(selected-post-image),
+  ::view-transition-new(selected-post-image) {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // Color-mode circle reveal, scoped so page nav keeps its cross-fade
+  html.theme-transition {
+    &::view-transition-group(root) {
+      animation-timing-function: var(--cffy-ease-emphasized);
+    }
+
+    &::view-transition-new(root) {
+      mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><filter id="blur"><feGaussianBlur stdDeviation="2"/></filter></defs><circle cx="0" cy="0" r="18" fill="white" filter="url(%23blur)"/></svg>') top left / 0 no-repeat;
+      mask-origin: content-box;
+      transform-origin: top left;
+      animation: theme-reveal 1s both;
+    }
+
+    // Old theme stays beneath the mask
+    &::view-transition-old(root) {
+      transform-origin: top left;
+      animation: theme-reveal 1s both;
+      z-index: -1;
+    }
+  }
+
+  @keyframes theme-reveal {
+    to {
+      mask-size: 350vmax;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vt-post-image,
+    .vt-post-header {
+      view-transition-name: none;
+    }
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none !important;
+    }
+  }
+}

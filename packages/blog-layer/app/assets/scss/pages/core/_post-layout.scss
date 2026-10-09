@@ -1,0 +1,286 @@
+@use '../../abstracts/variables' as lv;
+@use '../../abstracts/type-scale' as t;
+
+@layer pages {
+  // Home hero lead under the display title
+  .section-hero-lead {
+    max-inline-size: 56ch;
+    margin-inline: auto;
+  }
+
+  // Tag filter: wraps on desktop, scrolls on narrow screens
+  .post-filter-chips {
+    @media (width < 768px) {
+      flex-wrap: nowrap;
+      max-inline-size: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-block: .25rem;
+
+      & > * {
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  // Post card: borderless cover, then badge + date, title, excerpt and tags (+ author when featured)
+  .card-post {
+    --_card-bg-color: transparent;
+    --cffy-card-padding-inline: 0;
+    --_card-post-radius: var(--corner-radius-card-increased);
+    --_card-post-easing-in: #{lv.$easing-spring-elastic};
+    --_card-post-easing-duration: 900ms;
+
+    height: 100%;
+    border-radius: 0;
+
+    &:is(:hover) {
+      --_card-post-radius: var(--corner-radius-card);
+    }
+
+    & .card-header {
+      padding: 0;
+      border-radius: var(--_card-post-radius);
+      transition: border-radius var(--_card-post-easing-duration) var(--_card-post-easing-in);
+    }
+
+    & .card-post-cover {
+      height: 12rem;
+      border-radius: var(--_card-post-radius);
+      background: var(--cffy-surface-body-pane);
+      overflow: clip;
+      transition: border-radius var(--_card-post-easing-duration) var(--_card-post-easing-in);
+
+      & img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: scale 400ms var(--cffy-ease-overshoot-soft);
+      }
+    }
+
+    & .card-body {
+      padding-block: var(--cffy-space-20) 0;
+    }
+
+    & .card-post-details {
+      display: grid;
+      align-content: start;
+      row-gap: var(--cffy-space-12);
+    }
+
+    & .card-post-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--cffy-space-8) var(--cffy-space-12);
+
+      & .badge {
+        margin-inline: 0;
+      }
+    }
+
+    & .card-post-title {
+      text-wrap: balance;
+    }
+
+    & .card-post-excerpt {
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    & .card-post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: var(--cffy-space-8);
+    }
+
+    // Series and tag links sit above the stretched title link
+    & :is(.card-post-chip, .card-post-author) {
+      position: relative;
+      z-index: 2;
+    }
+
+    & .card-post-chip {
+      --_badge-border-color: transparent;
+
+      margin-inline: 0;
+      transition: background-color 200ms var(--cffy-ease-decelerate);
+    }
+
+    & .card-post-author:is(:hover, :focus-visible) {
+      text-decoration: underline;
+    }
+
+    // Title link stretched over the card
+    & .card-post-link {
+      position: static;
+      color: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        width: auto;
+        height: auto;
+        background: none;
+        border-radius: var(--_card-post-radius);
+        scale: none;
+        transition: none;
+      }
+
+      &:focus-visible {
+        outline: none;
+      }
+
+      & > span {
+        text-decoration: underline;
+        text-decoration-color: transparent;
+        text-decoration-thickness: 2px;
+        text-underline-offset: .2em;
+        transition: text-decoration-color 200ms var(--cffy-ease-decelerate);
+      }
+    }
+
+    &:is(:hover) {
+      & .card-post-cover img {
+        scale: 1.05;
+      }
+
+      & .card-post-link > span {
+        text-decoration-color: currentColor;
+      }
+    }
+
+    &:has(.card-post-link:focus-visible) {
+      outline: var(--cffy-border-width-md) solid var(--cffy-primary-a10);
+      outline-offset: 4px;
+      border-radius: var(--_card-post-radius);
+    }
+
+    &:is(.card-post-skeleton) {
+      pointer-events: none;
+      user-select: none;
+
+      & .card-post-cover {
+        background: rgb(from var(--cffy-muted-base-fixed) r g b / 0.5);
+        animation: skeleton-loading 2500ms both alternate ease-in-out infinite;
+      }
+    }
+
+    // Featured: cover left, details right (stacked below md)
+    &:is(.wide-post) {
+      width: 100%;
+
+      & .card-post-cover {
+        height: auto;
+        aspect-ratio: 1200 / 630;
+      }
+
+      & .card-post-title {
+        font-size: t.$fs-hub-title-long;
+        line-height: 1.05;
+      }
+
+      @media (min-width: 768px) {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+        align-items: center;
+        gap: var(--cffy-space-32);
+
+        & > .card-body {
+          padding: 0;
+        }
+
+        & .card-post-details {
+          row-gap: var(--cffy-space-16);
+        }
+
+        & .card-post-excerpt {
+          line-clamp: 3;
+          -webkit-line-clamp: 3;
+        }
+      }
+
+      @media (min-width: 1200px) {
+        gap: var(--cffy-space-48);
+      }
+    }
+  }
+
+  // Subgrid aligns cover and detail rows across the grid
+  .blog-post-grid,
+  .blog-post-skeleton-grid {
+    grid-auto-rows: auto;
+    position: relative;
+
+    & > article {
+      grid-row: span 5;
+      display: grid;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+
+      & > .card-post {
+        grid-row: span 5;
+        display: grid;
+        grid-template-rows: subgrid;
+        row-gap: 0;
+
+        & > .card-header {
+          grid-row: span 1;
+        }
+
+        & > .card-body {
+          grid-row: span 4;
+          display: grid;
+          grid-template-rows: subgrid;
+          row-gap: 0;
+
+          & > .card-post-details {
+            grid-row: span 4;
+            row-gap: var(--cffy-space-12);
+
+            & > * {
+              grid-row: span 1;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Filter reflow: kept cards slide, removed/added fade
+  .post-card-move,
+  .post-card-enter-active,
+  .post-card-leave-active {
+    transition: transform 800ms var(--cffy-ease-overshoot-soft),
+      opacity 400ms var(--cffy-ease-overshoot-soft);
+  }
+
+  .post-card-enter-from,
+  .post-card-leave-to {
+    opacity: 0;
+    transform: scale(.95);
+  }
+
+  .post-card-leave-active {
+    position: absolute;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .post-card-move,
+    .post-card-enter-active,
+    .post-card-leave-active {
+      transition: none;
+    }
+  }
+}

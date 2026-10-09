@@ -1,0 +1,84 @@
+@use './core/layers';
+@use './core/shared-ui';
+@use './core/article-layout';
+@use './core/post-layout';
+@use './core/post-article-layout';
+@use './core/code-layout';
+@use './core/transitions-layout';
+@use './core/widgets';
+
+@layer overrides {
+  code,
+  .font-code {
+    font-family: var(--cffy-font-code), monospace;
+  }
+}
+
+@layer pages {
+  .section-hero {
+    & h1 {
+      & span {
+        --_hero-color-start-from: var(--cffy-secondary-base-fixed);
+        --_hero-color-start-to: var(--cffy-secondary-a30);
+        --_hero-color-end-from: var(--cffy-accent-base-fixed);
+        --_hero-color-end-to: var(--cffy-accent-a30);
+
+        --hero-color-start: var(--_hero-color-start-from);
+        --hero-color-end: var(--_hero-color-end-from);
+        --_space: in srgb;
+
+        background: linear-gradient(90deg var(--_space),
+            var(--hero-color-start),
+            var(--hero-color-end));
+        background-clip: text;
+        color: transparent;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: hero-color-change 3s linear infinite alternate;
+
+        @supports (background: linear-gradient(in oklch, #fff, #fff)) {
+          --_space: in oklch;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
+    }
+  }
+
+  @property --hero-color-start {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: #382bf0;
+  }
+
+  @property --hero-color-end {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: #0075d6;
+  }
+
+  @keyframes hero-color-change {
+    to {
+      --hero-color-start: var(--_hero-color-start-to);
+      --hero-color-end: var(--_hero-color-end-to);
+    }
+  }
+
+  .gradient-blob {
+    --_color: var(--color, var(--cffy-secondary-base-fixed));
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle at center, var(--_color) 0%, transparent 70%);
+    transform: translate(50%, -50%);
+    opacity: 0.45;
+    z-index: -1;
+  }
+}

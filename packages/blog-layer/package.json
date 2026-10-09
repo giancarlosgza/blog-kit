@@ -1,0 +1,46 @@
+{
+  "name": "@giancarlosgza/blog-layer",
+  "version": "0.1.0",
+  "description": "Nuxt layer that adds a Firestore-backed blog to a site under a configurable base path: pages, cached API, RSS, sitemap and SEO",
+  "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "bin": {
+    "blog-layer-subset-icons": "./scripts/subset-icons.mjs"
+  },
+  "files": [
+    "app",
+    "blog-module.ts",
+    "nuxt.config.ts",
+    "scripts",
+    "server",
+    "shared"
+  ],
+  "peerDependencies": {
+    "nuxt": "^4.5.0",
+    "vue": "^3.5.0",
+    "vue-router": "^5.0.0"
+  },
+  "dependencies": {
+    "@colorffy/css": "3.0.0",
+    "@colorffy/ui": "3.0.0",
+    "@material-symbols/font-700": "0.47.6",
+    "@nuxt/image": "2.1.0",
+    "@nuxtjs/color-mode": "4.0.1",
+    "@nuxtjs/sitemap": "8.6.1",
+    "@shikijs/langs": "4.5.0",
+    "@shikijs/themes": "4.5.0",
+    "@takumi-rs/core": "2.14.0",
+    "@types/sanitize-html": "2.16.2",
+    "@vueuse/components": "14.4.0",
+    "@vueuse/core": "14.4.0",
+    "@vueuse/nuxt": "14.4.0",
+    "firebase-admin": "13.10.0",
+    "floating-vue": "5.4.0",
+    "nuxt-og-image": "6.10.3",
+    "sanitize-html": "2.18.0",
+    "sass": "1.105.1",
+    "shiki": "4.5.0",
+    "subset-font": "2.9.0"
+  }
+}

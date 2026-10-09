@@ -1,0 +1,6 @@
+// Landing type scale (desktop max: h1 72px, cards 32px, hub titles 48px)
+$fs-landing-h1: clamp(2.5rem, calc(1.64rem + 3.57vw), 4.5rem);
+$fs-landing-card-md: clamp(1.375rem, calc(1.11rem + 1.12vw), 2rem);
+$fs-hub-title-long: clamp(2rem, calc(1.3rem + 2.2vw), 3rem);
+
+$ls-ledger-title: -2%;

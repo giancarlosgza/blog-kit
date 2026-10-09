@@ -1,0 +1,42 @@
+@layer pages {
+  .code-container {
+    --_code-container-border-color: var(--cffy-outline-surface);
+    --_code-container-bg-color: transparent;
+
+    position: relative;
+    background-color: var(--_code-container-bg-color);
+    border: var(--cffy-border-width-sm) solid var(--_code-container-border-color);
+    border-radius: var(--cffy-radius-md);
+    padding: 0;
+    margin: 0;
+    transition: background-color 200ms var(--cffy-ease-decelerate),
+      border 200ms var(--cffy-ease-decelerate);
+
+    &:is(:hover) {
+      --_code-container-border-color: var(--cffy-surface-a60);
+    }
+
+    & pre {
+      margin: 0;
+      padding: .75rem 1rem;
+      border-radius: var(--cffy-radius-md);
+      overflow-x: auto;
+    }
+
+    & code {
+      font-family: var(--cffy-font-code), monospace;
+      font-size: 0.9em;
+      line-height: 1.6;
+      background: transparent;
+    }
+
+    // Raw source until Shiki loads
+    & .code-loading-placeholder code {
+      white-space: pre;
+    }
+
+    &.code-copied {
+      --_code-container-border-color: var(--cffy-surface-a60);
+    }
+  }
+}

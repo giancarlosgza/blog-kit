@@ -1,0 +1,8 @@
+// Layer defaults; zero specificity, so any site `:root` value wins
+@layer abstracts.tokens {
+  :where(:root) {
+    --corner-radius-large: 18px;
+    --corner-radius-card: 20px;
+    --corner-radius-card-increased: 30px;
+  }
+}

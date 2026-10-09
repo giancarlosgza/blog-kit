@@ -1,0 +1,15 @@
+@layer base.icons {
+  .hover-rotate {
+    &:not(.disabled, :disabled) {
+      & i {
+        transition: rotate 2500ms var(--cffy-ease-spring);
+      }
+
+      &:is(:hover) {
+        & i {
+          rotate: 360deg;
+        }
+      }
+    }
+  }
+}

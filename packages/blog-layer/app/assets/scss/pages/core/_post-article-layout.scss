@@ -1,0 +1,199 @@
+@use '@colorffy/css/scss/abstracts/mixins' as m;
+
+@layer pages {
+  // Shared by the header and the body so both line up on one centered reading column;
+  // from xl the side columns hold the action and "on this page" rails
+  .post-article-grid {
+    --_post-column: 42rem;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+
+    @include m.media-breakpoint-up(lg) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, var(--_post-column)) minmax(0, 1fr);
+      column-gap: 2.5rem;
+
+      & > * {
+        grid-column: 2;
+        grid-row: 1;
+      }
+    }
+
+    @include m.media-breakpoint-up(xxl) {
+      --_post-column: 45rem;
+
+      column-gap: 4rem;
+    }
+  }
+
+  // A single shrinkable track, so wide code blocks or widgets can't stretch the column
+  .post-article-main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .post-article-share-inline {
+    @include m.media-breakpoint-up(xl) {
+      display: none !important;
+    }
+  }
+
+  .post-article-rail {
+    display: none;
+
+    @include m.media-breakpoint-up(xl) {
+      position: sticky;
+      top: calc(var(--cffy-navbar-min-height, 4.25rem) + 1.5rem);
+      align-self: start;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .post-article-rail-start {
+    @include m.media-breakpoint-up(xl) {
+      grid-column: 1;
+      justify-self: end;
+      align-items: center;
+      gap: var(--cffy-space-8);
+    }
+  }
+
+  .post-article-rail-divider {
+    inline-size: 1px;
+    block-size: 1.5rem;
+    background: var(--cffy-outline-surface);
+  }
+
+  .post-article-rail-end {
+    @include m.media-breakpoint-up(xl) {
+      grid-column: 3;
+      justify-self: start;
+      inline-size: 100%;
+      max-inline-size: 14rem;
+      gap: var(--cffy-space-24);
+    }
+  }
+
+  .post-article-rail-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-article-rail-label {
+    padding-block-end: var(--cffy-space-8);
+    font-family: var(--cffy-font-code);
+    font-size: var(--cffy-fs-4xs);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--cffy-muted-a10);
+  }
+
+  .post-article-rail-title {
+    padding-block-end: var(--cffy-space-8);
+    font-size: var(--cffy-fs-xs);
+    font-weight: var(--cffy-fw-600);
+    color: var(--cffy-on-background);
+
+    &:is(:hover, :focus-visible) {
+      text-decoration: underline;
+    }
+  }
+
+  // Compact text links: a dot marks the current section, no pane rows
+  .post-article-rail-link {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--cffy-space-8);
+    padding-block: var(--cffy-space-6);
+    font-size: var(--cffy-fs-xs);
+    line-height: 1.4;
+    text-align: start;
+    color: var(--cffy-muted-a10);
+    transition: color 200ms var(--cffy-ease-decelerate);
+
+    &.has-dot::before {
+      content: '';
+      flex-shrink: 0;
+      inline-size: 6px;
+      block-size: 6px;
+      margin-block-start: .5em;
+      border-radius: calc(var(--cffy-radius-xl) * 2);
+      background: transparent;
+      transition: background-color 200ms var(--cffy-ease-decelerate);
+    }
+
+    &.is-sub {
+      padding-inline-start: var(--cffy-space-12);
+    }
+
+    &:is(:hover, :focus-visible),
+    &.is-active {
+      color: var(--cffy-on-background);
+    }
+
+    &.is-active {
+      font-weight: var(--cffy-fw-500);
+
+      &::before {
+        background: var(--cffy-secondary-a50);
+      }
+    }
+  }
+
+  span.post-article-rail-link {
+    cursor: default;
+  }
+
+  .post-article-rail-number {
+    flex-shrink: 0;
+    min-inline-size: 1rem;
+    font-family: var(--cffy-font-code);
+    font-size: var(--cffy-fs-3xs);
+    line-height: 1.8;
+  }
+
+  .post-article-mark {
+    --_mark-size: 1.5rem;
+  }
+
+  .post-article-lead {
+    font-size: var(--cffy-fs-lg);
+    line-height: 1.5;
+    max-inline-size: 60ch;
+  }
+
+  // Wider than the reading column, centered on it
+  .post-article-cover {
+    display: block;
+    inline-size: min(100%, 60rem);
+    margin-inline: auto;
+    block-size: auto;
+    aspect-ratio: 1200 / 630;
+    object-fit: cover;
+    border-radius: var(--corner-radius-card-increased);
+  }
+
+  .post-article-toc-mobile {
+    @include m.media-breakpoint-up(xl) {
+      display: none;
+    }
+  }
+
+  // The xl rail lists the parts; the inline block keeps only its summary
+  .post-article-series-parts {
+    @include m.media-breakpoint-up(xl) {
+      display: none;
+    }
+  }
+
+  // Part number in the list icon slot, following the icon color (inverted when active)
+  .post-article-series-number {
+    min-inline-size: 1.75rem;
+    text-align: center;
+    color: var(--_list-icon-color);
+  }
+
+  .post-article-toc-sub {
+    padding-inline-start: 1.25rem;
+  }
+}
