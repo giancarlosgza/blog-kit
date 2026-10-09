@@ -17,7 +17,6 @@
     "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest",
-    "audit:signatures": "pnpm audit signatures",
     "publish:layers": "pnpm --filter \"./packages/*\" publish --access public"
   },
   "devDependencies": {
