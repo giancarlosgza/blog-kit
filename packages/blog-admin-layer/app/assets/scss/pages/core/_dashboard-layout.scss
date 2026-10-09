@@ -1,0 +1,96 @@
+@layer pages {
+  .analytics-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 25rem;
+
+    .analytics-grid-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: var(--cffy-space-12);
+
+      p:is(.subtitle-2) {
+        font-family: var(--cffy-font-primary);
+        font-weight: var(--cffy-fw-800);
+        margin-bottom: 0;
+      }
+    }
+
+    .analytics-grid-item {
+      --stat-width: 10%;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: .35rem var(--cffy-space-8);
+      margin-bottom: .35rem;
+      position: relative;
+      border-radius: var(--cffy-radius-sm);
+      cursor: pointer;
+
+      &:is(:hover) {
+        background-color: var(--cffy-surface-container-high);
+
+        .btn {
+          opacity: 1;
+          scale: 1;
+          visibility: visible;
+        }
+
+        &:after {
+          background-color: var(--cffy-surface-container-high);
+        }
+      }
+
+      .btn {
+        position: absolute;
+        inset-block: 0;
+        right: 0;
+        margin: auto;
+        z-index: 3;
+        opacity: 0;
+        scale: 0.75;
+        visibility: hidden;
+        transition: scale 500ms var(--cffy-ease-overshoot-soft),
+          opacity 200ms var(--cffy-ease-decelerate),
+          visibility 200ms var(--cffy-ease-decelerate);
+      }
+
+      p:is(.subtitle-2) {
+        font-size: var(--cffy-fs-3xs);
+        font-family: var(--cffy-font-secondary), sans-serif;
+        margin-bottom: 0;
+        z-index: 2;
+      }
+
+      :nth-child(2 of .subtitle-2) {
+        font-weight: var(--cffy-fw-600);
+        font-family: var(--cffy-font-primary);
+        font-variant-numeric: tabular-nums;
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-width: 1rem;
+        width: calc(var(--stat-width) - 3rem);
+        max-width: 100%;
+        height: 100%;
+        z-index: 1;
+        border-radius: var(--cffy-radius-sm);
+        background-color: oklab(from var(--cffy-primary-a10) l a b / .10);
+      }
+    }
+  }
+
+  .chart-canvas {
+    position: relative;
+
+    & canvas {
+      max-width: 100%;
+    }
+  }
+}

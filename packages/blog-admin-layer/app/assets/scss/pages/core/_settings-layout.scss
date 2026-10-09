@@ -1,0 +1,40 @@
+@use '@colorffy/css/scss/abstracts/mixins' as m;
+
+@layer pages {
+  // Editor
+  .settings-editor {
+    grid-template-columns: minmax(0, 1fr) 22.75rem;
+    align-items: start;
+
+    & .settings-editor-aside {
+      position: sticky;
+      top: 5rem;
+    }
+
+    @include m.media-query(1155) {
+      grid-template-columns: minmax(0, 1fr);
+
+      & .settings-editor-aside {
+        position: static;
+      }
+    }
+  }
+
+  .settings-logo-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: 7.5rem;
+    overflow: hidden;
+    padding: var(--cffy-space-16);
+    border: var(--cffy-border-width-sm) solid var(--cffy-outline-surface);
+    border-radius: var(--cffy-radius-md);
+    background: repeating-conic-gradient(var(--cffy-outline-surface) 0 25%, transparent 0 50%) 50% / 1rem 1rem;
+
+    & img {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: contain;
+    }
+  }
+}

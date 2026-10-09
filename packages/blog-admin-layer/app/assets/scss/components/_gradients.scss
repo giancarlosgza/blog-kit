@@ -1,0 +1,27 @@
+@property --gradient-shape-primary {
+  syntax: "<color>";
+  initial-value: rgba(56, 43, 240, 1);
+  inherits: false;
+}
+
+@property --gradient-shape-accent {
+  syntax: "<color>";
+  initial-value: rgba(200, 27, 212, 1);
+  inherits: false;
+}
+
+@layer base.icons {
+  .hover-rotate {
+    &:not(.disabled, :disabled) {
+      & i {
+        transition: rotate 2500ms var(--cffy-ease-spring);
+      }
+
+      &:is(:hover) {
+        & i {
+          rotate: 360deg;
+        }
+      }
+    }
+  }
+}

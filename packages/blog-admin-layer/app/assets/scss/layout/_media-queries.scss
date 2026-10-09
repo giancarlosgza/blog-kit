@@ -1,0 +1,35 @@
+@use '@colorffy/css/scss/abstracts/mixins' as m;
+
+@layer layout.media-queries {
+  @include m.media-query(1024) {
+    .grid-main-content {
+      display: block;
+    }
+
+    // Add a margin bottom to the main content to show bottom elements
+    main {
+      padding-bottom: 6rem;
+    }
+  }
+
+  @include m.media-query(992) {
+    // Navigation
+    .navbar {
+      > :where(.container, .container-fluid) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      & .navbar-sm-avatar-wrapper {
+        display: inline-flex;
+        justify-self: flex-end;
+      }
+    }
+  }
+
+  @include m.media-query(768) {
+    .fab-mobile {
+      display: inline-flex;
+    }
+  }
+}

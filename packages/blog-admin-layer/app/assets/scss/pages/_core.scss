@@ -1,0 +1,101 @@
+@use './core/layers';
+@use './core/auth-layout';
+@use './core/shared-ui';
+@use './core/dashboard-layout';
+@use './core/filters-layout';
+@use './core/posts-layout';
+@use './core/authors-layout';
+@use './core/settings-layout';
+@use './core/media-layout';
+@use './core/workflow-layout';
+@use './core/analytics-layout';
+@use './core/recommendations-layout';
+
+@layer pages {
+  @property --gradient-stop-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 90deg;
+  }
+
+  @property --gradient-hue-red {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 29deg;
+  }
+
+  @property --gradient-hue-orange {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 70deg;
+  }
+
+  @property --gradient-hue-yellow {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 110deg;
+  }
+
+  .grid-main-content {
+    position: relative;
+    isolation: isolate;
+
+    border-top: calc(var(--cffy-border-width-md) * 1.25) solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(in oklch var(--gradient-stop-angle),
+        oklch(0.63 0.3 var(--gradient-hue-red)),
+        oklch(0.7 0.3 var(--gradient-hue-orange)),
+        oklch(0.93 0.3 var(--gradient-hue-yellow)));
+    animation: hue-rotate-gradient 10s linear infinite;
+  }
+
+  @keyframes hue-rotate-gradient {
+    0% {
+      --gradient-hue-red: 29deg;
+      --gradient-hue-orange: 70deg;
+      --gradient-hue-yellow: 110deg;
+    }
+
+    100% {
+      --gradient-hue-red: 389deg;
+      --gradient-hue-orange: 430deg;
+      --gradient-hue-yellow: 470deg;
+    }
+  }
+
+  /*
+  * View Transitions
+  * CSS
+  */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 200ms;
+  }
+
+  /* Post, Author & Headline */
+  ::view-transition-group(selected-post),
+  ::view-transition-group(selected-author),
+  ::view-transition-group(selected-headline) {
+    animation-duration: 400ms;
+    animation-timing-function: var(--cffy-ease-emphasized);
+  }
+
+  ::view-transition-old(selected-post),
+  ::view-transition-old(selected-author) {
+    display: none;
+  }
+
+  ::view-transition-new(selected-post),
+  ::view-transition-new(selected-author) {
+    animation: none;
+  }
+
+  /* Respect reduced-motion: skip every view-transition animation */
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none !important;
+    }
+  }
+}

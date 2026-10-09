@@ -1,0 +1,54 @@
+{
+  "name": "@giancarlosgza/blog-admin-layer",
+  "version": "0.1.1",
+  "description": "Nuxt layer for a Firebase blog admin: post editor and workflow, media, authors, tags, settings, analytics and AI tools",
+  "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "bin": {
+    "blog-admin-subset-icons": "./scripts/subset-icons.mjs"
+  },
+  "files": [
+    "app",
+    "nuxt.config.ts",
+    "scripts",
+    "server",
+    "shared",
+    "!server/tsconfig.json"
+  ],
+  "peerDependencies": {
+    "nuxt": "^4.5.0",
+    "vue": "^3.5.0",
+    "vue-router": "^5.0.0"
+  },
+  "dependencies": {
+    "@colorffy/css": "3.0.0",
+    "@colorffy/ui": "3.0.0",
+    "@google/genai": "2.27.0",
+    "@material-symbols/font-700": "0.47.6",
+    "@nuxt/fonts": "0.14.0",
+    "@nuxtjs/color-mode": "4.0.1",
+    "@nuxtjs/robots": "6.2.4",
+    "@nuxtjs/sitemap": "8.6.1",
+    "@tiptap/core": "3.31.4",
+    "@tiptap/extension-image": "3.31.4",
+    "@tiptap/pm": "3.31.4",
+    "@tiptap/starter-kit": "3.31.4",
+    "@tiptap/vue-3": "3.31.4",
+    "@types/sanitize-html": "2.16.2",
+    "@vite-pwa/nuxt": "1.1.1",
+    "@vueuse/components": "14.4.0",
+    "@vueuse/core": "14.4.0",
+    "@vueuse/nuxt": "14.4.0",
+    "browser-image-compression": "2.0.2",
+    "chart.js": "4.5.1",
+    "firebase": "12.19.0",
+    "firebase-admin": "13.10.0",
+    "floating-vue": "5.4.0",
+    "nuxt-vuefire": "1.1.2",
+    "sanitize-html": "2.18.0",
+    "sass": "1.105.1",
+    "subset-font": "2.9.0",
+    "vuefire": "3.2.3"
+  }
+}

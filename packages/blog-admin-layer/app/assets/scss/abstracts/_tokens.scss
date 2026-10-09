@@ -1,0 +1,9 @@
+// Defaults; :where() lets the site's :root values win
+@layer abstracts.tokens {
+  :where(:root) {
+    --frosted-glass-shadow: inset 0 0 .5625rem 0 color-mix(in oklab, var(--cffy-color-brand-white-500) 25%, transparent);
+    --corner-radius-large: 18px;
+    --corner-radius-card: 25px;
+    --corner-radius-card-increased: calc(var(--corner-radius-card) * 1.85);
+  }
+}

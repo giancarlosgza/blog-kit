@@ -1,0 +1,135 @@
+@layer pages {
+  .divider.toolbar-divider {
+    --cffy-divider-spacing: 0;
+    --cffy-divider-color: var(--cffy-outline-button);
+
+    align-self: center;
+    opacity: 0.85;
+  }
+
+  .text-card-title {
+    font-size: var(--cffy-fs-lg);
+    font-family: var(--cffy-font-primary), sans-serif;
+    font-weight: var(--cffy-fw-800);
+    letter-spacing: .75px;
+
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  // Pulse shadow
+  .animation-pulse-shadow {
+    border-radius: var(--cffy-radius-full);
+    animation: pulse-shadow 2s infinite;
+
+    @keyframes pulse-shadow {
+      0% {
+        box-shadow: 0 0 0 0 rgb(from var(--cffy-success-base-fixed) r g b / 0.5);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgb(from var(--cffy-success-base-fixed) r g b / 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgb(from var(--cffy-success-base-fixed) r g b / 0);
+      }
+    }
+  }
+
+  // Custom cards
+  .card-stat {
+    --base-color: var(--cffy-primary-base-fixed);
+    --base-opacity: 0.35;
+    --_card-stat-gap: 1.15rem;
+    --_card-stat-padding: 1.25rem;
+    --_card-stat-border-color: transparent;
+
+    container: CardStatContainer / inline-size;
+    border: var(--cffy-border-width-sm) solid var(--_card-stat-border-color);
+
+    & i:is(.lead-icon) {
+      font-size: var(--cffy-fs-3xl);
+      padding: calc(var(--_card-stat-padding) - .5rem);
+      align-self: center;
+      border-radius: var(--cffy-radius-md);
+      background-color: oklab(from var(--base-color) l a b / var(--base-opacity));
+    }
+
+    & p {
+      &:is(.subtitle-1) {
+        font-weight: var(--cffy-fw-600);
+        font-family: var(--cffy-font-secondary);
+        font-size: var(--cffy-fs-2xl);
+        line-height: 1;
+        margin-bottom: 0;
+      }
+
+      &:is(.subtitle-2) {
+        font-size: var(--cffy-fs-base);
+        color: var(--cffy-muted-a10);
+        line-height: 1.25;
+      }
+    }
+
+    & .card-body {
+      display: flex;
+      gap: var(--_card-stat-gap);
+      padding: var(--_card-stat-padding);
+
+      & div:has(i) {
+        align-items: center;
+      }
+    }
+
+    @container CardStatContainer (width <=200px) {
+      & .card-body {
+        flex-direction: column;
+        gap: .55rem;
+        padding: var(--cffy-space-16);
+
+        & div:has(i) {
+          align-items: flex-start;
+        }
+      }
+    }
+  }
+
+  // AI panels (suggestions, proposals, generator)
+  .ai-panel {
+    border: var(--cffy-border-width-sm) solid var(--cffy-outline-surface);
+    border-radius: var(--cffy-radius-lg);
+  }
+
+  // AI trigger sits on the field's label line, aligned to the end
+  .ai-field {
+    position: relative;
+
+    & > .ai-trigger {
+      position: absolute;
+      top: -0.5625rem;
+      right: 0;
+      z-index: 1;
+    }
+  }
+
+  // List filters: sticky card that joins the list panel below it
+  .list-filters {
+    position: sticky;
+    top: var(--cffy-navbar-min-height, 4.25rem);
+    z-index: 10;
+    margin-bottom: var(--cffy-space-16);
+
+    &:has(+ .list-panel) {
+      margin-bottom: 0;
+      border-end-start-radius: 0;
+      border-end-end-radius: 0;
+    }
+
+    & + .list-panel {
+      border-start-start-radius: 0;
+      border-start-end-radius: 0;
+    }
+  }
+}

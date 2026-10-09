@@ -1,0 +1,153 @@
+@use '@colorffy/css/scss/abstracts/mixins' as m;
+
+@layer pages {
+  .workflow-stepper {
+    --cffy-stepper-indicator-size: 1.5rem;
+
+    & .step-item .step-trigger {
+      cursor: default;
+
+      &:is(:disabled, [aria-disabled="true"]) {
+        cursor: default;
+        opacity: 1;
+      }
+    }
+
+    & .step-item .step-indicator i {
+      font-size: var(--cffy-fs-base);
+    }
+  }
+
+  .workflow-note {
+    --_workflow-note-bg: var(--cffy-surface-container);
+    --_workflow-note-color: var(--cffy-on-background);
+
+    display: grid;
+    gap: var(--cffy-space-8);
+    padding: var(--cffy-space-12);
+    border-radius: var(--cffy-radius-md);
+    background: var(--_workflow-note-bg);
+    color: var(--_workflow-note-color);
+    font-size: var(--cffy-fs-3xs);
+    line-height: 1.5;
+
+    &.is-warning {
+      --_workflow-note-bg: color-mix(in srgb, var(--cffy-warning-a10), var(--cffy-on-background-inverse) var(--cffy-tonal-dark-intensity));
+      --_workflow-note-color: var(--cffy-on-warning-container);
+    }
+
+    & p {
+      margin: 0;
+      white-space: pre-line;
+      overflow-wrap: anywhere;
+    }
+
+    & .workflow-note-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--cffy-space-8);
+      font-weight: var(--cffy-fw-600);
+
+      & .avatar {
+        margin: 0;
+      }
+
+      & time {
+        font-weight: var(--cffy-fw-400);
+        opacity: .75;
+      }
+    }
+  }
+
+  // Pending reviews count in the sidebar
+  .drawer-item .sidebar-link-badge {
+    margin-inline-start: auto;
+  }
+
+  // Review queue
+  .review-post {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--cffy-space-12);
+    min-inline-size: 0;
+    color: inherit;
+    text-decoration: none;
+
+    &:hover .review-post-title {
+      text-decoration: underline;
+    }
+
+    & .review-post-thumb {
+      flex: none;
+      inline-size: 2.5rem;
+      block-size: 2.5rem;
+      border-radius: var(--cffy-radius-md);
+      object-fit: cover;
+      background: color-mix(in srgb, var(--_review-post-color, var(--cffy-muted-base-fixed)) 35%, var(--cffy-surface-body-pane));
+    }
+
+    & .review-post-text {
+      display: grid;
+      gap: .125rem;
+      min-inline-size: 12rem;
+      line-height: 1.3;
+    }
+
+    & :is(.review-post-title, .review-post-slug) {
+      max-inline-size: 28rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    & .review-post-title {
+      font-weight: var(--cffy-fw-600);
+    }
+  }
+
+  // Side sheets (request changes, history)
+  .dialog.dialog-side-sheet.workflow-sheet {
+    width: min(26.25rem, calc(100vw - var(--cffy-space-16)));
+
+    @include m.media-query(600) {
+      inset-inline: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  .workflow-sheet-heading {
+    display: grid;
+    gap: var(--cffy-space-4);
+    min-inline-size: 0;
+
+    & .dialog-title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .workflow-sheet-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--cffy-space-16);
+  }
+
+  // History sheet
+  .history-day + .history-day {
+    margin-block-start: var(--cffy-space-20);
+  }
+
+  .history-transition {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--cffy-space-6);
+
+    & .badge {
+      margin: 0;
+    }
+  }
+}

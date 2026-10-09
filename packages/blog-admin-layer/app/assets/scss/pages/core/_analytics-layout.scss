@@ -1,0 +1,194 @@
+@use '@colorffy/css/scss/abstracts/mixins' as m;
+
+@layer pages {
+  // Inline sparkline (post performance chart, top posts rows)
+  .sparkline {
+    display: block;
+    inline-size: 100%;
+    overflow: visible;
+
+    & .sparkline-line {
+      fill: none;
+      stroke: var(--cffy-secondary-a10);
+      stroke-width: 2;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
+    }
+
+    & .sparkline-area {
+      fill: color-mix(in srgb, var(--cffy-secondary-base-fixed) 14%, transparent);
+    }
+  }
+
+  // Post performance tiles
+  .post-kpis {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--cffy-space-8);
+  }
+
+  .post-kpi {
+    --_post-kpi-bg: color-mix(in srgb, var(--cffy-on-background) 5%, transparent);
+
+    display: grid;
+    gap: var(--cffy-space-6);
+    padding: .625rem var(--cffy-space-12);
+    border: 0;
+    border-radius: var(--cffy-radius-md);
+    background: var(--_post-kpi-bg);
+    color: var(--cffy-on-background);
+    text-align: start;
+    cursor: pointer;
+    transition: background-color 200ms var(--cffy-ease-decelerate);
+
+    &:hover {
+      --_post-kpi-bg: color-mix(in srgb, var(--cffy-on-background) 9%, transparent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--cffy-secondary-a10);
+      outline-offset: 2px;
+    }
+
+    &.is-selected {
+      --_post-kpi-bg: color-mix(in srgb, var(--cffy-secondary-base-fixed) 16%, transparent);
+    }
+
+    & .post-kpi-label {
+      font-family: var(--cffy-font-code);
+      font-size: var(--cffy-fs-4xs);
+      color: var(--cffy-muted-a10);
+    }
+
+    & .post-kpi-value {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--cffy-space-6);
+      font-size: var(--cffy-fs-lg);
+      font-weight: var(--cffy-fw-600);
+      font-variant-numeric: tabular-nums;
+      line-height: 1.2;
+
+      & .badge {
+        margin: 0;
+      }
+    }
+  }
+
+  // Top sources
+  .post-sources {
+    display: grid;
+    gap: var(--cffy-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & li {
+      --source-width: 0%;
+
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--cffy-space-8);
+      min-block-size: 2rem;
+      padding-inline: .625rem;
+      border-radius: var(--cffy-radius-sm);
+      overflow: hidden;
+      font-size: var(--cffy-fs-3xs);
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset-block: 0;
+        inset-inline-start: 0;
+        inline-size: var(--source-width);
+        z-index: -1;
+        background: oklab(from var(--cffy-primary-a10) l a b/0.1);
+      }
+    }
+  }
+
+  // Top posts dashboard card
+  .top-posts {
+    display: grid;
+    gap: .125rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .top-post {
+    display: grid;
+    grid-template-columns: 1.5rem 2.25rem minmax(0, 1fr) 4.5rem 5.25rem;
+    align-items: center;
+    gap: var(--cffy-space-12);
+    padding: var(--cffy-space-8);
+    border-radius: var(--cffy-radius-md);
+    color: inherit;
+    text-decoration: none;
+
+    &:is(a):hover {
+      background: var(--cffy-surface-container-high);
+
+      & .top-post-title {
+        text-decoration: underline;
+      }
+    }
+
+    & .top-post-thumb {
+      inline-size: 2.25rem;
+      block-size: 2.25rem;
+      border-radius: var(--cffy-radius-md);
+      object-fit: cover;
+      background: color-mix(in srgb, var(--_top-post-color, var(--cffy-muted-base-fixed)) 35%, var(--cffy-surface-body-pane));
+    }
+
+    & .top-post-text {
+      display: grid;
+      gap: .125rem;
+      min-inline-size: 0;
+      line-height: 1.3;
+    }
+
+    & .top-post-title {
+      overflow: hidden;
+      font-size: var(--cffy-fs-3xs);
+      font-weight: var(--cffy-fw-500);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    & .top-post-spark {
+      grid-column: 4;
+    }
+
+    & .top-post-views {
+      grid-column: 5;
+      display: grid;
+      justify-items: end;
+      gap: .125rem;
+
+      & .badge {
+        margin: 0;
+      }
+    }
+
+    @include m.media-query(600) {
+      grid-template-columns: 1.25rem 2.25rem minmax(0, 1fr) auto;
+      gap: var(--cffy-space-8);
+
+      & .top-post-spark {
+        display: none;
+      }
+
+      & .top-post-views {
+        grid-column: 4;
+      }
+    }
+  }
+}

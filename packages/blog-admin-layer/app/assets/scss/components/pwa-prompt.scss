@@ -1,0 +1,81 @@
+@use '@colorffy/css/scss/abstracts/variables' as v;
+@use '@colorffy/css/scss/abstracts/mixins' as m;
+
+@layer components.alert {
+  .pwa-alert-container {
+    --_pwa-alert-position-x: var(--cffy-space-16);
+    --_pwa-alert-position-y: var(--cffy-space-16);
+    --_pwa-alert-padding: .75rem;
+    --_pwa-alert-gap: .75rem;
+    --_pwa-border-radius: var(--cffy-shape-container);
+
+    position: fixed;
+    right: var(--_pwa-alert-position-x);
+    bottom: var(--_pwa-alert-position-y);
+    display: grid;
+    gap: var(--_pwa-alert-gap);
+    grid-template-columns: 1fr auto;
+    width: fit-content;
+    max-width: 40%;
+    margin: auto;
+    z-index: v.$z-index-toast;
+    padding-block: var(--_pwa-alert-padding);
+    padding-inline: var(--_pwa-alert-padding);
+    background: var(--cffy-surface-overlay);
+    border: var(--cffy-border-width-sm) solid var(--cffy-outline-surface);
+    box-shadow: var(--cffy-shadow-lg);
+    border-radius: var(--_pwa-border-radius);
+
+    & .pwa-content {
+      display: flex;
+      align-items: center;
+      gap: var(--_pwa-alert-gap);
+
+      i {
+        font-variation-settings: var(--cffy-iw-semi-bold);
+        color: var(--cffy-muted-a10);
+      }
+
+      & .pwa-content-text-wrapper {
+        display: grid;
+        gap: calc(var(--_pwa-alert-gap) / 2);
+
+        p {
+          margin-bottom: 0;
+
+          &:is(.subtitle-1) {
+            font-weight: var(--cffy-fw-600);
+            font-family: var(--cffy-font-primary);
+          }
+
+          &:is(.subtitle-2) {
+            color: var(--cffy-muted-a10);
+            max-inline-size: 40ch;
+            @include m.text-wrap-pretty;
+          }
+        }
+      }
+    }
+
+    & .pwa-actions {
+      place-content: flex-end;
+      display: flex;
+      align-items: center;
+      gap: calc(var(--_pwa-alert-gap) / 2);
+
+      .btn {
+        margin: 0;
+      }
+    }
+  }
+
+  @include m.media-query(1024) {
+    .pwa-alert-container {
+      --_pwa-alert-position-x: var(--cffy-space-8);
+      --_pwa-alert-position-y: calc(#{v.$navigation-bar-min-height} + var(--cffy-space-16));
+
+      max-width: 100%;
+      left: var(--_pwa-alert-position-x);
+    }
+  }
+}

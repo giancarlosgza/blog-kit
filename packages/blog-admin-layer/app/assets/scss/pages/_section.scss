@@ -1,0 +1,86 @@
+@use '@colorffy/css/scss/abstracts/mixins' as m;
+
+@layer overrides {
+  // Wrapper for bottom-sticky animated waves background
+  .bg-gradient-waves {
+    position: absolute;
+    top: 0;
+    inset-inline: 0;
+    width: 100%;
+    height: 100%;
+    overflow: clip;
+    z-index: -1;
+
+    & .gradient-background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform: translate3d(0, 0, 0);
+
+      filter: blur(150px);
+      @supports not (filter: blur(10px)) {
+        -webkit-filter: blur(150px);
+      }
+
+      & .gradient-background-shape {
+        position: absolute;
+        border-radius: 100%;
+        width: 800px;
+        height: 600px;
+        mix-blend-mode: color-burn;
+
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        animation-direction: alternate;
+
+        &:is(.gradient-shape-1) {
+          bottom: -450px;
+          left: -10%;
+          background: var(--gradient-shape-primary);
+          animation-name: animate-aurora-1;
+          animation-duration: 25s;
+        }
+
+        &:is(.gradient-shape-2) {
+          bottom: -450px;
+          right: -10%;
+          background: var(--gradient-shape-accent);
+          animation-name: animate-aurora-2;
+          animation-duration: 30s;
+        }
+      }
+    }
+
+    @include m.media-query(992) {
+      & .gradient-background {
+        & .gradient-background-shape {
+          // Disable animation on smaller screens to prevent overflow jumps
+          &:is(.gradient-shape-1, .gradient-shape-2) {
+            animation-name: none;
+            bottom: -500px;
+          }
+
+          &:is(.gradient-shape-1) {
+            left: -20%;
+          }
+
+          &:is(.gradient-shape-2) {
+            right: -20%;
+          }
+        }
+      }
+    }
+  }
+
+  @keyframes animate-aurora-1 {
+    0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+    50% { transform: translate3d(25vw, -50px, 0) scale(1.2, 0.8) rotate(15deg); }
+    100% { transform: translate3d(40vw, 50px, 0) scale(0.9, 1.1) rotate(-5deg); }
+  }
+
+  @keyframes animate-aurora-2 {
+    0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+    50% { transform: translate3d(-30vw, -80px, 0) scale(1.3, 0.9) rotate(-15deg); }
+    100% { transform: translate3d(-10vw, 30px, 0) scale(0.8, 1.2) rotate(10deg); }
+  }
+}

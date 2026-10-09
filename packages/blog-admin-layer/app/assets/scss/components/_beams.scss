@@ -1,0 +1,198 @@
+@use '@colorffy/css/scss/abstracts/variables' as v;
+@use '@colorffy/css/scss/abstracts/mixins' as m;
+
+// Travelling light on hover and focus
+@layer components.beams {
+  // Typed so a bad override is ignored
+  @property --_beam-length {
+    syntax: '<length>';
+    inherits: true;
+    initial-value: 32px;
+  }
+  @property --_beam-fade-edge {
+    syntax: '<length-percentage>';
+    inherits: true;
+    initial-value: 12%;
+  }
+  @property --_beam-duration {
+    syntax: '<time>';
+    inherits: true;
+    initial-value: 5s;
+  }
+
+  :is(.beam-orbit, .beam-sweep) {
+    --angle: 90deg;
+    --_gradient-stops: #{v.$gradient-cyan};
+    --_beam-length: 8rem;
+    --_beam-size: 2px;
+    --_beam-blur: 1px;
+    --_beam-glow-height: 1rem;
+    --_beam-glow-blur: .5rem;
+    --_beam-glow-opacity: .5;
+    --_beam-fade-edge: 12%;
+    --_beam-duration: 5s;
+    --_beam-fade: 400ms;
+    --_beam-easing: var(--cffy-ease-decelerate);
+    --_beam-space: in srgb;
+    --_beam-tile: linear-gradient(var(--angle) var(--_beam-space), transparent, var(--_gradient-stops), transparent);
+
+    position: relative;
+
+    // oklab avoids grey between hues
+    @supports (background: linear-gradient(in oklab, #fff, #fff)) {
+      --_beam-space: in oklab;
+    }
+
+    @include m.generate-gradients(v.$static-gradients, false);
+    @include m.generate-gradients(v.$dynamic-gradients, false);
+
+    // ::before is the sharp beam, ::after the glow travelling with it
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      background-image: var(--_beam-tile);
+      background-repeat: no-repeat;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--_beam-fade) var(--_beam-easing);
+
+      // Fades both ends to hide the lap restart
+      -webkit-mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 var(--_beam-fade-edge),
+        #000 calc(100% - var(--_beam-fade-edge)),
+        transparent
+      );
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 var(--_beam-fade-edge),
+        #000 calc(100% - var(--_beam-fade-edge)),
+        transparent
+      );
+      mask-repeat: no-repeat;
+    }
+
+    &::before {
+      filter: blur(var(--_beam-blur));
+    }
+
+    &::after {
+      filter: blur(var(--_beam-glow-blur));
+    }
+
+    &:is(:hover, :focus-visible, :focus-within, .beam-active) {
+      &::before {
+        opacity: 1;
+      }
+
+      &::after {
+        opacity: var(--_beam-glow-opacity);
+      }
+    }
+  }
+
+  // Top edge, then back along the bottom
+  .beam-orbit {
+    &::before,
+    &::after {
+      background-image: var(--_beam-tile), var(--_beam-tile);
+      background-position: 0 top, 100% bottom;
+    }
+
+    // Sits on the border, not inside it
+    &::before {
+      inset-block: calc(var(--_beam-size) / -2);
+      background-size: var(--_beam-length) var(--_beam-size);
+    }
+
+    &::after {
+      inset-block: calc(var(--_beam-glow-height) / -2);
+      background-size: var(--_beam-length) var(--_beam-glow-height);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      &:is(:hover, :focus-visible, :focus-within, .beam-active) {
+        &::before,
+        &::after {
+          animation: beam-orbit-relay var(--_beam-duration) linear infinite;
+        }
+      }
+    }
+
+    // Reduced motion: static light on both edges
+    @media (prefers-reduced-motion: reduce) {
+      &::before {
+        background-size: 100% var(--_beam-size);
+      }
+
+      &::after {
+        background-size: 100% var(--_beam-glow-height);
+      }
+    }
+  }
+
+  .beam-sweep {
+    &::before,
+    &::after {
+      background-size: var(--_beam-length) 100%;
+      background-position-x: 0;
+    }
+
+    &::before {
+      bottom: 0;
+      height: var(--_beam-size);
+    }
+
+    &::after {
+      top: 100%;
+      height: var(--_beam-glow-height);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      &:is(:hover, :focus-visible, :focus-within, .beam-active) {
+        &::before,
+        &::after {
+          animation: beam-sweep-travel var(--_beam-duration) linear infinite;
+        }
+      }
+    }
+
+    // Reduced motion: static light on the edge
+    @media (prefers-reduced-motion: reduce) {
+      &::before,
+      &::after {
+        background-size: 100% 100%;
+      }
+    }
+  }
+
+  // One light at a time: top layer out, bottom layer in
+  @keyframes beam-orbit-relay {
+    0% {
+      background-position: calc(0% - var(--_beam-length)) top, calc(100% + var(--_beam-length)) bottom;
+    }
+
+    50% {
+      background-position: calc(100% + var(--_beam-length)) top, calc(100% + var(--_beam-length)) bottom;
+    }
+
+    100% {
+      background-position: calc(100% + var(--_beam-length)) top, calc(0% - var(--_beam-length)) bottom;
+    }
+  }
+
+  // Starts and ends off the edge
+  @keyframes beam-sweep-travel {
+    from {
+      background-position-x: calc(0% - var(--_beam-length));
+    }
+
+    to {
+      background-position-x: calc(100% + var(--_beam-length));
+    }
+  }
+}

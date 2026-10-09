@@ -1,0 +1,27 @@
+@use '@colorffy/css/scss/abstracts/mixins' as m;
+
+@layer pages {
+  // Editor (create/edit)
+  .author-editor {
+    grid-template-columns: minmax(0, 1fr) 22.75rem;
+    align-items: start;
+
+    & .author-editor-aside {
+      position: sticky;
+      top: 5rem;
+    }
+
+    @include m.media-query(1155) {
+      grid-template-columns: minmax(0, 1fr);
+
+      & .author-editor-aside {
+        position: static;
+      }
+    }
+  }
+
+  .card:is(.selected-author) {
+    view-transition-name: selected-author;
+    contain: paint;
+  }
+}
