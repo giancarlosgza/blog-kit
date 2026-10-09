@@ -1,0 +1,30 @@
+{
+  "name": "blog-kit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Reusable Firebase blog: Nuxt layers and shared packages",
+  "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
+  "packageManager": "pnpm@10.20.0",
+  "scripts": {
+    "dev:site": "pnpm --filter playground-site dev",
+    "dev:landing": "pnpm --filter playground-landing dev",
+    "build:site": "pnpm --filter playground-site build",
+    "build:landing": "pnpm --filter playground-landing build",
+    "typecheck": "pnpm --filter \"./playground/*\" typecheck",
+    "postinstall": "pnpm --filter \"./playground/*\" exec nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "audit:signatures": "pnpm audit signatures",
+    "publish:layers": "pnpm --filter \"./packages/*\" publish --access public"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "9.5.1",
+    "eslint": "10.12.0",
+    "typescript": "6.0.3",
+    "vitest": "4.1.11",
+    "vue-tsc": "3.3.12"
+  }
+}

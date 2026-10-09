@@ -1,0 +1,21 @@
+packages:
+  - 'packages/*'
+  - 'playground/*'
+
+# Only install versions published at least a day ago (same policy as the sites' npm `min-release-age=1`)
+minimumReleaseAge: 1440
+
+overrides:
+  typescript: 6.0.3
+  # 8.71.x reports every top-level const in .mjs scripts as "only used as a type"; keep the
+  # version the sites lint with until that is fixed upstream
+  '@typescript-eslint/eslint-plugin': 8.70.1
+  '@typescript-eslint/parser': 8.70.1
+  '@typescript-eslint/project-service': 8.70.1
+  '@typescript-eslint/scope-manager': 8.70.1
+  '@typescript-eslint/tsconfig-utils': 8.70.1
+  '@typescript-eslint/type-utils': 8.70.1
+  '@typescript-eslint/types': 8.70.1
+  '@typescript-eslint/typescript-estree': 8.70.1
+  '@typescript-eslint/utils': 8.70.1
+  '@typescript-eslint/visitor-keys': 8.70.1
