@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IDatatableColumn } from '@colorffy/ui'
-import type { ITag } from '#admin/shared/models/tag'
+import type { ITag } from '@giancarlosgza/blog-core'
 import { breakpointsBootstrapV5, useBreakpoints } from '@vueuse/core'
 
 /** Interfaces */

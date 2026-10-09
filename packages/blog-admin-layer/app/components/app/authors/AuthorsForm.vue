@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IAuthor } from '#admin/shared/models/author'
+import type { IAuthor } from '@giancarlosgza/blog-core'
 
 /** Props */
 const props = withDefaults(defineProps<{

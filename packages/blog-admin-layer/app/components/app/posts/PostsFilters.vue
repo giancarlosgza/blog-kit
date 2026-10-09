@@ -1,7 +1,6 @@
 <script setup lang="ts">
+import type { IAuthor, ITag } from '@giancarlosgza/blog-core'
 import type { PostSort, PostStatusFilter } from '#admin/app/utils/post-filters'
-import type { IAuthor } from '#admin/shared/models/author'
-import type { ITag } from '#admin/shared/models/tag'
 import { breakpointsBootstrapV5, useBreakpoints, useMounted, watchDebounced } from '@vueuse/core'
 import { authorKey, DEFAULT_POST_SORT, POST_SORT_OPTIONS, POST_STATUS_OPTIONS } from '#admin/app/utils/post-filters'
 

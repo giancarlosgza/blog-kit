@@ -1,8 +1,6 @@
-import type { IAuthor } from '#admin/shared/models/author'
-import type { IFirestoreDateValue } from '#admin/shared/models/date'
-import type { IPost, PostStatus } from '#admin/shared/models/post'
+import type { IAuthor, IFirestoreDateValue, IPost, PostStatus } from '@giancarlosgza/blog-core'
+import { resolveAuthorName } from '@giancarlosgza/blog-core'
 import { resolvePostStatus } from '#admin/shared/utils/post-status'
-import { resolveAuthorName } from './blog'
 
 /** `published` means live on the blog (isPublished); the rest match the workflow status. */
 export type PostStatusFilter = PostStatus

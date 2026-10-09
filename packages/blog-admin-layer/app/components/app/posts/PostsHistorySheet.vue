@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IDialogDisplay, ITimelineItem } from '@colorffy/ui'
-import type { IPostEvent, PostEventType } from '#admin/shared/models/post'
+import type { IPostEvent, PostEventType } from '@giancarlosgza/blog-core'
 import { POST_EVENT_LABELS, POST_STATUS_LABELS } from '#admin/shared/utils/post-status'
 
 /** Interfaces */

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IDialogDisplay } from '@colorffy/ui'
-import type { ITag } from '#admin/shared/models/tag'
+import type { ITag } from '@giancarlosgza/blog-core'
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
 
 /** Interfaces */

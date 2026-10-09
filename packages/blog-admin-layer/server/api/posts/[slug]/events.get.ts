@@ -1,4 +1,4 @@
-import type { IPostEvent } from '#admin/shared/models/post'
+import type { IPostEvent } from '@giancarlosgza/blog-core'
 import { Timestamp } from 'firebase-admin/firestore'
 
 const EVENTS_LIMIT = 200

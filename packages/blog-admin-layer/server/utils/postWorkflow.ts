@@ -1,6 +1,6 @@
+import type { IPost, IPostActor, IPostEvent, IPostReview, PostStatus } from '@giancarlosgza/blog-core'
 import type { DocumentReference, Firestore, Transaction } from 'firebase-admin/firestore'
 import type { H3Event } from 'h3'
-import type { IPost, IPostActor, IPostEvent, IPostReview, PostStatus } from '#admin/shared/models/post'
 import { getApp } from 'firebase-admin/app'
 import { getFirestore, Timestamp } from 'firebase-admin/firestore'
 import { resolvePostStatus } from '#admin/shared/utils/post-status'

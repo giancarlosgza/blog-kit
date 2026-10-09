@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IDatatableColumn } from '@colorffy/ui'
-import type { IPost, PostStatus } from '#admin/shared/models/post'
+import type { IPost, PostStatus } from '@giancarlosgza/blog-core'
 import { breakpointsBootstrapV5, useBreakpoints } from '@vueuse/core'
 import { resolvePostStatus } from '#admin/shared/utils/post-status'
 import { NuxtLink } from '#components'

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { IDialogDisplay, UiAlertToast } from '@colorffy/ui'
+import type { IPost, PostStatus } from '@giancarlosgza/blog-core'
 import type AppPostsPublishDialog from '#admin/app/components/app/posts/PostsPublishDialog.vue'
 import type AppPostsRequestChangesSheet from '#admin/app/components/app/posts/PostsRequestChangesSheet.vue'
 import type { IPostWorkflowResponse } from '#admin/app/composables/usePostWorkflow'
-import type { IPost, PostStatus } from '#admin/shared/models/post'
 import { useToast } from '@colorffy/ui'
 import { where } from 'firebase/firestore'
 import { resolvePostStatus } from '#admin/shared/utils/post-status'

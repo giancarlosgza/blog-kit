@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { ISeries } from '@giancarlosgza/blog-core'
 import type { IPostEditorForm } from '#admin/app/composables/usePostEditor'
 import type { ISeriesPartPreview } from '#admin/app/utils/post-series'
-import type { ISeries } from '#admin/shared/models/series'
 import { isValidOrder, nextSeriesOrder, resolveSeriesSlug, seriesPartsPreview, toOrderValue } from '#admin/app/utils/post-series'
 
 /** Interfaces */

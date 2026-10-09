@@ -1,4 +1,4 @@
-import type { IPost } from '#blog/shared/models/post'
+import type { IPost } from '@giancarlosgza/blog-core'
 import type { IFeaturedPostsResponse, IPostListResponse, ITagsResponse } from '#blog/shared/types/api'
 
 /** Interfaces */

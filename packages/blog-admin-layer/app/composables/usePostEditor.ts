@@ -1,4 +1,4 @@
-import type { IPost, IPostContent } from '#admin/shared/models/post'
+import type { IPost, IPostContent } from '@giancarlosgza/blog-core'
 import type { IPostWorkflowResponse } from './usePostWorkflow'
 import { deleteField, doc, getDoc, setDoc, Timestamp } from 'firebase/firestore'
 import { useFirestore } from 'vuefire'

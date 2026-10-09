@@ -1,5 +1,4 @@
-import type { IAuthor } from '#admin/shared/models/author'
-import type { IPost } from '#admin/shared/models/post'
+import type { IAuthor, IPost } from '@giancarlosgza/blog-core'
 import { describe, expect, it } from 'vitest'
 import {
   applyPostFilters,

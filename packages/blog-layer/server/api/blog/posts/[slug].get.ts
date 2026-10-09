@@ -1,5 +1,4 @@
-import type { IAuthor } from '#blog/shared/models/author'
-import type { IPost } from '#blog/shared/models/post'
+import type { IAuthor, IPost } from '@giancarlosgza/blog-core'
 import type { IPostPageResponse, IPostSeries } from '#blog/shared/types/api'
 import { getFirestore } from 'firebase-admin/firestore'
 

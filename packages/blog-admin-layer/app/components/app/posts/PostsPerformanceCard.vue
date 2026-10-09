@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IFirestoreDateValue } from '#admin/shared/models/date'
+import type { IFirestoreDateValue } from '@giancarlosgza/blog-core'
 import type { PostAnalyticsMetricKey } from '#admin/shared/types/stats/post'
 import { toMillis } from '#admin/app/utils/post-filters'
 import { deltaTone, formatDelta, isPostAnalyticsRange, plausiblePageUrl, POST_ANALYTICS_RANGES } from '#admin/shared/utils/post-analytics'

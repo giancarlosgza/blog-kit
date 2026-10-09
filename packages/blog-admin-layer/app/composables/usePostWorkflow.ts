@@ -1,4 +1,4 @@
-import type { IPost, IPostEvent, IPostReview, PostStatus } from '#admin/shared/models/post'
+import type { IPost, IPostEvent, IPostReview, PostStatus } from '@giancarlosgza/blog-core'
 
 /** Workflow fields returned by every `/api/posts/*` workflow route. */
 export interface IPostWorkflowResponse {

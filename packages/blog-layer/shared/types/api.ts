@@ -1,8 +1,4 @@
-import type { IAuthor } from '../models/author'
-import type { IPost } from '../models/post'
-import type { ISeries } from '../models/series'
-import type { ISettings } from '../models/settings'
-import type { ITag } from '../models/tag'
+import type { IAuthor, IPost, ISeries, ISettings, ITag } from '@giancarlosgza/blog-core'
 import type { IPostHeading } from '../utils/post-headings'
 
 /**

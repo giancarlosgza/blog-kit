@@ -1,5 +1,5 @@
+import type { WidgetDescriptor } from '@giancarlosgza/blog-core'
 import type { Component } from 'vue'
-import type { WidgetDescriptor } from '#blog/shared/widgets/types'
 
 /** An embeddable post widget: its schema (for props coercion) and the component that renders it. */
 export interface IBlogWidget {

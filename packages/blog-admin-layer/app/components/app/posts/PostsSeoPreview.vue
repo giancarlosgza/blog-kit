@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { IResolvedPostSeo } from '#admin/shared/utils/post-seo'
-import { SEO_DESCRIPTION_MAX, SEO_TITLE_MAX } from '#admin/shared/utils/post-seo'
+import type { IResolvedPostSeo } from '@giancarlosgza/blog-core'
+import { SEO_DESCRIPTION_MAX, SEO_TITLE_MAX } from '@giancarlosgza/blog-core'
 
 /** Props */
 const props = withDefaults(defineProps<{

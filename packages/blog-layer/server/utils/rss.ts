@@ -1,9 +1,6 @@
-import type { IFirestoreDateValue } from '#blog/shared/models/date'
-import type { IPost } from '#blog/shared/models/post'
-import { htmlToExcerpt, resolveAuthorName } from '#blog/shared/utils/blog'
-import { toBlogUrl } from '#blog/shared/utils/blog-path'
-import { toDateMs } from '#blog/shared/utils/date'
-import { sanitizeBlogHtml } from '#blog/shared/utils/sanitize'
+import type { IFirestoreDateValue, IPost } from '@giancarlosgza/blog-core'
+import { htmlToExcerpt, resolveAuthorName, toBlogUrl, toDateMs } from '@giancarlosgza/blog-core'
+import { sanitizeBlogHtml } from '@giancarlosgza/blog-core/sanitize'
 
 /**
  * Pure RSS 2.0 builders for `server/handlers/rss.xml.ts`: XML escaping, CDATA, RFC 822 dates,

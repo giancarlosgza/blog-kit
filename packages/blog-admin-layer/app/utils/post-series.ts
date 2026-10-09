@@ -1,7 +1,6 @@
+import type { IPost, ISeries } from '@giancarlosgza/blog-core'
 import type { IPostEditorForm } from '#admin/app/composables/usePostEditor'
-import type { IPost } from '#admin/shared/models/post'
-import type { ISeries } from '#admin/shared/models/series'
-import { toSlug } from './blog'
+import { toSlug } from '@giancarlosgza/blog-core'
 
 /** Interfaces */
 type TSeriesForm = Pick<IPostEditorForm, 'seriesSlug' | 'seriesOrder' | 'isNewSeries' | 'newSeriesName' | 'newSeriesDescription'>

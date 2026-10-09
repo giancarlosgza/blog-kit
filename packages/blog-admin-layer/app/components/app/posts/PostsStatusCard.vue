@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { IStepItem } from '@colorffy/ui'
+import type { IPost } from '@giancarlosgza/blog-core'
 import type { AdminRole } from '#admin/shared/models/admin'
-import type { IPost } from '#admin/shared/models/post'
 import { resolvePostStatus, REVIEW_NOTE_MAX } from '#admin/shared/utils/post-status'
 
 /** Interfaces */

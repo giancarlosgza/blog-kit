@@ -1,4 +1,4 @@
-import type { WidgetDescriptor, WidgetPropSchema } from '#admin/shared/widgets/types'
+import type { WidgetDescriptor, WidgetPropSchema } from '@giancarlosgza/blog-core'
 
 export interface IWidgetPreview {
   label: string

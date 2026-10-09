@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { IDialogDisplay, UiAlertToast } from '@colorffy/ui'
+import type { ITag } from '@giancarlosgza/blog-core'
 import type AppTagsDialog from '#admin/app/components/app/tags/TagsDialog.vue'
-import type { ITag } from '#admin/shared/models/tag'
 import { useToast } from '@colorffy/ui'
 import { deleteDoc, doc } from 'firebase/firestore'
 

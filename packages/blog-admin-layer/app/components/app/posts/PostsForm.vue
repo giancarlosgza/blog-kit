@@ -1,10 +1,8 @@
 <script setup lang="ts">
+import type { IAuthor, ISeries, ITag } from '@giancarlosgza/blog-core'
 import type { IPostEditorForm } from '#admin/app/composables/usePostEditor'
-import type { IAuthor } from '#admin/shared/models/author'
-import type { ISeries } from '#admin/shared/models/series'
-import type { ITag } from '#admin/shared/models/tag'
+import { resolvePostSeo, SEO_DESCRIPTION_MAX, SEO_TITLE_MAX } from '@giancarlosgza/blog-core'
 import { isValidOrder, toOrderValue } from '#admin/app/utils/post-series'
-import { resolvePostSeo, SEO_DESCRIPTION_MAX, SEO_TITLE_MAX } from '#admin/shared/utils/post-seo'
 
 /** Interfaces */
 interface IProps {

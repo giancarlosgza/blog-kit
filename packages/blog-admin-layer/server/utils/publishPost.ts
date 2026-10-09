@@ -1,15 +1,15 @@
+import type { IPost, IPostActor, PostEventType } from '@giancarlosgza/blog-core'
 import type { Firestore } from 'firebase-admin/firestore'
-import type { IPost, IPostActor, PostEventType } from '#admin/shared/models/post'
 import type { IWorkflowResponse } from './postWorkflow'
+import { sanitizePostHtml } from '@giancarlosgza/blog-core/sanitize'
 import { FieldValue, Timestamp } from 'firebase-admin/firestore'
 import { resolvePostStatus } from '#admin/shared/utils/post-status'
 import { addPostEvent, postRef, readPostInTransaction, workflowResponse } from './postWorkflow'
-import { sanitizePostHtml } from './sanitizePostHtml'
 
 /**
- * Publish now. `functions/publish-scheduled.js` mirrors these steps for due scheduled posts:
+ * Publish now. `publishScheduledPost` in `@giancarlosgza/blog-firebase` mirrors these steps for due scheduled posts:
  *   1. read the post and its draft in one transaction
- *   2. sanitize the draft (same allowlist, see the parity test) into `postContents`
+ *   2. sanitize the draft (`sanitizePostHtml` from blog-core, shared by both) into `postContents`
  *   3. set isPublished + status published, drop publishAt/review
  *   4. write the history event
  * The transaction makes a double click (or a scheduler overlap) publish once.

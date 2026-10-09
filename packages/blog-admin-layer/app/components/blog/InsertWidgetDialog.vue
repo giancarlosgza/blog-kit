@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IDialogDisplay } from '@colorffy/ui'
-import type { WidgetDescriptor } from '#admin/shared/widgets/types'
+import type { WidgetDescriptor } from '@giancarlosgza/blog-core'
 
 /** Interfaces */
 interface IProps {

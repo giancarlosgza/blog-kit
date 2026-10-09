@@ -1,4 +1,4 @@
-import type { ISettings } from '#blog/shared/models/settings'
+import type { ISettings } from '@giancarlosgza/blog-core'
 import type { ISettingsResponse } from '#blog/shared/types/api'
 
 /**

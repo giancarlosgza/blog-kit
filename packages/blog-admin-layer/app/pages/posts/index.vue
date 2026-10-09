@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import type { IDialogDisplay, UiAlertToast } from '@colorffy/ui'
+import type { IAuthor, IPost, ITag, PostStatus } from '@giancarlosgza/blog-core'
 import type AppPostsFiltersSideSheet from '#admin/app/components/app/posts/PostsFiltersSideSheet.vue'
 import type { IPostFilters, PostSort, PostStatusFilter } from '#admin/app/utils/post-filters'
-import type { IAuthor } from '#admin/shared/models/author'
-import type { IPost, PostStatus } from '#admin/shared/models/post'
-import type { ITag } from '#admin/shared/models/tag'
 import { useToast } from '@colorffy/ui'
 import { applyPostFilters, emptyPostFilters, hasActivePostFilters, mergePostFiltersQuery, parsePostFilters } from '#admin/app/utils/post-filters'
 import { POST_STATUS_LABELS, resolvePostStatus } from '#admin/shared/utils/post-status'

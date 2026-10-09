@@ -1,7 +1,7 @@
+import type { ITag } from '@giancarlosgza/blog-core'
 import type { InjectionKey, MaybeRefOrGetter, Ref } from 'vue'
 import type { IPostEditorForm } from '#admin/app/composables/usePostEditor'
-import type { ITag } from '#admin/shared/models/tag'
-import { SEO_DESCRIPTION_MAX, SEO_TITLE_MAX } from '#admin/shared/utils/post-seo'
+import { SEO_DESCRIPTION_MAX, SEO_TITLE_MAX } from '@giancarlosgza/blog-core'
 
 /** Interfaces */
 export type PostAiTask = 'title' | 'excerpt' | 'tags' | 'improve' | 'smartFill' | 'seo'

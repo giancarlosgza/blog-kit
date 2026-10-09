@@ -8,6 +8,12 @@ const shellCss = [
   join(layerDir, 'app/assets/scss/main.scss')
 ]
 
+// blog-core helpers, auto-imported like the layer's own utils
+const coreImports = [{
+  from: '@giancarlosgza/blog-core',
+  imports: ['htmlToExcerpt', 'joinBlogPath', 'normalizeBasePath', 'resolveAuthorName', 'resolvePostSeo', 'SEO_DESCRIPTION_MAX', 'SEO_TITLE_MAX', 'toBlogUrl', 'toDateMs', 'toSlug']
+}]
+
 const toPosix = (path: string) => path.replace(/\\/g, '/')
 
 /** CSS order: framework and admin styles, other layers, then the site, so brand tokens win */
@@ -32,7 +38,14 @@ export default defineNuxtConfig({
     '#admin': layerDir
   },
 
+  imports: {
+    presets: coreImports
+  },
+
   nitro: {
+    imports: {
+      presets: [...coreImports, { from: '@giancarlosgza/blog-core/sanitize', imports: ['sanitizePostHtml'] }]
+    },
     preset: 'node-server',
     compressPublicAssets: true
   },

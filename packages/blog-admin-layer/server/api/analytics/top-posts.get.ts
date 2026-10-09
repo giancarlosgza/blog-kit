@@ -1,4 +1,4 @@
-import type { IPost } from '#admin/shared/models/post'
+import type { IPost } from '@giancarlosgza/blog-core'
 import type { V2QueryResponse } from '#admin/shared/types/stats/plausible-v2'
 import type { TopPost, TopPostsResponse } from '#admin/shared/types/stats/post'
 import { getApp } from 'firebase-admin/app'

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IPost } from '#admin/shared/models/post'
+import type { IPost } from '@giancarlosgza/blog-core'
 import { breakpointsBootstrapV5, useBreakpoints } from '@vueuse/core'
 import { resolvePostStatus } from '#admin/shared/utils/post-status'
 import { NuxtLink } from '#components'

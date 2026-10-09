@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { UiAlertToast } from '@colorffy/ui'
-import type { ISettings } from '#admin/shared/models/settings'
+import type { ISettings } from '@giancarlosgza/blog-core'
 import { useToast } from '@colorffy/ui'
 
 /** Head */

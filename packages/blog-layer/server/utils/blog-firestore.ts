@@ -1,6 +1,5 @@
+import type { IPost, ISeries } from '@giancarlosgza/blog-core'
 import type { Query } from 'firebase-admin/firestore'
-import type { IPost } from '#blog/shared/models/post'
-import type { ISeries } from '#blog/shared/models/series'
 import { getFirestore } from 'firebase-admin/firestore'
 
 /**

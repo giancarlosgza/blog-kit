@@ -1,4 +1,4 @@
-import type { IPost } from '#blog/shared/models/post'
+import type { IPost } from '@giancarlosgza/blog-core'
 import { Timestamp } from 'firebase-admin/firestore'
 import { describe, expect, it } from 'vitest'
 import { excludePosts, homeHeroPosts } from '#blog/app/composables/usePostFeed'

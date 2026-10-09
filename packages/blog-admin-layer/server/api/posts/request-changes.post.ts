@@ -1,4 +1,4 @@
-import type { IPostReview } from '#admin/shared/models/post'
+import type { IPostReview } from '@giancarlosgza/blog-core'
 import { Timestamp } from 'firebase-admin/firestore'
 import { normalizeReviewReasons, resolvePostStatus, REVIEW_NOTE_MAX } from '#admin/shared/utils/post-status'
 

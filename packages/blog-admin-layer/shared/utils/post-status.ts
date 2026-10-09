@@ -1,4 +1,4 @@
-import type { IPost, PostEventType, PostStatus } from '../models/post'
+import type { IPost, PostEventType, PostStatus } from '@giancarlosgza/blog-core'
 
 export const POST_STATUSES: PostStatus[] = ['draft', 'review', 'changes', 'scheduled', 'published']
 

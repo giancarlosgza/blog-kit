@@ -1,8 +1,4 @@
-import type { IAuthor } from '#blog/shared/models/author'
-import type { IPost } from '#blog/shared/models/post'
-import type { ISeries } from '#blog/shared/models/series'
-import type { ISettings } from '#blog/shared/models/settings'
-import type { ITag } from '#blog/shared/models/tag'
+import type { IAuthor, IPost, ISeries, ISettings, ITag } from '@giancarlosgza/blog-core'
 import type { IPostSeries, IPostSeriesPart } from '#blog/shared/types/api'
 import { Buffer } from 'node:buffer'
 

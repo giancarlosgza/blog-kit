@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IPost } from '#blog/shared/models/post'
+import type { IPost } from '@giancarlosgza/blog-core'
 
 /** Interfaces */
 interface IProps {

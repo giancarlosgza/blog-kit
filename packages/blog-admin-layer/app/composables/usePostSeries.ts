@@ -1,6 +1,5 @@
+import type { IPost, ISeries } from '@giancarlosgza/blog-core'
 import type { InjectionKey, Ref } from 'vue'
-import type { IPost } from '#admin/shared/models/post'
-import type { ISeries } from '#admin/shared/models/series'
 import { collection, doc, getDoc, getDocs, limit, query, serverTimestamp, setDoc, where } from 'firebase/firestore'
 import { useFirestore } from 'vuefire'
 

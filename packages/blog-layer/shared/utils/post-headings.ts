@@ -1,4 +1,4 @@
-import { toSlug } from './blog'
+import { toSlug } from '@giancarlosgza/blog-core'
 
 export interface IPostHeading {
   id: string

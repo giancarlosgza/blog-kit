@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { IDialogDisplay } from '@colorffy/ui'
+import type { IAuthor, ITag } from '@giancarlosgza/blog-core'
 import type { PostSort, PostStatusFilter } from '#admin/app/utils/post-filters'
-import type { IAuthor } from '#admin/shared/models/author'
-import type { ITag } from '#admin/shared/models/tag'
 import { authorKey, DEFAULT_POST_SORT, POST_SORT_OPTIONS, POST_STATUS_OPTIONS } from '#admin/app/utils/post-filters'
 
 /** Interfaces */

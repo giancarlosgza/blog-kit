@@ -1,4 +1,4 @@
-import type { IFirestoreDateValue } from './date'
+import type { IFirestoreDateValue } from '@giancarlosgza/blog-core'
 
 /** Admin access roles. `admin` = full access; `editor` = content only (posts, authors, tags). */
 export type AdminRole = 'admin' | 'editor'

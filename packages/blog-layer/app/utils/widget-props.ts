@@ -1,4 +1,4 @@
-import type { WidgetDescriptor } from '#blog/shared/widgets/types'
+import type { WidgetDescriptor } from '@giancarlosgza/blog-core'
 
 /** Safely parse a widget's `data-props` JSON into a plain object. Never throws. */
 export function safeParseProps(raw: string | null | undefined): Record<string, unknown> {

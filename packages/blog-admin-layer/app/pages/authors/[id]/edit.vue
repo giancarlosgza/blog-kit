@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { UiAlertToast } from '@colorffy/ui'
-import type { IAuthor } from '#admin/shared/models/author'
+import type { IAuthor } from '@giancarlosgza/blog-core'
 import { useToast } from '@colorffy/ui'
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
 

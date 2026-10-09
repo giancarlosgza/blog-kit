@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ISettings } from '#admin/shared/models/settings'
+import type { ISettings } from '@giancarlosgza/blog-core'
 
 /** Model */
 const form = defineModel<ISettings>('form', { required: true })

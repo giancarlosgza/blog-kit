@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { IAuthor } from '#blog/shared/models/author'
-import type { IPost } from '#blog/shared/models/post'
+import type { IAuthor, IPost } from '@giancarlosgza/blog-core'
 import type { IPostSeries } from '#blog/shared/types/api'
 import type { IPostHeading } from '#blog/shared/utils/post-headings'
 import { useClipboard, useIntersectionObserver, useShare } from '@vueuse/core'

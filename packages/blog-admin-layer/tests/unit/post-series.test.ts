@@ -1,4 +1,4 @@
-import type { IPost } from '#admin/shared/models/post'
+import type { IPost } from '@giancarlosgza/blog-core'
 import { describe, expect, it } from 'vitest'
 import {
   isValidOrder,

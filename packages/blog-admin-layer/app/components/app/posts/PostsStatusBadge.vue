@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PostStatus } from '#admin/shared/models/post'
+import type { PostStatus } from '@giancarlosgza/blog-core'
 import { POST_STATUS_BADGES, POST_STATUS_LABELS } from '#admin/shared/utils/post-status'
 
 /** Interfaces */

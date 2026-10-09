@@ -1,5 +1,5 @@
-import type { IFirestoreDateValue } from '#blog/shared/models/date'
-import { toDateMs } from '#blog/shared/utils/date'
+import type { IFirestoreDateValue } from '@giancarlosgza/blog-core'
+import { toDateMs } from '@giancarlosgza/blog-core'
 
 /** Normalize Date, Firestore Timestamp, serialized timestamps, and strings to milliseconds. */
 export function useDateValue() {

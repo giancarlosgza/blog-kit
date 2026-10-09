@@ -4,6 +4,12 @@ import blogModule from './blog-module'
 
 const layerDir = dirname(fileURLToPath(import.meta.url))
 
+// blog-core helpers, auto-imported like the layer's own utils
+const coreImports = [{
+  from: '@giancarlosgza/blog-core',
+  imports: ['htmlToExcerpt', 'joinBlogPath', 'normalizeBasePath', 'resolveAuthorName', 'resolvePostSeo', 'SEO_DESCRIPTION_MAX', 'SEO_TITLE_MAX', 'toBlogUrl', 'toDateMs', 'toSlug']
+}]
+
 /** Blog Layer */
 export default defineNuxtConfig({
   compatibilityDate: '2026-01-01',
@@ -16,7 +22,14 @@ export default defineNuxtConfig({
     basePath: '/'
   },
 
+  imports: {
+    presets: coreImports
+  },
+
   nitro: {
+    imports: {
+      presets: [...coreImports, { from: '@giancarlosgza/blog-core/sanitize', imports: ['sanitizeBlogHtml'] }]
+    },
     devStorage: {
       cache: { driver: 'memory' }
     }

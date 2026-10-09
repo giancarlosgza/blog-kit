@@ -1,5 +1,5 @@
+import type { WidgetDescriptor } from '@giancarlosgza/blog-core'
 import type { IWidgetPreview } from '#admin/app/utils/widget-form'
-import type { WidgetDescriptor } from '#admin/shared/widgets/types'
 
 /** Widgets editors can embed, provided by the site as `$blogWidgetRegistry` from a plugin. */
 export interface IWidgetRegistry {

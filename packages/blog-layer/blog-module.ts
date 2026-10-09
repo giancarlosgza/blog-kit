@@ -1,6 +1,6 @@
 import type { NuxtPage } from 'nuxt/schema'
+import { joinBlogPath, normalizeBasePath } from '@giancarlosgza/blog-core'
 import { addServerHandler, createResolver, defineNuxtModule, extendPages } from 'nuxt/kit'
-import { joinBlogPath, normalizeBasePath } from './shared/utils/blog-path'
 
 export interface BlogModuleOptions {
   /** Where the blog mounts: `/` for a standalone blog, e.g. `/blog` inside another site. Build time. */

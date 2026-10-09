@@ -1,4 +1,4 @@
-import type { ISettings } from '#admin/shared/models/settings'
+import type { ISettings } from '@giancarlosgza/blog-core'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { useFirestore } from 'vuefire'
 

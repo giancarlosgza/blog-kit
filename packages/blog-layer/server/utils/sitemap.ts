@@ -1,8 +1,5 @@
-import type { IAuthor } from '#blog/shared/models/author'
-import type { IPost } from '#blog/shared/models/post'
-import type { ISeries } from '#blog/shared/models/series'
-import type { ITag } from '#blog/shared/models/tag'
-import { joinBlogPath } from '#blog/shared/utils/blog-path'
+import type { IAuthor, IPost, ISeries, ITag } from '@giancarlosgza/blog-core'
+import { joinBlogPath } from '@giancarlosgza/blog-core'
 
 /**
  * Pure sitemap URL builder for `/api/blog/_sitemap-urls` (Firestore reads live in the route).

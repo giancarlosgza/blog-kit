@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IAuthor } from '#blog/shared/models/author'
+import type { IAuthor } from '@giancarlosgza/blog-core'
 import type { IAuthorPageResponse } from '#blog/shared/types/api'
 
 /** Head */
