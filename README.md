@@ -5,10 +5,10 @@ packages and only keeps its brand, assets and deploy config.
 
 | Package | Status | What it is |
 | :--- | :--- | :--- |
-| [`@giancarlosgza/blog-layer`](packages/blog-layer) | 0.1.1 | The blog: pages under `blog.basePath`, `/api/blog/*`, RSS, sitemap, SEO. Embeds into any Nuxt site that uses `@colorffy/css` |
-| [`@giancarlosgza/blog-site-layer`](packages/blog-site-layer) | 0.1.1 | A standalone blog site: the blog layer plus app shell, navbar/footer, PWA, robots, fonts, analytics |
+| [`@giancarlosgza/blog-layer`](packages/blog-layer) | 0.1.2 | The blog: pages under `blog.basePath`, `/api/blog/*`, RSS, sitemap, SEO. Embeds into any Nuxt site that uses `@colorffy/css` |
+| [`@giancarlosgza/blog-site-layer`](packages/blog-site-layer) | 0.1.2 | A standalone blog site: the blog layer plus app shell, navbar/footer, PWA, robots, fonts, analytics |
 | `@giancarlosgza/blog-core` | planned | Shared models, sanitizer, SEO and date helpers (today inside the blog layer's `shared/`) |
-| [`@giancarlosgza/blog-admin-layer`](packages/blog-admin-layer) | 0.1.1 | The admin app: editor, workflow, media, authors, tags, settings, analytics, AI tools. Runs as its own SSR app |
+| [`@giancarlosgza/blog-admin-layer`](packages/blog-admin-layer) | 0.1.2 | The admin app: editor, workflow, media, authors, tags, settings, analytics, AI tools. Runs as its own SSR app |
 | `@giancarlosgza/blog-firebase` | planned | Firestore/Storage rules, indexes and Cloud Functions |
 
 Which one to install:
