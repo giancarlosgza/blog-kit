@@ -1,0 +1,66 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // ==========================================
+    // REUSABLE FUNCTIONS
+    // ==========================================
+
+    function isAuthenticated() {
+      return request.auth != null && request.auth.uid != null;
+    }
+
+    // Staff: an authenticated user whose Firestore /admins/{uid} doc has role admin or editor.
+    // Mirrors isStaff() in firestore.rules.
+    function isStaff() {
+      return isAuthenticated()
+        && firestore.exists(/databases/(default)/documents/admins/$(request.auth.uid))
+        && firestore.get(/databases/(default)/documents/admins/$(request.auth.uid)).data.role in ['admin', 'editor'];
+    }
+
+    // Uploaded images are served on the public blog, so reads are public.
+    // Writes (and deletes) are limited to staff, and uploads must be images.
+    function isValidImageWrite() {
+      return isStaff()
+        && (request.resource == null
+          || (request.resource.size < 15 * 1024 * 1024
+            && request.resource.contentType.matches('image/.*')));
+    }
+
+    // ==========================================
+    // BLOG IMAGE ASSETS — public read, staff write
+    // ==========================================
+
+    match /authors/{allPaths=**} {
+      allow read: if true;
+      allow write: if isValidImageWrite();
+    }
+
+    match /covers/{allPaths=**} {
+      allow read: if true;
+      allow write: if isValidImageWrite();
+    }
+
+    match /posts/{allPaths=**} {
+      allow read: if true;
+      allow write: if isValidImageWrite();
+    }
+
+    match /logos/{allPaths=**} {
+      allow read: if true;
+      allow write: if isValidImageWrite();
+    }
+
+    // Per-post social share images (og:image overrides)
+    match /seo/{allPaths=**} {
+      allow read: if true;
+      allow write: if isValidImageWrite();
+    }
+
+    // Everything else: deny by default.
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

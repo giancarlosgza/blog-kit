@@ -1,0 +1,115 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ==========================================
+    // REUSABLE FUNCTIONS
+    // ==========================================
+
+    function isAuthenticated() {
+      return request.auth != null && request.auth.uid != null;
+    }
+
+    function adminRole() {
+      return get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role;
+    }
+
+    // Staff: an authenticated user whose /admins/{uid} doc has role admin or editor.
+    function isStaff() {
+      return isAuthenticated()
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+        && (adminRole() == 'admin' || adminRole() == 'editor');
+    }
+
+    // Admin: staff whose role is exactly admin.
+    function isAdmin() {
+      return isAuthenticated()
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+        && adminRole() == 'admin';
+    }
+
+    // ==========================================
+    // BLOG CONTENT — public read, staff write
+    // ==========================================
+
+    // Workflow fields owned by the server routes (submit/publish/…) and the scheduler.
+    function workflowFields() {
+      return ['isPublished', 'status', 'publishAt', 'review'];
+    }
+
+    // Editors create hidden drafts only: no publish flag, schedule or review state.
+    function isDraftCreate() {
+      let data = request.resource.data;
+      return data.get('isPublished', false) == false
+        && data.get('status', 'draft') == 'draft'
+        && !data.keys().hasAny(['publishAt', 'review']);
+    }
+
+    // Editors edit content but never move a post through the workflow directly.
+    function keepsWorkflow() {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(workflowFields());
+    }
+
+    // Post metadata: published posts are public; staff can also read drafts.
+    // Publishing goes through the admin-only server routes; admins keep direct write access.
+    match /posts/{slug} {
+      allow read: if resource.data.isPublished == true || isStaff();
+      allow create: if isAdmin() || (isStaff() && isDraftCreate());
+      allow update: if isAdmin() || (isStaff() && keepsWorkflow());
+      allow delete: if isStaff();
+
+      // Workflow history: staff read it, only the Admin SDK writes it so it can't be forged.
+      match /events/{eventId} {
+        allow read: if isStaff();
+        allow write: if false;
+      }
+    }
+
+    // Public only when the parent post is published (else drafts leak by slug guess).
+    // Only admins write the public body; editors publish through review.
+    match /postContents/{slug} {
+      allow read: if isStaff()
+        || (exists(/databases/$(database)/documents/posts/$(slug))
+          && get(/databases/$(database)/documents/posts/$(slug)).data.isPublished == true);
+      allow write: if isAdmin();
+    }
+
+    // Working/draft bodies are NEVER public — staff only.
+    match /postDrafts/{slug} {
+      allow read, write: if isStaff();
+    }
+
+    match /authors/{uid} {
+      allow read: if true;
+      allow write: if isStaff();
+    }
+
+    // Settings are admin-only.
+    match /settings/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /tags/{tag} {
+      allow read: if true;
+      allow write: if isStaff();
+    }
+
+    match /series/{slug} {
+      allow read: if true;
+      allow write: if isStaff();
+    }
+
+    // Saved Gemini runs for the AI recommendations page.
+    match /ai_recommendations/{id} {
+      allow read, write: if isStaff();
+    }
+
+    // Admin records: users read their own role doc (auth middleware); only admins list or write.
+    match /admins/{uid} {
+      allow get: if isStaff() || (isAuthenticated() && request.auth.uid == uid);
+      allow list: if isAdmin();
+      allow write: if isAdmin();
+    }
+  }
+}
