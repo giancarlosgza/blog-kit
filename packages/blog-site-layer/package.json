@@ -1,6 +1,6 @@
 {
   "name": "@giancarlosgza/blog-site-layer",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Nuxt layer for a standalone blog site: the blog layer plus app shell, navbar/footer, PWA, robots, fonts and analytics",
   "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
   "license": "MIT",
