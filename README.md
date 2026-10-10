@@ -78,6 +78,17 @@ Installs only take versions published at least a day ago (`minimumReleaseAge` in
 4. In each site, bump the package (`npm run install:latest`) and push once the release is a day old:
    the sites' `npm audit signatures` (CI and Dockerfile) follows the same one-day rule as installs.
 
+### Upgrading a site to 0.3.0
+The admin layer's login page is now a neutral card, and its split layout moved out of the layer:
+- `AuthSplitLayout`, `AuthSocialButtons`, `AuthCardWall` and the `admin.login.wallLabel` / `wallNote` /
+  `wallLink` defaults are gone. A site that wants that design keeps its own copies next to its own
+  `app/pages/auth/login.vue` (the Colorffy admin does).
+- Custom login pages sign in through `useAdminSignIn()` (`user`, `error`, `loading`, `redirectTo`,
+  `signInWithGoogle`, `signInWithEmail`, `signOut`).
+- `useDateFormat` is `useAdminDateFormat` (since 0.2.1).
+- The admin layer pre-bundles `@giancarlosgza/blog-core/sanitize` itself; drop any site-level
+  `vite.optimizeDeps.include` added for it on 0.2.x.
+
 ### Upgrading a site to 0.2.0
 Models, widget types and the shared helpers moved from the layers' `shared/` to `@giancarlosgza/blog-core`:
 - Add `@giancarlosgza/blog-core` to the site's dependencies and import `WidgetDescriptor` and the models

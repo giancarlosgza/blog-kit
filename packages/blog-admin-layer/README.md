@@ -44,8 +44,19 @@ PWA icons (optionally generated with `pwa: { pwaAssets: { config: true } }` and 
 
 - **Brand:** `admin.*` in the site's `app/app.config.ts` (names, default post color, login texts, legal
   links, AI prompt context and recommendation chips). Every key is documented in this package's `app/app.config.ts`.
-- **Login aside:** the layer shows a gradient with the blog name; replace it with an
-  `app/components/auth/CardWall.vue` of your own.
+- **Login page:** the layer's `/auth/login` is a neutral card (Google and email/password sign-in, the
+  blog name and `admin.login.staffNotice`). For your own design, add `app/pages/auth/login.vue` to the
+  site: it replaces the layer's page and keeps the sign-in logic through `useAdminSignIn()`:
+
+  ```vue
+  <script setup lang="ts">
+  definePageMeta({ layout: 'auth' })
+  const { user, error, loading, redirectTo, signInWithGoogle, signInWithEmail, signOut } = useAdminSignIn()
+  </script>
+  ```
+
+  It signs in with Firebase Auth and returns to `?redirect=`; the `auth` middleware, the staff check
+  (`admins/{uid}.role`) and the session cookie stay in the layer.
 - **Models and helpers:** add `@giancarlosgza/blog-core` to the site's own dependencies when site code
   imports its types (e.g. `WidgetDescriptor`) or calls its auto-imported helpers; with pnpm a layer's
   dependencies are not visible to the site.
