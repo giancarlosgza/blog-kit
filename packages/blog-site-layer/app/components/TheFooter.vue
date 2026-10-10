@@ -7,6 +7,7 @@ const brand = useAppConfig().blog
 const { blogName, blogDescription } = useBlogBrand()
 const appVersion = useAppVersion()
 const { blogPath } = useBlogPath()
+const { t } = useBlogLabels()
 
 /** State */
 const showCookiesBanner = useState<boolean>('show-cookies-banner', () => false)
@@ -28,7 +29,7 @@ function handleCookiesBannerKeydown(event: KeyboardEvent): void {
 </script>
 
 <template>
-  <UiFooter aria-label="Site footer">
+  <UiFooter :aria-label="t('siteFooter')">
     <!-- Brand -->
     <template #brand>
       <p class="subtitle-1 fw-600 mb-1">
@@ -43,16 +44,16 @@ function handleCookiesBannerKeydown(event: KeyboardEvent): void {
     </template>
 
     <!-- Links -->
-    <nav aria-label="Footer">
-      <UiFooterGroup title="Blog">
+    <nav :aria-label="t('footer')">
+      <UiFooterGroup :title="t('blog')">
         <UiFooterItem
           :as="NuxtLink"
           :to="{ name: 'blog' }"
-          text="Articles"
+          :text="t('articles')"
         />
         <UiFooterItem
           :href="blogPath('/rss.xml')"
-          text="RSS"
+          :text="t('rss')"
         />
         <template
           v-for="link in footerLinks"
@@ -77,18 +78,18 @@ function handleCookiesBannerKeydown(event: KeyboardEvent): void {
     <template #bottom>
       <nav
         class="d-flex flex-wrap gap-3"
-        aria-label="Legal information"
+        :aria-label="t('legalInformation')"
       >
         <UiFooterItem
           v-if="brand.legal.cookiesUrl"
           :href="brand.legal.cookiesUrl"
-          text="Cookies"
+          :text="t('cookies')"
         />
         <UiFooterItem
-          text="Cookie Settings"
+          :text="t('cookieSettings')"
           role="button"
           tabindex="0"
-          aria-label="Manage cookie settings"
+          :aria-label="t('manageCookieSettings')"
           @click="openCookiesBanner"
           @keydown="handleCookiesBannerKeydown"
         />

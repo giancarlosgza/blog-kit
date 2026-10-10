@@ -30,13 +30,14 @@ const emit = defineEmits<{
 
 /** Composables */
 const brand = useAppConfig().blog
+const { t } = useBlogLabels()
 
 /** Data */
 const content: ICookiesBannerContent = {
-  message: 'We use cookies to make your experience better. To learn more, {policyLink}.',
-  acceptButtonText: 'Accept',
-  rejectButtonText: 'Reject',
-  policyLinkText: 'check out our policy',
+  message: t('cookieMessage'),
+  acceptButtonText: t('accept'),
+  rejectButtonText: t('reject'),
+  policyLinkText: t('cookiePolicy'),
   variant,
   storageKey: 'cookies:accept',
   rejectedStorageKey: 'cookies:reject'
@@ -85,12 +86,12 @@ watch(isCookiesAccepted, (newValue, oldValue) => {
     type="snackbar"
     :variant="variant"
     size="sm"
-    aria-label="Cookie consent banner"
+    :aria-label="t('cookieBanner')"
   >
     <template #content>
       <span>
-        We use cookies to make your experience better.<template v-if="brand.legal.cookiesUrl">
-          To learn more,
+        {{ content.message }}<template v-if="brand.legal.cookiesUrl">
+          {{ t('cookieLearnMore') }}
           <NuxtLink
             :to="brand.legal.cookiesUrl"
             class="text-link"
@@ -98,7 +99,7 @@ watch(isCookiesAccepted, (newValue, oldValue) => {
             external
             no-prefetch
             rel="noopener"
-            :aria-label="`View ${content.policyLinkText} - opens in new tab`"
+            :aria-label="t('opensInNewTab', { label: content.policyLinkText })"
           >
             {{ content.policyLinkText }}
           </NuxtLink>.
@@ -111,7 +112,7 @@ watch(isCookiesAccepted, (newValue, oldValue) => {
           variant="text"
           size="sm"
           :text="content.rejectButtonText"
-          :aria-label="`${content.rejectButtonText} cookies and close this banner`"
+          :aria-label="t('rejectCookies')"
           rounded
           @click="onRejectCookies"
         />
@@ -120,7 +121,7 @@ watch(isCookiesAccepted, (newValue, oldValue) => {
           color="neutral"
           size="sm"
           :text="content.acceptButtonText"
-          :aria-label="`${content.acceptButtonText} cookies and close this banner`"
+          :aria-label="t('acceptCookies')"
           rounded
           @click="onAcceptCookies"
         />

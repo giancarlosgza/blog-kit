@@ -12,10 +12,11 @@ const { showLabels = true } = defineProps<IColorModeProps>()
 /** Data */
 const colorMode = useColorMode()
 const idPrefix = useId()
+const { t } = useBlogLabels()
 const colorModes = [
-  { id: 'system', label: 'System', icon: '&#xe31e;' },
-  { id: 'light', label: 'Light', icon: '&#xe518;' },
-  { id: 'dark', label: 'Dark', icon: '&#xe51c;' }
+  { id: 'system', label: t('colorModeSystem'), icon: '&#xe31e;' },
+  { id: 'light', label: t('colorModeLight'), icon: '&#xe518;' },
+  { id: 'dark', label: t('colorModeDark'), icon: '&#xe51c;' }
 ]
 const colorModeTabs: ITabItem[] = colorModes.map(mode => ({ ...mode, id: `${idPrefix}-${mode.id}` }))
 
@@ -57,7 +58,7 @@ function selectColorMode(tabId: string): void {
       rounded
       fit
       :icon-only="!showLabels"
-      aria-label="Color mode"
+      :aria-label="t('colorMode')"
       @update:active-tab="selectColorMode"
     />
   </ClientOnly>

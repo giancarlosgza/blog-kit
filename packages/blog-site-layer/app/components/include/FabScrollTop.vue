@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/** Composables */
+const { t } = useBlogLabels()
+
 /** Methods */
 function scrollToTop(): void {
   window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -11,8 +14,8 @@ function scrollToTop(): void {
       variant="tonal"
       color="primary"
       class="btn-fab fab-scroll"
-      title="Scroll to top"
-      aria-label="Scroll to top"
+      :title="t('scrollToTop')"
+      :aria-label="t('scrollToTop')"
       rounded
       @click="scrollToTop"
     >

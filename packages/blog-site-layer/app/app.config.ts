@@ -12,7 +12,8 @@ export default defineAppConfig({
   blog: {
     loadingColor: 'var(--cffy-secondary-base-fixed)',
     pwa: {
-      installDescription: 'Read the latest articles from your home screen.'
+      /** Install prompt text; defaults to the label in the blog's language. */
+      installDescription: ''
     },
     legal: {
       cookiesUrl: ''

@@ -17,6 +17,7 @@ const errorText = computed(() => {
 
 /** Data */
 const handleError = () => clearError({ redirect: '/' })
+const { t } = useBlogLabels()
 </script>
 
 <template>
@@ -61,7 +62,7 @@ const handleError = () => clearError({ redirect: '/' })
               variant="tonal"
               color="warning"
               class="btn-cta"
-              text="Go home"
+              :text="t('goHome')"
               @click="handleError"
             >
               <template #icon>

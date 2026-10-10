@@ -2,6 +2,7 @@
 /** Composables */
 const { $pwa } = useNuxtApp()
 const brand = useAppConfig().blog
+const { t } = useBlogLabels()
 
 /** Data */
 let offlineReadyTimer: ReturnType<typeof setTimeout> | undefined
@@ -58,9 +59,9 @@ onBeforeUnmount(() => {
           <div class="pwa-content-text-wrapper">
             <p
               class="subtitle-2 text-on-body fw-500"
-              :title="$pwa?.offlineReady ? '' : 'Reload to get the latest updates'"
+              :title="$pwa?.offlineReady ? '' : t('reloadForUpdates')"
             >
-              {{ $pwa?.offlineReady ? 'App updated' : 'Update Available' }}
+              {{ $pwa?.offlineReady ? t('appUpdated') : t('updateAvailable') }}
             </p>
           </div>
         </div>
@@ -68,7 +69,7 @@ onBeforeUnmount(() => {
           <UiButton
             v-if="$pwa?.needRefresh"
             variant="filled"
-            text="Reload"
+            :text="t('reload')"
             size="sm"
             class="text-neutral"
             rounded
@@ -93,10 +94,10 @@ onBeforeUnmount(() => {
           />
           <div class="pwa-content-text-wrapper">
             <p class="subtitle-1">
-              Install the {{ brand.shortName }}
+              {{ t('installApp', { name: brand.shortName }) }}
             </p>
             <p class="subtitle-2">
-              {{ brand.pwa.installDescription }}
+              {{ brand.pwa.installDescription || t('installDescription') }}
             </p>
           </div>
         </div>
@@ -104,14 +105,14 @@ onBeforeUnmount(() => {
           <UiButton
             variant="text"
             class="text-neutral"
-            text="Not now"
+            :text="t('notNow')"
             size="sm"
             rounded
             @click="$pwa.cancelInstall()"
           />
           <UiButton
             variant="filled"
-            text="Install"
+            :text="t('install')"
             size="sm"
             rounded class="px-3"
             @click="$pwa.install()"

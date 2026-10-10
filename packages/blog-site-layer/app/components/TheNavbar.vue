@@ -6,6 +6,7 @@ import { NuxtLink } from '#components'
 const brand = useAppConfig().blog
 const { blogName } = useBlogBrand()
 const { settings } = useBlogSettings()
+const { t } = useBlogLabels()
 
 /** Computed */
 const logoUrl = computed(() => settings.value?.logoURL || '')
@@ -57,7 +58,7 @@ const navLinks = computed((): IBlogLink[] => brand.navLinks)
         <UiNavbarLink
           :as="NuxtLink"
           :to="{ name: 'blog' }"
-          text="Articles"
+          :text="t('articles')"
         />
         <template
           v-for="link in navLinks"
