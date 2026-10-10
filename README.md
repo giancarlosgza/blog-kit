@@ -78,6 +78,11 @@ Installs only take versions published at least a day ago (`minimumReleaseAge` in
 4. In each site, bump the package (`npm run install:latest`) and push once the release is a day old:
    the sites' `npm audit signatures` (CI and Dockerfile) follows the same one-day rule as installs.
 
+### Upgrading a site to 0.4.0
+The blog and site layers are translatable: set `blog.locale` (e.g. `'es-MX'`) for the built-in Spanish texts
+and dates, and `blog.labels` for single overrides. Nothing changes for English sites; `blog.home.title` and
+`blog.pwa.installDescription` now default to the label in the blog's language when left empty.
+
 ### Upgrading a site to 0.3.0
 The admin layer's login page is now a neutral card, and its split layout moved out of the layer:
 - `AuthSplitLayout`, `AuthSocialButtons`, `AuthCardWall` and the `admin.login.wallLabel` / `wallNote` /

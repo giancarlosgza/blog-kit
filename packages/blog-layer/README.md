@@ -61,6 +61,11 @@ Blog pages use the site's `default` layout; set `blog.layout` to use another one
 
 - **`blog.basePath`** (`nuxt.config`, default `/`): where the blog mounts.
 - **`blog.layout`** (`nuxt.config`, optional): layout for the blog pages.
+- **Language:** `blog.locale` in `app/app.config.ts` (default `'en-US'`, e.g. `'es-MX'`) sets the interface
+  language (built-in English and Spanish), date formatting, the RSS `<language>` and JSON-LD `inLanguage`.
+  Override single texts with `blog.labels` (keys in `shared/utils/blog-labels.ts`); `useBlogLabels().t(key)`
+  reads them in site code. For Colorffy UI's own component texts, also set
+  `colorffyUI: { locale: 'es-MX', labels: 'es' }` in `nuxt.config`.
 - **Brand:** override `blog.*` in the site's `app/app.config.ts`. Every key is documented in this
   package's `app/app.config.ts`. `settings/general` in Firestore overrides the name and description.
 - **Models and helpers:** add `@giancarlosgza/blog-core` to the site's own dependencies when site code
