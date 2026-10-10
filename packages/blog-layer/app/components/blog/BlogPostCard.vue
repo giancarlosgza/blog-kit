@@ -135,7 +135,7 @@ function markActive(): void {
           <component
             :is="headingTag"
             class="card-post-title mb-0"
-            :class="featured ? 'display-3' : 'fs-xl fw-500 lh-base'"
+            :class="featured ? 'blog-display-3' : 'fs-xl fw-500 lh-base'"
           >
             <NuxtLink
               :to="blogPath(`/${slug}`)"

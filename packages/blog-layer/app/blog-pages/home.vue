@@ -74,20 +74,20 @@ useSeoMeta({
 <template>
   <div class="container my-5">
     <!-- Header -->
-    <header class="section-hero text-center">
+    <header class="blog-hero text-center">
       <p
         v-if="brand.home.eyebrow"
         class="fs-xs fw-500 text-uppercase text-muted mb-3"
       >
         {{ brand.home.eyebrow }}
       </p>
-      <h1 class="display-1 mb-0">
+      <h1 class="blog-display-1 mb-0">
         {{ seoTitle }}
         <span v-if="brand.home.headingAccent">
           {{ brand.home.headingAccent }}
         </span>
       </h1>
-      <p class="section-hero-lead subtitle-1 lh-md text-muted mt-4 mb-0">
+      <p class="blog-hero-lead subtitle-1 lh-md text-muted mt-4 mb-0">
         {{ seoDescription }}
       </p>
     </header>

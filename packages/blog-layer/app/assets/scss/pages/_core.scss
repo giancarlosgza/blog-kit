@@ -1,4 +1,3 @@
-@use './core/layers';
 @use './core/shared-ui';
 @use './core/article-layout';
 @use './core/post-layout';
@@ -15,26 +14,26 @@
 }
 
 @layer pages {
-  .section-hero {
+  .blog-hero {
     & h1 {
       & span {
-        --_hero-color-start-from: var(--cffy-secondary-base-fixed);
-        --_hero-color-start-to: var(--cffy-secondary-a30);
-        --_hero-color-end-from: var(--cffy-accent-base-fixed);
-        --_hero-color-end-to: var(--cffy-accent-a30);
+        --_blog-hero-color-start-from: var(--cffy-secondary-base-fixed);
+        --_blog-hero-color-start-to: var(--cffy-secondary-a30);
+        --_blog-hero-color-end-from: var(--cffy-accent-base-fixed);
+        --_blog-hero-color-end-to: var(--cffy-accent-a30);
 
-        --hero-color-start: var(--_hero-color-start-from);
-        --hero-color-end: var(--_hero-color-end-from);
+        --blog-hero-color-start: var(--_blog-hero-color-start-from);
+        --blog-hero-color-end: var(--_blog-hero-color-end-from);
         --_space: in srgb;
 
         background: linear-gradient(90deg var(--_space),
-            var(--hero-color-start),
-            var(--hero-color-end));
+            var(--blog-hero-color-start),
+            var(--blog-hero-color-end));
         background-clip: text;
         color: transparent;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        animation: hero-color-change 3s linear infinite alternate;
+        animation: blog-hero-color-change 3s linear infinite alternate;
 
         @supports (background: linear-gradient(in oklch, #fff, #fff)) {
           --_space: in oklch;
@@ -47,26 +46,26 @@
     }
   }
 
-  @property --hero-color-start {
+  @property --blog-hero-color-start {
     syntax: '<color>';
     inherits: false;
     initial-value: #382bf0;
   }
 
-  @property --hero-color-end {
+  @property --blog-hero-color-end {
     syntax: '<color>';
     inherits: false;
     initial-value: #0075d6;
   }
 
-  @keyframes hero-color-change {
+  @keyframes blog-hero-color-change {
     to {
-      --hero-color-start: var(--_hero-color-start-to);
-      --hero-color-end: var(--_hero-color-end-to);
+      --blog-hero-color-start: var(--_blog-hero-color-start-to);
+      --blog-hero-color-end: var(--_blog-hero-color-end-to);
     }
   }
 
-  .gradient-blob {
+  .blog-gradient-blob {
     --_color: var(--color, var(--cffy-secondary-base-fixed));
 
     position: fixed;

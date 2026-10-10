@@ -33,11 +33,11 @@ const siteUrl = useSiteUrl()
       class="mb-4"
     />
 
-    <header class="facet-hub-header">
+    <header class="blog-hub-header">
       <div>
         <h1
           :id="titleId"
-          class="facet-hub-title display-1"
+          class="blog-hub-title blog-display-1"
         >
           <slot name="title">
             {{ title }}
@@ -47,7 +47,7 @@ const siteUrl = useSiteUrl()
       </div>
       <div
         v-if="description || $slots.meta"
-        class="facet-hub-meta"
+        class="blog-hub-meta"
       >
         <p
           v-if="description"

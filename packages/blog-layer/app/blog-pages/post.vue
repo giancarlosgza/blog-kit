@@ -159,7 +159,7 @@ useSeoMeta({
     />
 
     <div
-      class="gradient-blob"
+      class="blog-gradient-blob"
       :style="{ '--color': color }"
       aria-hidden="true"
     />

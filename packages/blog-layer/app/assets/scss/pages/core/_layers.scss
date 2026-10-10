@@ -1,1 +1,2 @@
-@layer overrides, pages;
+// Colorffy layer order with pages last, declared first so it holds whichever stylesheet loads first
+@layer reset, abstracts, base, components, layout, utilities, media-queries, overrides, pages;

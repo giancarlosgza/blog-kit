@@ -126,7 +126,7 @@ watch(() => headings, async () => {
         <div class="d-flex align-items-center flex-wrap gap-3">
           <span
             v-if="post.color"
-            class="post-article-mark color-mark"
+            class="post-article-mark blog-color-mark"
             :style="markStyle"
             aria-hidden="true"
           />
@@ -149,7 +149,7 @@ watch(() => headings, async () => {
           >By {{ authorName }}</span>
         </div>
         <h1
-          class="display-1 mb-0"
+          class="blog-display-1 mb-0"
           :class="{ 'vt-post-header': isTransitionTarget }"
         >
           {{ title }}
