@@ -13,6 +13,18 @@ export default defineNuxtConfig({
     basePath: '/blog'
   },
 
+  // Colorffy UI component texts (pagination, dialogs) in Spanish too
+  colorffyUI: {
+    locale: 'es-MX',
+    labels: 'es'
+  },
+
+  app: {
+    head: {
+      htmlAttrs: { lang: 'es' }
+    }
+  },
+
   css: [
     '@/assets/scss/main.scss',
     '@/assets/css/material-symbols.generated.css'
