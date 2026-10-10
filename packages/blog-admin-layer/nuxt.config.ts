@@ -80,6 +80,9 @@ export default defineNuxtConfig({
 
   vite: {
     optimizeDeps: {
+      // Installed layers sit in node_modules, where Vite does not discover deps: pre-bundle the
+      // CommonJS sanitize-html chain behind the client-side preview sanitizer
+      include: ['@giancarlosgza/blog-admin-layer > @giancarlosgza/blog-core/sanitize'],
       // One vuefire instance: with pnpm, nuxt-vuefire's plugin and the layer would otherwise get separate copies
       exclude: ['vuefire']
     }
