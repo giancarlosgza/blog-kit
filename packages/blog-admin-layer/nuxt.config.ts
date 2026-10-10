@@ -8,7 +8,6 @@ const shellCss = [
   join(layerDir, 'app/assets/scss/main.scss')
 ]
 
-// blog-core helpers, auto-imported like the layer's own utils
 const coreImports = [{
   from: '@giancarlosgza/blog-core',
   imports: ['htmlToExcerpt', 'joinBlogPath', 'normalizeBasePath', 'resolveAuthorName', 'resolvePostSeo', 'SEO_DESCRIPTION_MAX', 'SEO_TITLE_MAX', 'toBlogUrl', 'toDateMs', 'toSlug']
@@ -16,7 +15,6 @@ const coreImports = [{
 
 const toPosix = (path: string) => path.replace(/\\/g, '/')
 
-/** CSS order: framework and admin styles, other layers, then the site, so brand tokens win */
 function shellStylesFirst(_options: unknown, nuxt: Nuxt) {
   nuxt.hook('modules:done', () => {
     const layerDirs = nuxt.options._layers
@@ -80,11 +78,13 @@ export default defineNuxtConfig({
 
   vite: {
     optimizeDeps: {
-      // Installed layers sit in node_modules, where Vite does not discover deps: pre-bundle the
-      // CommonJS sanitize-html chain behind the client-side preview sanitizer
       include: ['@giancarlosgza/blog-admin-layer > @giancarlosgza/blog-core/sanitize'],
-      // One vuefire instance: with pnpm, nuxt-vuefire's plugin and the layer would otherwise get separate copies
       exclude: ['vuefire']
+    },
+    css: {
+      preprocessorOptions: {
+        scss: { sourceMapIncludeSources: true }
+      }
     }
   },
   app: {

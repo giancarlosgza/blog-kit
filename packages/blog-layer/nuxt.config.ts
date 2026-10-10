@@ -4,7 +4,6 @@ import blogModule from './blog-module'
 
 const layerDir = dirname(fileURLToPath(import.meta.url))
 
-// blog-core helpers, auto-imported like the layer's own utils
 const coreImports = [{
   from: '@giancarlosgza/blog-core',
   imports: ['htmlToExcerpt', 'joinBlogPath', 'normalizeBasePath', 'resolveAuthorName', 'resolvePostSeo', 'SEO_DESCRIPTION_MAX', 'SEO_TITLE_MAX', 'toBlogUrl', 'toDateMs', 'toSlug']
