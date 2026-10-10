@@ -203,6 +203,11 @@ describe('buildRssFeed', () => {
     expect(xml).toContain('<image><url>https://cdn.dev/logo.png</url>')
     expect(xml).toContain('<item></item>\n</channel>\n</rss>')
   })
+
+  it('uses the blog locale as the channel language', () => {
+    const xml = buildRssFeed({ title: 'Blog', description: '', siteUrl: SITE, feedUrl: `${SITE}/rss.xml`, language: 'es-MX', items: [] })
+    expect(xml).toContain('<language>es-mx</language>')
+  })
 })
 
 describe('helpers', () => {

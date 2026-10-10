@@ -1,6 +1,9 @@
 import { Timestamp } from 'firebase-admin/firestore'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { useDateValue } from '#blog/app/composables/useDateValue'
+
+const appConfig = { blog: { locale: 'en-US' } }
+vi.stubGlobal('useAppConfig', () => appConfig)
 
 const { normalizeDateValue, formatDateValue } = useDateValue()
 const MS = Date.UTC(2026, 8, 22, 12, 0, 0)
@@ -50,5 +53,11 @@ describe('formatDateValue', () => {
     expect(formatDateValue(MS, { timeZone: 'UTC', year: 'numeric', month: 'long', day: 'numeric' })).toBe('September 22, 2026')
     expect(formatDateValue(undefined)).toBe('')
     expect(formatDateValue('nope')).toBe('')
+  })
+
+  it('formats in the blog locale', () => {
+    appConfig.blog.locale = 'es-MX'
+    expect(useDateValue().formatDateValue(MS, { timeZone: 'UTC', year: 'numeric', month: 'long', day: 'numeric' })).toBe('22 de septiembre de 2026')
+    appConfig.blog.locale = 'en-US'
   })
 })

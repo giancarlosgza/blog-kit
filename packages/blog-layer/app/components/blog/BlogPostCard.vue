@@ -32,6 +32,7 @@ const { blogPath } = useBlogPath()
 const { formatDateValue, normalizeDateValue } = useDateValue()
 const brand = useAppConfig().blog
 const { seriesName } = useSeriesNames()
+const { t } = useBlogLabels()
 const activePost = useState<string | null>('activePost', () => null)
 
 /** Computed */
@@ -47,7 +48,7 @@ const series = computed(() => {
   const name = showSeries ? seriesName(post.seriesSlug) : null
   return name ? { name, to: blogPath(`/series/${post.seriesSlug}`) } : null
 })
-const badgeText = computed(() => badge || (featured ? 'Featured' : ''))
+const badgeText = computed(() => badge || (featured ? t('featured') : ''))
 const badgeIconCode = computed(() => (badge ? badgeIcon || undefined : '&#xf525;'))
 const displayedTags = computed(() => post.tags?.slice(0, featured ? MAX_FEATURED_TAGS : MAX_TAGS) ?? [])
 const isTransitionTarget = computed(() => activePost.value === slug.value)
@@ -61,7 +62,7 @@ function markActive(): void {
 <template>
   <article
     :aria-busy="isSkeleton || undefined"
-    :aria-label="isSkeleton ? 'Loading article' : undefined"
+    :aria-label="isSkeleton ? t('loadingArticle') : undefined"
   >
     <UiCard
       variant="pane"
@@ -118,7 +119,7 @@ function markActive(): void {
               v-if="series"
               :to="series.to"
               class="card-post-chip badge badge-tonal tonal-secondary undecorated"
-              :title="`Part of the ${series.name} series`"
+              :title="t('partOfSeries', { series: series.name })"
             >
               {{ series.name }}
             </NuxtLink>

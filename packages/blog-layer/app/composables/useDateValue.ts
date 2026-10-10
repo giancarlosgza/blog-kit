@@ -3,6 +3,8 @@ import { toDateMs } from '@giancarlosgza/blog-core'
 
 /** Normalize Date, Firestore Timestamp, serialized timestamps, and strings to milliseconds. */
 export function useDateValue() {
+  const { locale } = useAppConfig().blog
+
   function normalizeDateValue(value?: IFirestoreDateValue): number {
     return toDateMs(value) ?? 0
   }
@@ -13,7 +15,7 @@ export function useDateValue() {
     if (!ms)
       return ''
 
-    return new Date(ms).toLocaleDateString('en-US', options ?? {
+    return new Date(ms).toLocaleDateString(locale, options ?? {
       year: 'numeric',
       month: 'long',
       day: 'numeric'

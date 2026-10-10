@@ -38,6 +38,7 @@ const MIN_MOBILE_TOC_HEADINGS = 3
 const { blogPath, blogUrl } = useBlogPath()
 const { formatDateValue, normalizeDateValue } = useDateValue()
 const brand = useAppConfig().blog
+const { t } = useBlogLabels()
 const { share, isSupported: isShareSupported } = useShare()
 const { copy, copied } = useClipboard()
 const activePost = useState<string | null>('activePost', () => null)
@@ -48,7 +49,7 @@ const headingTargets = shallowRef<HTMLElement[]>([])
 
 /** Computed */
 const slug = computed(() => post.slug || post.id || '')
-const title = computed(() => post.title || 'Article')
+const title = computed(() => post.title || t('article'))
 const authorName = computed(() => author?.name || resolveAuthorName(post, brand.defaultAuthor))
 const publishedLabel = computed(() => formatDateValue(post.createdAt))
 const publishedIso = computed(() => {
@@ -134,7 +135,7 @@ watch(() => headings, async () => {
             class="caption text-muted"
             :datetime="publishedIso"
           >{{ publishedLabel }}</time>
-          <span class="caption text-muted">{{ readingMinutes }} min read</span>
+          <span class="caption text-muted">{{ t('minRead', { minutes: readingMinutes }) }}</span>
           <NuxtLink
             v-if="author?.slug"
             :to="blogPath(`/authors/${author.slug}`)"
@@ -177,8 +178,8 @@ watch(() => headings, async () => {
             <UiButton
               variant="chip"
               size="sm"
-              text="Share"
-              aria-label="Share this article"
+              :text="t('share')"
+              :aria-label="t('shareArticle')"
               @click="handleShare"
             >
               <template #icon>
@@ -188,8 +189,8 @@ watch(() => headings, async () => {
             <UiButton
               variant="chip"
               size="sm"
-              :text="copied ? 'Copied' : 'Copy link'"
-              aria-label="Copy the link to this article"
+              :text="copied ? t('copied') : t('copyLink')"
+              :aria-label="t('copyArticleLink')"
               @click="copy(shareUrl)"
             >
               <template #icon>
@@ -220,7 +221,7 @@ watch(() => headings, async () => {
       <!-- Actions -->
       <aside
         class="post-article-rail post-article-rail-start"
-        aria-label="Article actions"
+        :aria-label="t('articleActions')"
       >
         <UiButtonTooltip
           :as="NuxtLink"
@@ -229,7 +230,7 @@ watch(() => headings, async () => {
           color="neutral"
           icon
           rounded
-          tooltip-text="All articles"
+          :tooltip-text="t('allArticles')"
         >
           <template #icon>
             <UiIconMaterial icon-code="&#xe5c4;" />
@@ -244,7 +245,7 @@ watch(() => headings, async () => {
           color="neutral"
           icon
           rounded
-          tooltip-text="Share"
+          :tooltip-text="t('share')"
           @click="handleShare"
         >
           <template #icon>
@@ -256,7 +257,7 @@ watch(() => headings, async () => {
           color="neutral"
           icon
           rounded
-          :tooltip-text="copied ? 'Copied' : 'Copy link'"
+          :tooltip-text="copied ? t('copied') : t('copyLink')"
           @click="copy(shareUrl)"
         >
           <template #icon>
@@ -324,7 +325,7 @@ watch(() => headings, async () => {
           <UiAccordion
             id="post-toc"
             name="post-toc"
-            title="On this page"
+            :title="t('onThisPage')"
             icon="&#xe8de;"
             class="bg-surface-pane"
           >
@@ -355,7 +356,7 @@ watch(() => headings, async () => {
         <!-- Previous and next -->
         <nav
           class="d-grid grid-repeat-cols-md-2 gap-3"
-          :aria-label="series ? 'Series parts and other articles' : 'Other articles'"
+          :aria-label="series ? t('seriesAndOtherArticles') : t('otherArticles')"
         >
           <UiCard
             v-if="seriesPrevious"
@@ -370,10 +371,10 @@ watch(() => headings, async () => {
                     icon-code="&#xe5c4;"
                     class="fs-4xs"
                   />
-                  Previous in series
+                  {{ t('previousInSeries') }}
                 </span>
                 <span class="fw-600">{{ seriesPrevious.title }}</span>
-                <span class="font-code fs-3xs text-muted">Part {{ seriesIndex }} of {{ seriesParts.length }}</span>
+                <span class="font-code fs-3xs text-muted">{{ t('partOf', { part: seriesIndex, total: seriesParts.length }) }}</span>
               </div>
             </template>
           </UiCard>
@@ -390,7 +391,7 @@ watch(() => headings, async () => {
                     icon-code="&#xe5c4;"
                     class="fs-4xs"
                   />
-                  Older
+                  {{ t('older') }}
                 </span>
                 <span class="fw-600">{{ older.title }}</span>
                 <span class="font-code fs-3xs text-muted">{{ formatDateValue(older.createdAt) }}</span>
@@ -404,8 +405,8 @@ watch(() => headings, async () => {
           >
             <template #body>
               <div class="d-grid gap-1">
-                <span class="caption text-muted">Older</span>
-                <span class="fw-600">This is the first article</span>
+                <span class="caption text-muted">{{ t('older') }}</span>
+                <span class="fw-600">{{ t('firstArticle') }}</span>
               </div>
             </template>
           </UiCard>
@@ -418,14 +419,14 @@ watch(() => headings, async () => {
             <template #body>
               <div class="d-grid gap-1 justify-items-end text-end">
                 <span class="caption text-muted d-inline-flex align-items-center gap-1">
-                  Next in series
+                  {{ t('nextInSeries') }}
                   <UiIconMaterial
                     icon-code="&#xe5c8;"
                     class="fs-4xs"
                   />
                 </span>
                 <span class="fw-600">{{ seriesNext.title }}</span>
-                <span class="font-code fs-3xs text-muted">Part {{ seriesIndex + 2 }} of {{ seriesParts.length }}</span>
+                <span class="font-code fs-3xs text-muted">{{ t('partOf', { part: seriesIndex + 2, total: seriesParts.length }) }}</span>
               </div>
             </template>
           </UiCard>
@@ -438,7 +439,7 @@ watch(() => headings, async () => {
             <template #body>
               <div class="d-grid gap-1 justify-items-end text-end">
                 <span class="caption text-muted d-inline-flex align-items-center gap-1">
-                  Newer
+                  {{ t('newer') }}
                   <UiIconMaterial
                     icon-code="&#xe5c8;"
                     class="fs-4xs"
@@ -456,8 +457,8 @@ watch(() => headings, async () => {
           >
             <template #body>
               <div class="d-grid gap-1 justify-items-end text-end">
-                <span class="caption text-muted">Newer</span>
-                <span class="fw-600">You are on the latest article</span>
+                <span class="caption text-muted">{{ t('newer') }}</span>
+                <span class="fw-600">{{ t('latestArticle') }}</span>
               </div>
             </template>
           </UiCard>
@@ -467,7 +468,7 @@ watch(() => headings, async () => {
       <!-- On this page -->
       <aside
         class="post-article-rail post-article-rail-end"
-        aria-label="On this page"
+        :aria-label="t('onThisPage')"
       >
         <nav
           v-if="series"
@@ -497,9 +498,9 @@ watch(() => headings, async () => {
         <nav
           v-if="headings.length"
           class="post-article-rail-group"
-          aria-label="Sections"
+          :aria-label="t('sections')"
         >
-          <span class="post-article-rail-label">On this page</span>
+          <span class="post-article-rail-label">{{ t('onThisPage') }}</span>
           <a
             v-for="heading in headings"
             :key="`toc-${heading.id}`"
@@ -525,11 +526,11 @@ watch(() => headings, async () => {
           id="post-related-heading"
           class="text-subheading subheading-m0"
         >
-          Related articles
+          {{ t('relatedArticles') }}
         </h2>
         <NuxtLink
           :to="blogPath()"
-          title="View all articles"
+          :title="t('viewAllArticles')"
           class="btn btn-text text-neutral btn-icon"
         >
           <UiIconMaterial icon-code="&#xe5c8;" />

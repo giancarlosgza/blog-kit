@@ -13,6 +13,7 @@ const bodyHtml = computed(() => decorateBlogLinks(props.html))
 const root = useTemplateRef<HTMLElement>('root')
 const nuxtApp = useNuxtApp()
 const widgets = useBlogWidgets()
+const { t } = useBlogLabels()
 
 let mountedApps: App[] = []
 
@@ -75,7 +76,7 @@ function hydrateWidgets() {
 
     let app: App
     if (!widget) {
-      app = createApp(WidgetError, { reason: `Unknown widget “${key}”` })
+      app = createApp(WidgetError, { title: t('widgetUnavailable'), reason: t('unknownWidget', { key }) })
     } else {
       const { props: widgetProps } = coerceProps(safeParseProps(el.dataset.props), widget.descriptor)
       if (widget.descriptor.minHeight)

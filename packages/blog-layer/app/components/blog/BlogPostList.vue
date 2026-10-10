@@ -21,8 +21,8 @@ const {
   paginated = false,
   hasMore = false,
   nextHref = undefined,
-  emptyTitle = 'No articles found',
-  emptySubtitle = 'Check back soon for new articles.',
+  emptyTitle,
+  emptySubtitle,
   headingTag = 'h2'
 } = defineProps<IProps>()
 
@@ -31,6 +31,7 @@ const emit = defineEmits<{ loadMore: [] }>()
 
 /** Composables */
 const { blogPath } = useBlogPath()
+const { t } = useBlogLabels()
 
 /** Constants */
 const SKELETON_COUNT = 6
@@ -65,7 +66,7 @@ function handleLoadMore(event: MouseEvent): void {
       v-if="isLoading"
       class="blog-post-skeleton-grid d-grid grid-repeat-cols-1 grid-repeat-cols-md-2 grid-repeat-cols-xl-3 gap-5"
       role="status"
-      aria-label="Loading articles"
+      :aria-label="t('loadingArticles')"
     >
       <BlogPostCard
         v-for="indexSkeleton in SKELETON_COUNT"
@@ -94,8 +95,8 @@ function handleLoadMore(event: MouseEvent): void {
     <!-- Empty state -->
     <UiEmpty
       v-else
-      :title="emptyTitle"
-      :subtitle="emptySubtitle"
+      :title="emptyTitle ?? t('noArticlesFound')"
+      :subtitle="emptySubtitle ?? t('checkBackSoon')"
       custom-class="my-5 my-md-8"
     >
       <template #action>
@@ -106,7 +107,7 @@ function handleLoadMore(event: MouseEvent): void {
               :to="blogPath()"
               variant="tonal"
               color="primary"
-              text="Back to home"
+              :text="t('backToHome')"
               class="btn-cta"
             >
               <template #icon>
@@ -129,7 +130,7 @@ function handleLoadMore(event: MouseEvent): void {
         class="btn-cta hover-rotate"
         :href="hasMore ? nextHref : undefined"
         :rel="hasMore && nextHref ? 'next' : undefined"
-        :text="hasMore ? 'Load more articles' : 'No more articles'"
+        :text="hasMore ? t('loadMoreArticles') : t('noMoreArticles')"
         :disabled="!hasMore"
         :loading="pending"
         @click="handleLoadMore"

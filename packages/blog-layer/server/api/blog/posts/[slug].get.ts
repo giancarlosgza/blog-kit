@@ -69,7 +69,7 @@ export default defineCachedEventHandler(async (event): Promise<IPostPageResponse
   const slug = getRouterParam(event, 'slug', { decode: true })?.trim() ?? ''
   // A "/" would address a subcollection path, not a post id.
   if (!slug || slug.includes('/'))
-    notFound('Post not found')
+    notFound(blogLabel('postNotFound'))
 
   try {
     const db = getFirestore()
@@ -77,7 +77,7 @@ export default defineCachedEventHandler(async (event): Promise<IPostPageResponse
     const data = postSnapshot.data()
     const post = toPublishedPost(postSnapshot.id, data)
     if (!post)
-      notFound('Post not found')
+      notFound(blogLabel('postNotFound'))
 
     const [contentSnapshot, author, related, older, newer, series] = await Promise.all([
       db.collection('postContents').doc(slug).get(),

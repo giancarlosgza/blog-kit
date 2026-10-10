@@ -3,12 +3,10 @@ import type { IChipOption } from '@colorffy/ui'
 
 /** Head */
 const { blogPath, blogUrl } = useBlogPath()
-definePageMeta({
-  pageTitle: 'Blog'
-})
 
 /** Composables */
 const { brand, blogName, blogDescription } = useBlogBrand()
+const { t } = useBlogLabels()
 const {
   tags,
   pending,
@@ -27,7 +25,7 @@ if (import.meta.server && feedError.value)
   throw createError({ statusCode: 503, statusMessage: 'Temporarily unavailable' })
 
 /** Constants */
-const pageTitle = brand.home.title
+const pageTitle = brand.home.title || t('articles')
 const ogTitle = `${brand.name} | ${pageTitle}`
 
 const ogDescription = brand.home.ogDescription || brand.description
@@ -38,7 +36,7 @@ const seoDescription = blogDescription
 const tagOptions = computed((): IChipOption[] =>
   (tags.value ?? []).map(tag => ({ id: tag.name, text: tag.name }))
 )
-const articlesHeading = computed(() => (selectedTag.value ? `Tagged ${selectedTag.value}` : 'Latest articles'))
+const articlesHeading = computed(() => (selectedTag.value ? t('taggedHeading', { tag: selectedTag.value }) : t('latestArticles')))
 
 /** Methods */
 function onTagFilter(value: string | string[] | null): void {
@@ -48,7 +46,7 @@ function onTagFilter(value: string | string[] | null): void {
 
 /** SEO */
 defineOgImage('BlogPost', {
-  kind: 'Blog',
+  kind: t('blog'),
   title: brand.name,
   description: ogDescription
 }, {
@@ -98,7 +96,7 @@ useSeoMeta({
     <section
       v-if="featuredPost"
       class="d-grid gap-5 mt-section mt-section-xl"
-      :aria-label="secondaryFeaturedPosts.length ? 'Featured articles' : 'Featured article'"
+      :aria-label="secondaryFeaturedPosts.length ? t('featuredArticles') : t('featuredArticle')"
     >
       <BlogPostCard
         :post="featuredPost"
@@ -137,7 +135,7 @@ useSeoMeta({
           color="secondary"
           :options="tagOptions"
           :model-value="selectedTag"
-          aria-label="Filter articles by tag"
+          :aria-label="t('filterByTag')"
           custom-class="post-filter-chips"
           @update:model-value="onTagFilter"
         />
@@ -150,8 +148,8 @@ useSeoMeta({
         :next-href="selectedTag ? undefined : blogPath('/page/2')"
         paginated
         heading-tag="h3"
-        :empty-title="selectedTag ? `No articles tagged “${selectedTag}” yet` : 'No articles published yet'"
-        :empty-subtitle="selectedTag ? 'Try another tag or browse every article.' : 'Check back soon for new articles.'"
+        :empty-title="selectedTag ? t('noArticlesTagged', { tag: selectedTag }) : t('noArticlesYet')"
+        :empty-subtitle="selectedTag ? t('tryAnotherTag') : t('checkBackSoon')"
         @load-more="loadMore"
       >
         <template
@@ -162,7 +160,7 @@ useSeoMeta({
             <UiButton
               variant="tonal"
               color="primary"
-              text="Show all articles"
+              :text="t('showAllArticles')"
               class="btn-cta"
               @click="selectedTag = null"
             >

@@ -57,6 +57,8 @@ export interface IRssChannelInput {
   feedUrl: string
   imageUrl?: string | null
   lastBuildDate?: Date | null
+  /** RSS `<language>` (e.g. `es-mx`); defaults to `en`. */
+  language?: string
   items: string[]
 }
 
@@ -188,7 +190,7 @@ export function buildRssFeed(channel: IRssChannelInput): string {
     `<title>${title}</title>`,
     `<link>${escapeXml(siteUrl)}</link>`,
     `<description>${escapeXml(channel.description)}</description>`,
-    '<language>en</language>',
+    `<language>${escapeXml((channel.language || 'en').toLowerCase())}</language>`,
     `<lastBuildDate>${(channel.lastBuildDate ?? new Date()).toUTCString()}</lastBuildDate>`,
     `<atom:link href="${escapeXml(channel.feedUrl)}" rel="self" type="application/rss+xml"/>`,
     imageUrl

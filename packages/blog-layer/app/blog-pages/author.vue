@@ -5,15 +5,13 @@ import type { IAuthorPageResponse } from '#blog/shared/types/api'
 /** Head */
 const route = useRoute()
 const { blogPath, blogUrl } = useBlogPath()
-definePageMeta({
-  pageTitle: 'Author'
-})
 
 /** Constants */
 const slug = computed(() => route.params.slug?.toString() || '')
 
 /** Composables */
 const { brand } = useBlogBrand()
+const { t } = useBlogLabels()
 
 /** Fetch */
 const { data, posts, pending, hasMore, loadMore, error, ready } = usePaginatedPosts<IAuthorPageResponse>(
@@ -23,17 +21,17 @@ const { data, posts, pending, hasMore, loadMore, error, ready } = usePaginatedPo
 await ready
 
 if (!data.value)
-  throw resourceError(error.value, 'Author not found')
+  throw resourceError(error.value, t('authorNotFound'))
 
 const author = computed<IAuthor>(() => data.value?.author ?? { name: '' })
 
 /** SEO */
-const authorName = computed(() => author.value?.name || 'Author')
-const seoDescription = computed(() => author.value?.description || `Articles by ${authorName.value} on ${brand.shortName}.`)
+const authorName = computed(() => author.value?.name || t('author'))
+const seoDescription = computed(() => author.value?.description || t('articlesBy', { name: authorName.value, blog: brand.shortName }))
 const canonicalUrl = computed(() => blogUrl(`/authors/${slug.value}`))
 
 defineOgImage('BlogPost', {
-  kind: 'Author',
+  kind: t('author'),
   title: computed(() => authorName.value),
   description: computed(() => seoDescription.value)
 }, {
@@ -66,7 +64,7 @@ useSeoMeta({
       title-id="author-heading"
       :description="author.description"
       :breadcrumbs="[
-        { label: 'Home', to: blogPath() },
+        { label: t('home'), to: blogPath() },
         { label: authorName },
       ]"
     >
@@ -89,7 +87,7 @@ useSeoMeta({
           :to="author.profileLink"
           target="_blank"
           rel="noopener noreferrer"
-          :title="`${authorName} profile`"
+          :title="t('authorProfile', { name: authorName })"
           class="subtitle-1"
         >
           {{ author.username || authorName }}
@@ -107,7 +105,7 @@ useSeoMeta({
         :pending="pending"
         paginated
         :has-more="hasMore"
-        :empty-title="`No articles by ${authorName} yet`"
+        :empty-title="t('noArticlesBy', { name: authorName })"
         @load-more="loadMore"
       />
     </section>

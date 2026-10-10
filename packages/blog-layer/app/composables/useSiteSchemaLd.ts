@@ -29,6 +29,7 @@ export function useSiteSchemaLd() {
   const websiteLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    'inLanguage': brand.locale,
     '@id': websiteId,
     'name': brand.name,
     'url': siteUrl,

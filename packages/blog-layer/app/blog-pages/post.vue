@@ -5,13 +5,11 @@ import { NuxtLink } from '#components'
 const route = useRoute()
 const siteUrl = useSiteUrl()
 const { basePath, blogPath, blogUrl } = useBlogPath()
-definePageMeta({
-  pageTitle: 'Article'
-})
 
 /** Composables */
 const { normalizeDateValue, formatDateValue } = useDateValue()
 const { brand } = useBlogBrand()
+const { t } = useBlogLabels()
 
 /** Constants */
 const slug = computed(() => route.params.slug?.toString() || '')
@@ -23,12 +21,12 @@ const { data, error, ready } = useBlogPost(slug.value)
 await ready
 
 if (!data.value)
-  throw resourceError(error.value, 'Post not found')
+  throw resourceError(error.value, t('postNotFound'))
 
 /** Computed */
 const post = computed(() => data.value?.post ?? null)
 const author = computed(() => data.value?.author ?? null)
-const title = computed(() => post.value?.title || 'Article')
+const title = computed(() => post.value?.title || t('article'))
 const contents = computed(() => data.value?.contents ?? '')
 const headings = computed(() => data.value?.headings ?? [])
 const readingTime = computed(() => data.value?.readingTime)
@@ -59,7 +57,7 @@ const baseSeo = computed(() => resolvePostSeo(seoSource.value, seoOptions.value)
 const needsGeneratedImage = !post.value?.ogImageURL && !post.value?.imageURL
 const ogImages = needsGeneratedImage
   ? defineOgImage('BlogPost', {
-      kind: 'Article',
+      kind: t('article'),
       title: computed(() => baseSeo.value.title),
       description: computed(() => baseSeo.value.description),
       author: computed(() => authorName.value),
@@ -71,7 +69,7 @@ const ogImages = needsGeneratedImage
   : []
 const seo = computed(() => resolvePostSeo(seoSource.value, { ...seoOptions.value, generatedImage: ogImages[0] }))
 const seoTitle = computed(() => seo.value.title)
-const description = computed(() => seo.value.description || `${brand.shortName} article.`)
+const description = computed(() => seo.value.description || t('articleFallbackDescription', { blog: brand.shortName }))
 const socialImage = computed(() => seo.value.image || `${siteUrl}/pwa-512x512.png`)
 const canonicalUrl = computed(() => seo.value.canonical)
 
@@ -82,6 +80,7 @@ const jsonLd = computed(() => {
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
+    'inLanguage': brand.locale,
     'headline': seoTitle.value,
     'description': description.value,
     'image': socialImage.value,
@@ -139,7 +138,7 @@ useSeoMeta({
         :base-url="siteUrl"
         separator-icon="&#xe5cc;"
         :items="[
-          { label: 'Home', to: blogPath() },
+          { label: t('home'), to: blogPath() },
           { label: title },
         ]"
       />

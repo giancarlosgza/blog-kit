@@ -5,15 +5,13 @@ import { NuxtLink } from '#components'
 /** Head */
 const route = useRoute()
 const { blogPath, blogUrl } = useBlogPath()
-definePageMeta({
-  pageTitle: 'Series'
-})
 
 /** Constants */
 const slug = computed(() => route.params.slug?.toString() || '')
 
 /** Composables */
 const { brand } = useBlogBrand()
+const { t } = useBlogLabels()
 
 /** Fetch */
 const { data, error, ready } = useCachedResource<ISeriesPageResponse>(
@@ -23,11 +21,11 @@ const { data, error, ready } = useCachedResource<ISeriesPageResponse>(
 await ready
 
 if (!data.value)
-  throw resourceError(error.value, 'Series not found')
+  throw resourceError(error.value, t('seriesNotFound'))
 
 /** Computed */
 const posts = computed(() => data.value?.posts ?? [])
-const seriesName = computed(() => data.value?.series.name || 'Series')
+const seriesName = computed(() => data.value?.series.name || t('series'))
 const partsLabel = computed(() => `${posts.value.length} ${posts.value.length === 1 ? 'part' : 'parts'}`)
 
 /** SEO */
@@ -38,7 +36,7 @@ const seoDescription = computed(() =>
 )
 const canonicalUrl = computed(() => blogUrl(`/series/${encodeURIComponent(slug.value)}`))
 defineOgImage('BlogPost', {
-  kind: 'Series',
+  kind: t('series'),
   title: computed(() => seriesName.value),
   description: computed(() => seoDescription.value)
 }, {
@@ -71,8 +69,8 @@ useSeoMeta({
       title-id="series-heading"
       :description="data?.series.description"
       :breadcrumbs="[
-        { label: 'Home', to: blogPath() },
-        { label: 'Series' },
+        { label: t('home'), to: blogPath() },
+        { label: t('series') },
         { label: seriesName },
       ]"
     >
@@ -101,8 +99,8 @@ useSeoMeta({
 
       <UiEmpty
         v-else
-        title="No parts published yet"
-        subtitle="Check back soon for the first part of this series."
+        :title="t('noPartsYet')"
+        :subtitle="t('firstPartSoon')"
         custom-class="my-5 my-md-8"
       >
         <template #action>
@@ -112,7 +110,7 @@ useSeoMeta({
               :to="blogPath()"
               variant="tonal"
               color="primary"
-              text="Back to home"
+              :text="t('backToHome')"
               class="btn-cta"
             >
               <template #icon>

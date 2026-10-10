@@ -1,3 +1,5 @@
+import type { IBlogLabels } from '#blog/shared/utils/blog-labels'
+
 /**
  * Blog identity defaults. The site overrides any of these in its own `app.config.ts`;
  * `settings/general` (blog name, description) overrides the name and description at runtime.
@@ -12,12 +14,17 @@ export default defineAppConfig({
     description: '',
     /** Byline when a post has no author name. */
     defaultAuthor: '',
+    /** BCP 47 locale: interface language (built-in `en`, `es`), dates, RSS and JSON-LD `inLanguage`. */
+    locale: 'en-US',
+    /** Overrides for single interface texts, e.g. `{ latestArticles: 'News' }` (keys in `shared/utils/blog-labels.ts`). */
+    labels: {} as Partial<IBlogLabels>,
     home: {
       /** Small line above the home heading (hidden when empty). */
       eyebrow: '',
       /** Highlighted word after the blog name in the home heading (hidden when empty). */
       headingAccent: '',
-      title: 'Articles',
+      /** Home page title; defaults to the "Articles" label in the blog's language. */
+      title: '',
       ogDescription: ''
     },
     archive: {

@@ -13,7 +13,7 @@ function readParams(event: H3Event) {
 export default defineCachedEventHandler(async (event): Promise<ITagPageResponse> => {
   const { tag, page } = readParams(event)
   if (!tag)
-    notFound('Tag not found')
+    notFound(blogLabel('tagNotFound'))
   if (page === null)
     throw createError({ statusCode: 400, statusMessage: 'Invalid page' })
 

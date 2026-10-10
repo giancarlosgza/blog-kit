@@ -10,12 +10,12 @@ export default defineCachedEventHandler(async (event): Promise<ISeriesPageRespon
   const slug = readSlug(event)
   // A "/" would address a subcollection path, not a series id.
   if (!slug || slug.includes('/'))
-    notFound('Series not found')
+    notFound(blogLabel('seriesNotFound'))
 
   try {
     const [series, posts] = await Promise.all([readSeries(slug), readSeriesPosts(slug)])
     if (!series)
-      notFound('Series not found')
+      notFound(blogLabel('seriesNotFound'))
 
     return { series, posts }
   } catch (error) {

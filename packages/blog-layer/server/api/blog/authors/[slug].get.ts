@@ -14,7 +14,7 @@ function readParams(event: H3Event) {
 export default defineCachedEventHandler(async (event): Promise<IAuthorPageResponse> => {
   const { slug, page } = readParams(event)
   if (!slug)
-    notFound('Author not found')
+    notFound(blogLabel('authorNotFound'))
   if (page === null)
     throw createError({ statusCode: 400, statusMessage: 'Invalid page' })
 
@@ -22,7 +22,7 @@ export default defineCachedEventHandler(async (event): Promise<IAuthorPageRespon
     const snapshot = await getFirestore().collection('authors').where('slug', '==', slug).limit(1).get()
     const authorDoc = snapshot.docs[0]
     if (!authorDoc)
-      notFound('Author not found')
+      notFound(blogLabel('authorNotFound'))
 
     const author = toAuthor(authorDoc.id, authorDoc.data())
     const { items, hasMore } = await listPublishedPosts(page, POSTS_PAGE_SIZE, query =>

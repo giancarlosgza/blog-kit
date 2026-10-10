@@ -40,6 +40,7 @@ export default defineCachedEventHandler(async (event) => {
       feedUrl: toBlogUrl(siteUrl, basePath, '/rss.xml'),
       imageUrl: settings?.logoURL,
       lastBuildDate: latestPostDate(feedPosts),
+      language: brand.locale,
       items
     })
   } catch (error) {

@@ -5,9 +5,6 @@ import { NuxtLink } from '#components'
 /** Head */
 const route = useRoute()
 const { blogPath, blogUrl } = useBlogPath()
-definePageMeta({
-  pageTitle: 'All articles'
-})
 
 // Page 1 is the blog home
 const raw = computed(() => route.params.page?.toString() || '')
@@ -20,6 +17,7 @@ if (page.value === 1)
 
 /** Composables */
 const { brand } = useBlogBrand()
+const { t } = useBlogLabels()
 const { data, pending, error, ready } = useCachedResource<IPostListResponse>(
   `posts-page-${page.value}`,
   () => $fetch<IPostListResponse>('/api/blog/posts', { query: { page: page.value } })
@@ -28,7 +26,7 @@ await ready
 
 // Pages past the last one are 404s
 if (page.value >= 2 && !data.value?.posts.length)
-  throw resourceError(data.value ? null : error.value, 'Page not found')
+  throw resourceError(data.value ? null : error.value, t('pageNotFound'))
 
 const posts = computed(() => data.value?.posts ?? [])
 const hasNext = computed(() => data.value?.hasMore ?? false)
@@ -40,12 +38,12 @@ const pageUrl = computed(() => blogUrl(`/page/${page.value}`))
 const prevUrl = computed(() => blogUrl(page.value <= 2 ? '/' : `/page/${page.value - 1}`))
 
 /** SEO */
-const seoTitle = computed(() => `All articles — Page ${page.value}`)
-const seoDescription = computed(() => `${brand.archive.description || `More articles from ${brand.shortName}`} — page ${page.value}.`)
+const seoTitle = computed(() => t('archiveTitle', { page: page.value }))
+const seoDescription = computed(() => t('archivePageSuffix', { description: brand.archive.description || t('archiveDescription', { blog: brand.shortName }), page: page.value }))
 
 defineOgImage('BlogPost', {
-  kind: 'Blog',
-  title: 'All articles',
+  kind: t('blog'),
+  title: t('allArticles'),
   description: computed(() => seoDescription.value)
 }, {
   alt: computed(() => `${seoTitle.value}. ${seoDescription.value}`)
@@ -77,11 +75,11 @@ useSeoMeta({
   <div class="container my-5">
     <!-- Header -->
     <LayoutHubHeader
-      title="All articles"
+      :title="t('allArticles')"
       title-id="archive-heading"
-      :description="`Page ${page}`"
+      :description="t('pageNumber', { page })"
       :breadcrumbs="[
-        { label: 'Home', to: blogPath() },
+        { label: t('home'), to: blogPath() },
         { label: `Page ${page}` },
       ]"
     />
@@ -94,14 +92,14 @@ useSeoMeta({
       <BlogPostList
         :posts="posts"
         :pending="pending"
-        empty-title="No articles on this page"
+        :empty-title="t('noArticlesOnPage')"
       />
     </section>
 
     <!-- Pagination -->
     <nav
       class="d-flex justify-content-between align-items-center gap-3 mt-8"
-      aria-label="Pagination"
+      :aria-label="t('pagination')"
     >
       <UiButton
         :as="NuxtLink"
@@ -109,7 +107,7 @@ useSeoMeta({
         rel="prev"
         variant="tonal"
         color="neutral"
-        text="Newer articles"
+        :text="t('newerArticles')"
         class="btn-cta"
       >
         <template #icon>
@@ -123,7 +121,7 @@ useSeoMeta({
         rel="next"
         variant="tonal"
         color="primary"
-        text="Older articles"
+        :text="t('olderArticles')"
         class="btn-cta"
         icon-trailing
       >

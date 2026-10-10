@@ -4,9 +4,6 @@ import type { ITagPageResponse } from '#blog/shared/types/api'
 /** Head */
 const route = useRoute()
 const { blogPath, blogUrl } = useBlogPath()
-definePageMeta({
-  pageTitle: 'Tag'
-})
 
 /** Constants */
 const tag = computed(() => safeDecode(route.params.tag?.toString() || ''))
@@ -22,6 +19,7 @@ function safeDecode(value: string): string {
 
 /** Composables */
 const { brand } = useBlogBrand()
+const { t } = useBlogLabels()
 
 /** Fetch */
 const { data, posts, pending, hasMore, loadMore, error, ready } = usePaginatedPosts<ITagPageResponse>(
@@ -31,16 +29,16 @@ const { data, posts, pending, hasMore, loadMore, error, ready } = usePaginatedPo
 await ready
 
 if (!data.value)
-  throw resourceError(error.value, 'Tag not found')
+  throw resourceError(error.value, t('tagNotFound'))
 
 /** SEO */
 const tagLabel = computed(() => `#${tag.value}`)
-const seoTitle = computed(() => `Articles tagged “${tag.value}”`)
-const seoDescription = computed(() => `Browse ${brand.shortName} articles tagged ${tag.value}.`)
+const seoTitle = computed(() => t('articlesTagged', { tag: tag.value }))
+const seoDescription = computed(() => t('browseTagged', { blog: brand.shortName, tag: tag.value }))
 const canonicalUrl = computed(() => blogUrl(`/tags/${encodeURIComponent(tag.value)}`))
 
 defineOgImage('BlogPost', {
-  kind: 'Tag',
+  kind: t('tag'),
   title: computed(() => tagLabel.value),
   description: computed(() => seoDescription.value)
 }, {
@@ -71,9 +69,9 @@ useSeoMeta({
     <LayoutHubHeader
       :title="tagLabel"
       title-id="tag-heading"
-      :description="`Articles tagged ${tag}`"
+      :description="t('articlesTagged', { tag })"
       :breadcrumbs="[
-        { label: 'Home', to: blogPath() },
+        { label: t('home'), to: blogPath() },
         { label: tagLabel },
       ]"
     />
@@ -88,7 +86,7 @@ useSeoMeta({
         :pending="pending"
         paginated
         :has-more="hasMore"
-        :empty-title="`No articles tagged “${tag}” yet`"
+        :empty-title="t('noArticlesTagged', { tag })"
         @load-more="loadMore"
       />
     </section>

@@ -22,6 +22,7 @@ const { copy, copied, isSupported: isClipboardSupported } = useClipboard({ sourc
 const toast = ref<InstanceType<typeof UiAlertToast> | null>(null)
 const { onToastMessage } = useToast(toast)
 const colorMode = useColorMode()
+const { t } = useBlogLabels()
 
 /** Data */
 const highlightedCode = ref<string>('')
@@ -32,7 +33,7 @@ const isClient = ref(false)
 /** Computed */
 const resolvedLang = computed(() => resolveShikiLang(props.lang))
 const copyButtonAriaLabel = computed(() => `Copy ${resolvedLang.value} code to clipboard`)
-const codeBlockAriaLabel = computed(() => `${resolvedLang.value} code example${isLoading.value ? ' - Loading syntax highlighting' : ''}`)
+const codeBlockAriaLabel = computed(() => `${t('codeExample', { lang: resolvedLang.value })}${isLoading.value ? ` - ${t('loadingHighlighting')}` : ''}`)
 const containerClasses = computed(() => ({
   'code-container': true,
   'code-copied': copied.value,
@@ -50,7 +51,7 @@ watch([source, resolvedLang, () => colorMode.value], () => {
 })
 watch(copied, (val) => {
   if (val) {
-    onToastMessage('success', 'Code copied to clipboard')
+    onToastMessage('success', t('codeCopied'))
   }
 })
 
@@ -120,7 +121,7 @@ function handleCopyCode(): void {
         <template #icon>
           <UiIconMaterial
             :icon-code="copied ? '&#xe179;' : '&#xe14f;'"
-            :aria-label="copied ? 'Copied' : 'Copy'"
+            :aria-label="copied ? t('copied') : t('copy')"
           />
         </template>
       </UiButton>
