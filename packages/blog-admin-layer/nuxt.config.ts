@@ -146,7 +146,7 @@ export default defineNuxtConfig({
     classSuffix: '-mode'
   },
 
-  // Firebase (web config from NUXT_PUBLIC_VUEFIRE_CONFIG_*)
+  // Firebase
   vuefire: {
     emulators: {
       enabled: process.env.NODE_ENV !== 'production'
@@ -164,7 +164,7 @@ export default defineNuxtConfig({
     }
   },
 
-  // Fonts (sites add their own families)
+  // Fonts
   fonts: {
     assets: {
       prefix: '/fonts/'
@@ -183,7 +183,7 @@ export default defineNuxtConfig({
     processCSSVariables: 'font-prefixed-only'
   },
 
-  // PWA (sites add manifest and cacheId)
+  // PWA
   pwa: {
     registerType: 'autoUpdate',
     workbox: {
