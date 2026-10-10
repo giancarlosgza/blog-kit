@@ -1,18 +1,7 @@
 <script setup lang="ts">
-import type { BrandIcon } from '#admin/app/utils/brand-icons'
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth'
-
-/** Interfaces */
-interface ISocialProvider {
-  id: string
-  name: string
-  icon: BrandIcon
-  size: number
-}
-
 /** Head */
 const runtimeConfig = useRuntimeConfig()
-const { blogName, login } = useAppConfig().admin
+const { blogName, organization, login, legal } = useAppConfig().admin
 const route = useRoute()
 const siteUrl = runtimeConfig.public.siteUrl as string | undefined
 const blogUrl = runtimeConfig.public.blogUrl as string
@@ -40,242 +29,168 @@ useHead({
 })
 
 /** Composables */
-const auth = useFirebaseAuth()
-const user = useCurrentUser()
+const { user, error, loading, isBusy, redirectTo, signInWithGoogle, signInWithEmail, signOut } = useAdminSignIn()
 
 /** Data */
-const error = ref<string>('')
-const isLoading = ref<boolean>(false)
-const isEmailLoading = ref<boolean>(false)
-const isEmailLoginActive = ref<boolean>(false)
 const email = ref<string>('')
 const password = ref<string>('')
 
 const emailId = useId()
 const passwordId = useId()
-const emailFormId = useId()
-
-const socialProviders: ISocialProvider[] = [
-  { id: 'Google', name: 'Google', icon: 'google', size: 16 }
-]
+const currentYear = new Date().getFullYear()
 
 /** Computed */
-const canSignInEmail = computed<boolean>(() => !!email.value.trim() && !!password.value && !isEmailLoading.value)
-const isBusy = computed<boolean>(() => isLoading.value || isEmailLoading.value)
-const emailToggleText = computed<string>(() => isEmailLoginActive.value ? 'Hide email form' : 'Continue with email')
-const emailToggleIcon = computed<string>(() => isEmailLoginActive.value ? '&#xe5ce;' : '&#xe158;')
-const safeRedirect = computed<string | null>(() => {
-  const r = route.query.redirect
-  if (typeof r !== 'string' || !r.startsWith('/') || r.startsWith('//'))
-    return null
-  return r
-})
+const canSignInEmail = computed<boolean>(() => !!email.value.trim() && !!password.value && !isBusy.value)
 
 /** Methods */
-async function signIn() {
-  if (!auth)
-    return
-
-  isLoading.value = true
-  error.value = ''
-  try {
-    await signInWithPopup(auth, new GoogleAuthProvider())
-    await navigateTo(safeRedirect.value ?? '/')
-  } catch (err: any) {
-    error.value = err?.message || 'Sign-in failed.'
-  } finally {
-    isLoading.value = false
-  }
-}
-async function signInEmail() {
-  if (!auth || !canSignInEmail.value)
-    return
-
-  isEmailLoading.value = true
-  error.value = ''
-  try {
-    await signInWithEmailAndPassword(auth, email.value.trim(), password.value)
-    await navigateTo(safeRedirect.value ?? '/')
-  } catch (err: any) {
-    console.log('Email sign-in failed:', err?.code)
-    switch (err?.code) {
-      case 'auth/operation-not-allowed':
-        error.value = 'Email/password sign-in is disabled.'
-        break
-      case 'auth/too-many-requests':
-        error.value = 'Too many attempts, try again later.'
-        break
-      default:
-        error.value = 'Invalid email or password.'
-    }
-  } finally {
-    isEmailLoading.value = false
-  }
-}
-function toggleEmailForm() {
-  isEmailLoginActive.value = !isEmailLoginActive.value
-}
-async function handleSignOut() {
-  if (!auth)
-    return
-
-  error.value = ''
-  try {
-    await signOut(auth)
-  } catch (err: any) {
-    error.value = err?.message || 'Sign-out failed.'
-  }
+function submitEmail() {
+  if (canSignInEmail.value)
+    signInWithEmail(email.value, password.value)
 }
 </script>
 
 <template>
-  <AuthSplitLayout heading-id="login-heading">
-    <!-- Header action -->
-    <template #header-action>
-      <UiButton
-        as="a"
-        :href="blogUrl"
-        target="_blank"
-        rel="noopener"
-        variant="outline"
-        text="Go to the blog"
-        :aria-label="`Open the ${blogName}`"
-        rounded
+  <div class="auth-page">
+    <section
+      class="auth-card"
+      aria-labelledby="login-heading"
+    >
+      <IncludeAppLogo
+        type="icon"
+        :width="48"
+        :height="48"
       />
-    </template>
+      <div class="auth-card-heading">
+        <h1
+          id="login-heading"
+          class="auth-card-title"
+        >
+          Sign in
+        </h1>
+        <p class="text-muted mb-0">
+          to the {{ blogName }} admin
+        </p>
+      </div>
 
-    <!-- Heading -->
-    <UiHeroContent
-      id="login-heading"
-      title="Welcome back"
-      :subtitle="`Sign in to the ${blogName} admin.`"
-      size="lg"
-    />
-
-    <!-- Alerts -->
-    <UiAlert
-      v-if="error"
-      :message="error"
-      type="tonal"
-      variant="danger"
-      custom-class="mb-0"
-      size="sm"
-    />
-    <UiAlert
-      v-else-if="safeRedirect"
-      type="tonal"
-      variant="warning"
-      custom-class="mb-0"
-      size="sm"
-      :message="`Login to access '${safeRedirect}'.`"
-    />
-
-    <!-- Signed-in user -->
-    <AuthCurrentUser
-      v-if="user"
-      :display-name="user.displayName"
-      :email="user.email"
-      :photo-url="user.photoURL"
-      :continue-to="safeRedirect ?? '/'"
-      continue-label="Continue to the blog admin"
-      @sign-out="handleSignOut"
-    />
-
-    <!-- Login methods -->
-    <template v-else>
-      <AuthSocialButtons
-        :providers="socialProviders"
-        action-text="Continue with"
-        :active-provider="isLoading ? 'Google' : null"
-        :is-social-loading="isLoading"
-        :disabled="isBusy"
-        @select="signIn"
+      <!-- Alerts -->
+      <UiAlert
+        v-if="error"
+        :message="error"
+        type="tonal"
+        variant="danger"
+        custom-class="mb-0"
+        size="sm"
+      />
+      <UiAlert
+        v-else-if="redirectTo"
+        type="tonal"
+        variant="warning"
+        custom-class="mb-0"
+        size="sm"
+        :message="`Sign in to open '${redirectTo}'.`"
       />
 
-      <p class="subtitle-2 text-muted text-decoration-side-lines mb-0">
-        or
-      </p>
+      <!-- Signed-in user -->
+      <AuthCurrentUser
+        v-if="user"
+        :display-name="user.displayName"
+        :email="user.email"
+        :photo-url="user.photoURL"
+        :continue-to="redirectTo ?? '/'"
+        continue-label="Continue to the admin"
+        @sign-out="signOut"
+      />
 
-      <!-- Email -->
-      <UiButton
-        variant="outline"
-        :text="emailToggleText"
-        :disabled="isBusy"
-        :aria-label="`${emailToggleText} - ${isEmailLoginActive ? 'Hide' : 'Show'} email login form`"
-        :aria-expanded="isEmailLoginActive"
-        :aria-controls="emailFormId"
-        size="lg"
-        fluid
-        rounded
-        @click="toggleEmailForm"
-      >
-        <template #icon>
-          <UiIconMaterial :icon-code="emailToggleIcon" />
-        </template>
-      </UiButton>
-
-      <form
-        v-if="isEmailLoginActive"
-        :id="emailFormId"
-        class="auth-split-email"
-        action="#"
-        aria-label="Email and password login form"
-        @submit.prevent="signInEmail"
-      >
-        <UiInputText
-          :id="emailId"
-          v-model="email"
-          label="Email"
-          type="email"
-          placeholder="name@example.com"
-          autocomplete="email"
-          required
-        />
-        <UiInputText
-          :id="passwordId"
-          v-model="password"
-          label="Password"
-          type="password"
-          placeholder="Your password"
-          autocomplete="current-password"
-          required
-        />
+      <!-- Login methods -->
+      <template v-else>
         <UiButton
-          type="submit"
-          variant="filled"
-          text="Sign in"
-          :loading="isEmailLoading"
-          :disabled="!canSignInEmail"
-          aria-label="Sign in with email and password"
-          custom-class="mt-2"
+          variant="outline"
+          text="Continue with Google"
+          :loading="loading === 'google'"
+          :disabled="isBusy"
           size="lg"
           fluid
           rounded
-        />
-      </form>
-    </template>
+          @click="signInWithGoogle"
+        >
+          <template #icon>
+            <UiIconSvg
+              :content="getBrandIcon('google')"
+              :size="16"
+            />
+          </template>
+        </UiButton>
 
-    <p class="subtitle-2 text-muted mb-0">
-      {{ login.staffNotice }}
-    </p>
+        <p class="subtitle-2 text-muted text-decoration-side-lines mb-0">
+          or
+        </p>
 
-    <!-- Wall note -->
-    <template
-      v-if="login.wallNote"
-      #note
-    >
-      {{ login.wallNote }}
-      <UiButton
-        v-if="login.wallLink.url"
-        as="a"
-        :href="login.wallLink.url"
+        <form
+          class="auth-card-form"
+          action="#"
+          aria-label="Email and password sign-in"
+          @submit.prevent="submitEmail"
+        >
+          <UiInputText
+            :id="emailId"
+            v-model="email"
+            label="Email"
+            type="email"
+            placeholder="name@example.com"
+            autocomplete="email"
+            required
+          />
+          <UiInputPassword
+            :id="passwordId"
+            v-model="password"
+            label="Password"
+            placeholder="Your password"
+            required
+          />
+          <UiButton
+            type="submit"
+            variant="filled"
+            text="Sign in"
+            :loading="loading === 'email'"
+            :disabled="!canSignInEmail"
+            size="lg"
+            fluid
+            rounded
+          />
+        </form>
+      </template>
+
+      <p class="subtitle-2 text-muted mb-0">
+        {{ login.staffNotice }}
+      </p>
+    </section>
+
+    <footer class="auth-page-footer">
+      <span>© {{ currentYear }} {{ organization }}</span>
+      <a
+        v-if="blogUrl"
+        :href="blogUrl"
         target="_blank"
         rel="noopener"
-        variant="tonal"
-        size="sm"
-        :text="login.wallLink.text"
-        rounded
-      />
-    </template>
-  </AuthSplitLayout>
+      >
+        Go to the blog
+      </a>
+      <a
+        v-if="legal.termsUrl"
+        :href="legal.termsUrl"
+        target="_blank"
+        rel="noopener"
+      >
+        Terms
+      </a>
+      <a
+        v-if="legal.privacyUrl"
+        :href="legal.privacyUrl"
+        target="_blank"
+        rel="noopener"
+      >
+        Privacy
+      </a>
+    </footer>
+  </div>
 </template>

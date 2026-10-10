@@ -23,15 +23,7 @@ export default defineAppConfig({
     /** Accent color for new posts and the default settings color. */
     defaultColor: '#6366f1',
     login: {
-      staffNotice: 'Access is limited to the blog staff. Use the account linked to your author profile.',
-      /** Label of the login aside (AuthCardWall). */
-      wallLabel: 'Blog',
-      /** Line shown over the aside (hidden when empty). */
-      wallNote: '',
-      wallLink: {
-        text: '',
-        url: ''
-      }
+      staffNotice: 'Access is limited to the blog staff. Use the account linked to your author profile.'
     },
     legal: {
       termsUrl: '',
