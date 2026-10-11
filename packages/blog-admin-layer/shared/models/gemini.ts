@@ -9,7 +9,7 @@ export interface IModelGroup {
   models: IModelItem[]
 }
 
-export const GEMINI_MODELS = ['gemini-3.5-flash-lite', 'gemini-3.7-flash', 'gemini-3.8-flash'] as const
+export const GEMINI_MODELS = ['gemini-3.5-flash-lite', 'gemini-3.8-flash'] as const
 export type IHarmonyGemini = typeof GEMINI_MODELS[number]
 /** Default model used across every AI surface (client and server). */
 export const DEFAULT_GEMINI_MODEL: IHarmonyGemini = 'gemini-3.8-flash'
