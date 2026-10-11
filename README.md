@@ -10,6 +10,7 @@ packages and only keeps its brand, assets and deploy config.
 | [`@giancarlosgza/blog-core`](packages/blog-core) | 0.4.2 | Firestore models, URL/date/SEO/text helpers and the post HTML sanitizer, shared by every package |
 | [`@giancarlosgza/blog-admin-layer`](packages/blog-admin-layer) | 0.4.2 | The admin app: editor, workflow, media, authors, tags, settings, analytics, AI tools. Runs as its own SSR app |
 | [`@giancarlosgza/blog-firebase`](packages/blog-firebase) | 0.4.2 | Firestore/Storage rules, indexes and the scheduled-publish Cloud Function |
+| [`@giancarlosgza/blog-deploy`](packages/blog-deploy) | unreleased | CLI that provisions a site on a Docker VPS: nginx, TLS, port, deploy script, env files, GitHub settings |
 
 Which one to install:
 - **A blog is the whole site** (e.g. blog.colorffy.com): `@giancarlosgza/blog-site-layer`.
@@ -37,6 +38,7 @@ playground/landing         landing page with the blog at /blog, extends blog-lay
 packages/blog-admin-layer  admin app (published)
 playground/admin           admin on the admin layer (port 3032)
 packages/blog-firebase     rules, indexes and Cloud Functions (published, built with tsdown)
+packages/blog-deploy       VPS provisioning CLI and the server deploy script (plain Node, no build)
 docs                       Firestore schema
 ```
 

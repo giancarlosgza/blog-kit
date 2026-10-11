@@ -1,0 +1,25 @@
+{
+  "name": "@giancarlosgza/blog-deploy",
+  "version": "0.4.2",
+  "description": "Provisions blog sites on a Docker VPS: nginx, TLS, ports, deploy script, env files and GitHub settings",
+  "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giancarlosgza/blog-kit.git",
+    "directory": "packages/blog-deploy"
+  },
+  "homepage": "https://github.com/giancarlosgza/blog-kit/tree/main/packages/blog-deploy#readme",
+  "type": "module",
+  "bin": {
+    "blog-deploy": "./bin/blog-deploy.mjs"
+  },
+  "files": [
+    "bin",
+    "server",
+    "src"
+  ],
+  "engines": {
+    "node": ">=24"
+  }
+}

@@ -20,6 +20,13 @@ export default defineConfig({
       },
       {
         test: {
+          name: 'blog-deploy',
+          include: ['packages/blog-deploy/tests/*.test.mjs'],
+          environment: 'node'
+        }
+      },
+      {
+        test: {
           name: 'blog-layer',
           include: ['packages/blog-layer/tests/unit/**/*.test.ts'],
           environment: 'node',
