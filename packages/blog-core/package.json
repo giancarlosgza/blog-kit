@@ -1,6 +1,6 @@
 {
   "name": "@giancarlosgza/blog-core",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Shared models, URL, date, SEO and text helpers and the post HTML sanitizer for the Firebase blog packages",
   "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
   "license": "MIT",
