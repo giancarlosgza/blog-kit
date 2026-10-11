@@ -42,6 +42,9 @@ The blog mounts at `/` unless the site sets `blog.basePath`.
 - **Navbar and footer:** replace them by adding `TheNavbar.vue` / `TheFooter.vue` to the site's
   `app/components/`.
 - **Brand styles:** CSS the site adds to `css` loads after the framework and the blog styles, so
-  tokens in the same cascade layers (e.g. `@layer abstracts.tokens { :root { ... } }`) win.
+  tokens in the same cascade layers win: `@layer base.tokens { :root { ... } }` for the Colorffy
+  defaults (`--cffy-*`). Start the site's first stylesheet with the full layer order
+  (`@layer reset, abstracts, base, components, layout, utilities, media-queries, overrides, pages;`):
+  in dev the site's styles can load before the layer's.
 
 Inside this layer, its own files are imported through `#blog-site/...`.

@@ -63,7 +63,10 @@ PWA icons (optionally generated with `pwa: { pwaAssets: { config: true } }` and 
 - **Widgets:** editors can insert the widgets the site registers by providing `blogWidgetRegistry`
   (`{ descriptors, preview? }`) from a plugin. Without one, "Insert widget" is hidden.
 - **Styles:** the layer loads `@colorffy/css` and the admin styles first, so site tokens in the same
-  cascade layers (e.g. `@layer abstracts.tokens { :root { ... } }`) override the defaults.
+  cascade layers override the defaults: `@layer base.tokens { :root { ... } }` for the Colorffy
+  defaults (`--cffy-*`). Start the site's first stylesheet with the full layer order
+  (`@layer reset, abstracts, base, components, layout, utilities, media-queries, overrides, pages;`):
+  in dev the site's styles can load before the layer's.
 
 Firestore and Storage rules, indexes and the scheduled-publish Cloud Function are in
 [`@giancarlosgza/blog-firebase`](https://github.com/giancarlosgza/blog-kit/tree/main/packages/blog-firebase); deploy them from the admin repo.
