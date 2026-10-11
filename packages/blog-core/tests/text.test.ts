@@ -15,6 +15,12 @@ describe('toSlug', () => {
     expect(toSlug('--Hello World--')).toBe('hello-world')
   })
 
+  it('keeps the base letter of accented characters', () => {
+    expect(toSlug('Brackets o alineadores: ¿cuál es mejor para ti?')).toBe('brackets-o-alineadores-cual-es-mejor-para-ti')
+    expect(toSlug('Ortodoncia en niños: ¿cuándo empezar?')).toBe('ortodoncia-en-ninos-cuando-empezar')
+    expect(toSlug('Ça va über Ålesund')).toBe('ca-va-uber-alesund')
+  })
+
   it('returns an empty string when nothing is left', () => {
     expect(toSlug('!!!')).toBe('')
     expect(toSlug('🎨')).toBe('')

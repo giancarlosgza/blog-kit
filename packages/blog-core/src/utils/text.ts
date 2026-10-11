@@ -1,8 +1,10 @@
 import type { IPost } from '../models/post'
 
-/** Convert an arbitrary string to a URL-safe slug. */
+/** Convert an arbitrary string to a URL-safe slug; accented letters keep their base letter (`cuál` → `cual`). */
 export function toSlug(value: string): string {
   return value
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
     .toLowerCase()
     .trim()
     .replace(/[^\w\s-]/g, '')
