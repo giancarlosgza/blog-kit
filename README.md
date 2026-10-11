@@ -80,6 +80,11 @@ Installs only take versions published at least a day ago (`minimumReleaseAge` in
 4. In each site, bump the package (`npm run install:latest`) and push once the release is a day old:
    the sites' `npm audit signatures` (CI and Dockerfile) follows the same one-day rule as installs.
 
+### Upgrading a site to 0.4.3
+- The admin reads its own URL from the site config, so `NUXT_SITE_URL` sets it at runtime, as on the blog
+  sites. `NUXT_PUBLIC_SITE_URL` keeps working; rename it in `.env` and `nuxt.config.ts` when convenient.
+- The admin's blog URL can be set as `NUXT_BLOG_URL`; `NUXT_PUBLIC_BLOG_URL` keeps working.
+
 ### Upgrading a site to 0.4.2
 - `toSlug` keeps the base letter of accented characters (`¿cuál?` becomes `cual`, it used to drop the letter).
   Existing posts keep their slugs; heading anchors in accented headings get the corrected ids.
