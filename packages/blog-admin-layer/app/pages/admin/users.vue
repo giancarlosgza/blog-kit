@@ -6,9 +6,8 @@ import type { AdminRole, IAdmin } from '#admin/shared/models/admin'
 import { useToast } from '@colorffy/ui'
 
 /** Head */
-const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
-const siteUrl = runtimeConfig.public.siteUrl as string | undefined
+const siteUrl = useAdminSiteUrl()
 
 definePageMeta({
   pageTitle: 'Admins',

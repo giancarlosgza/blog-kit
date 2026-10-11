@@ -12,9 +12,8 @@ import { resolvePostStatus } from '#admin/shared/utils/post-status'
 type ReviewTab = 'review' | 'changes' | 'scheduled' | 'all'
 
 /** Head */
-const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
-const siteUrl = runtimeConfig.public.siteUrl as string | undefined
+const siteUrl = useAdminSiteUrl()
 
 definePageMeta({
   pageTitle: 'Reviews',

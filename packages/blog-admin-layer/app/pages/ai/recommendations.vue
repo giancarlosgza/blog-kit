@@ -5,10 +5,9 @@ import { useToast } from '@colorffy/ui'
 import { RECOMMENDATIONS_SOURCE_LABEL, RECOMMENDATIONS_UNIT_LABEL } from '#admin/app/composables/useRecommendationsAi'
 
 /** Head */
-const runtimeConfig = useRuntimeConfig()
 const chips = useAppConfig().admin.ai.chips
 const route = useRoute()
-const siteUrl = runtimeConfig.public.siteUrl as string | undefined
+const siteUrl = useAdminSiteUrl()
 
 definePageMeta({
   pageTitle: 'AI Recommendations',

@@ -9,9 +9,8 @@ interface IError {
 }
 
 /** Head */
-const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
-const siteUrl = runtimeConfig.public.siteUrl as string | undefined
+const siteUrl = useAdminSiteUrl()
 const canonicalUrl = computed(() => siteUrl ? `${siteUrl}${route.path}` : route.path)
 
 definePageMeta({

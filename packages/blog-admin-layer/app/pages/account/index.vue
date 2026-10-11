@@ -11,9 +11,8 @@ interface IProviderInfo {
 }
 
 /** Head */
-const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
-const siteUrl = runtimeConfig.public.siteUrl as string | undefined
+const siteUrl = useAdminSiteUrl()
 
 definePageMeta({
   pageTitle: 'Account',

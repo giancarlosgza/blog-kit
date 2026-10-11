@@ -29,7 +29,7 @@ const runtimeConfig = useRuntimeConfig()
 const { blogName } = useAppConfig().admin
 const { blogUrl } = useBlogUrl()
 const route = useRoute()
-const siteUrl = runtimeConfig.public.siteUrl as string | undefined
+const siteUrl = useAdminSiteUrl()
 
 definePageMeta({
   pageTitle: 'Dashboard',

@@ -11,15 +11,15 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      blogUrl: process.env.NUXT_PUBLIC_BLOG_URL || 'http://localhost:3030',
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3032'
+      blogUrl: process.env.NUXT_BLOG_URL || 'http://localhost:3030',
+      siteUrl: process.env.NUXT_SITE_URL || 'http://localhost:3032'
     }
   },
 
   css: ['@/assets/css/material-symbols.generated.css'],
 
   site: {
-    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://admin.example.com',
+    url: process.env.NUXT_SITE_URL || 'https://admin.example.com',
     name: 'Blog Admin Playground'
   },
 

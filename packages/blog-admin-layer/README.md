@@ -17,7 +17,7 @@ npm install @giancarlosgza/blog-admin-layer
 export default defineNuxtConfig({
   extends: ['@giancarlosgza/blog-admin-layer'],
   css: ['@/assets/css/material-symbols.generated.css'],
-  site: { url: process.env.NUXT_PUBLIC_SITE_URL, name: 'My Blog Admin' },
+  site: { url: process.env.NUXT_SITE_URL, name: 'My Blog Admin' },
   pwa: { manifest: { name: 'My Blog Admin', short_name: 'Admin' }, workbox: { cacheId: 'my-blog-admin' } }
 })
 ```
@@ -32,9 +32,10 @@ export default defineNuxtConfig({
 
 Environment (see `playground/admin/.env.example`):
 - `NUXT_PUBLIC_VUEFIRE_CONFIG_*`: Firebase web config; `GOOGLE_APPLICATION_CREDENTIALS`: service account.
-- `NUXT_PUBLIC_SITE_URL`: the admin's own origin. It must match the deployed URL, because
-  `/api/ai/generate` rejects other origins.
-- `NUXT_PUBLIC_BLOG_URL`: the public blog URL, including its base path when the blog is embedded.
+- `NUXT_SITE_URL`: the admin's own origin, read at runtime through the site config (`NUXT_PUBLIC_SITE_URL`
+  also works). It must match the deployed URL, because `/api/ai/generate` rejects other origins.
+- `NUXT_BLOG_URL`: the public blog URL, including its base path when the blog is embedded
+  (`NUXT_PUBLIC_BLOG_URL` also works).
 - Optional: `NUXT_GEMINI_KEY` (AI tools), `NUXT_PLAUSIBLE_TOKEN` + `NUXT_PUBLIC_PLAUSIBLE_*` (analytics).
 
 Public files the site provides: `favicon.ico`, `logo-wordmark.svg`, `icon-pwa.png`, `avatar.png` and the

@@ -3,7 +3,7 @@
 const runtimeConfig = useRuntimeConfig()
 const { blogName, organization, login, legal } = useAppConfig().admin
 const route = useRoute()
-const siteUrl = runtimeConfig.public.siteUrl as string | undefined
+const siteUrl = useAdminSiteUrl()
 const blogUrl = runtimeConfig.public.blogUrl as string
 
 definePageMeta({

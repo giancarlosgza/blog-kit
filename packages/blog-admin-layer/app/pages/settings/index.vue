@@ -4,10 +4,9 @@ import type { ISettings } from '@giancarlosgza/blog-core'
 import { useToast } from '@colorffy/ui'
 
 /** Head */
-const runtimeConfig = useRuntimeConfig()
 const { blogName, defaultColor } = useAppConfig().admin
 const route = useRoute()
-const siteUrl = runtimeConfig.public.siteUrl as string | undefined
+const siteUrl = useAdminSiteUrl()
 
 definePageMeta({
   pageTitle: 'Settings',

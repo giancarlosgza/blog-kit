@@ -6,10 +6,9 @@ import { useToast } from '@colorffy/ui'
 import { deleteDoc, doc } from 'firebase/firestore'
 
 /** Head */
-const runtimeConfig = useRuntimeConfig()
 const { blogName } = useAppConfig().admin
 const route = useRoute()
-const siteUrl = runtimeConfig.public.siteUrl as string | undefined
+const siteUrl = useAdminSiteUrl()
 
 definePageMeta({
   pageTitle: 'Tags',

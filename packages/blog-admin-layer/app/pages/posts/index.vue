@@ -15,10 +15,9 @@ interface IDeletePostResponse {
 }
 
 /** Head */
-const runtimeConfig = useRuntimeConfig()
 const { blogName } = useAppConfig().admin
 const route = useRoute()
-const siteUrl = runtimeConfig.public.siteUrl as string | undefined
+const siteUrl = useAdminSiteUrl()
 
 definePageMeta({
   pageTitle: 'Posts',

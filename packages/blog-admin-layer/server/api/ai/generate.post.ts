@@ -10,7 +10,7 @@ const DEFAULT_MAX_OUTPUT_TOKENS = 2048
 const MIN_OUTPUT_TOKENS = 256
 const MAX_OUTPUT_TOKENS_CAP = 8192
 
-/** The admin's own origin (`public.siteUrl`); any origin in dev. */
+/** The admin's own origin (site config URL, else `public.siteUrl`); any origin in dev. */
 function isAllowedOrigin(origin: string, siteUrl = ''): boolean {
   if (import.meta.dev)
     return true
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
   // Same-origin enforcement: requests from unknown origins are rejected before any auth check.
   // The origin header is absent on same-origin requests (e.g. SSR $fetch), so absence is allowed.
   const origin = getHeader(event, 'origin')
-  if (origin && !isAllowedOrigin(origin, useRuntimeConfig(event).public.siteUrl)) {
+  if (origin && !isAllowedOrigin(origin, getSiteConfig(event).url || useRuntimeConfig(event).public.siteUrl)) {
     throw createError({ statusCode: 403, statusMessage: 'Forbidden' })
   }
 

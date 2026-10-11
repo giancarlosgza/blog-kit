@@ -2,10 +2,9 @@
 import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore'
 
 /** Head */
-const runtimeConfig = useRuntimeConfig()
 const { blogName, defaultColor } = useAppConfig().admin
 const route = useRoute()
-const siteUrl = runtimeConfig.public.siteUrl as string | undefined
+const siteUrl = useAdminSiteUrl()
 
 definePageMeta({
   pageTransition: {

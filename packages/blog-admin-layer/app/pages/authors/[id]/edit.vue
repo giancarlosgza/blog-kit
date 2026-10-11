@@ -5,9 +5,8 @@ import { useToast } from '@colorffy/ui'
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
 
 /** Head */
-const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
-const siteUrl = runtimeConfig.public.siteUrl as string | undefined
+const siteUrl = useAdminSiteUrl()
 
 definePageMeta({
   pageTransition: {

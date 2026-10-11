@@ -49,6 +49,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    blogUrl: '',
     geminiKey: '',
     plausibleToken: '',
     public: {

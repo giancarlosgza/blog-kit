@@ -11,10 +11,9 @@ import { applyMediaFilters, countMediaByFolder, emptyMediaFilters, hasActiveMedi
 import { formatBytes, isMediaInUse } from '#admin/shared/utils/media'
 
 /** Head */
-const runtimeConfig = useRuntimeConfig()
 const { blogName } = useAppConfig().admin
 const route = useRoute()
-const siteUrl = runtimeConfig.public.siteUrl as string | undefined
+const siteUrl = useAdminSiteUrl()
 
 definePageMeta({
   pageTitle: 'Media',
