@@ -78,6 +78,13 @@ Installs only take versions published at least a day ago (`minimumReleaseAge` in
 4. In each site, bump the package (`npm run install:latest`) and push once the release is a day old:
    the sites' `npm audit signatures` (CI and Dockerfile) follows the same one-day rule as installs.
 
+### Upgrading a site to 0.4.2
+- `toSlug` keeps the base letter of accented characters (`¿cuál?` becomes `cual`, it used to drop the letter).
+  Existing posts keep their slugs; heading anchors in accented headings get the corrected ids.
+- The admin's Save draft button saves again, and the new post slug can be edited (it follows the title until
+  changed, then "Use title" restores it).
+- Gemini 3.7 Flash is gone from the AI tools; a saved 3.7 choice falls back to 3.8 Flash.
+
 ### Upgrading a site to 0.4.0
 The blog and site layers are translatable: set `blog.locale` (e.g. `'es-MX'`) for the built-in Spanish texts
 and dates, and `blog.labels` for single overrides. Nothing changes for English sites; `blog.home.title` and
