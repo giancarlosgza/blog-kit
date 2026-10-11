@@ -1,5 +1,8 @@
-import { describe, expect, it } from 'vitest'
-import { DeployError, localhostKeys, missingKeys, parseEnv, validateSite } from '../src/config.mjs'
+import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { afterEach, describe, expect, it } from 'vitest'
+import { DeployError, localhostKeys, missingKeys, parseEnv, siteSecretFiles, validateSite } from '../src/config.mjs'
 import { createSiteScript, renderSite } from '../src/nginx.mjs'
 import { parseFacts, pickPort } from '../src/server.mjs'
 
@@ -40,6 +43,40 @@ describe('env checks', () => {
 
   it('flags local URLs', () => {
     expect(localhostKeys({ A: 'http://localhost:3000', B: 'https://example.com', C: 'http://127.0.0.1' })).toEqual(['A', 'C'])
+  })
+})
+
+describe('siteSecretFiles', () => {
+  afterEach(() => {
+    delete process.env.BLOG_DEPLOY_SECRETS
+  })
+
+  it('prefers the repo copies and falls back to ~/.webservices/<container>', () => {
+    const repo = mkdtempSync(join(tmpdir(), 'blog-deploy-repo-'))
+    const secrets = mkdtempSync(join(tmpdir(), 'blog-deploy-secrets-'))
+    process.env.BLOG_DEPLOY_SECRETS = secrets
+    mkdirSync(join(secrets, 'site-prod'))
+    writeFileSync(join(secrets, 'site-prod', '.env'), 'A=1')
+    writeFileSync(join(secrets, 'site-prod', 'service-account.json'), '{}')
+
+    expect(siteSecretFiles(repo, 'site-prod')).toMatchObject({
+      env: join(secrets, 'site-prod', '.env'),
+      account: join(secrets, 'site-prod', 'service-account.json')
+    })
+
+    writeFileSync(join(repo, '.env.production'), 'A=2')
+    writeFileSync(join(repo, 'service-account.json'), '{}')
+    expect(siteSecretFiles(repo, 'site-prod')).toMatchObject({
+      env: join(repo, '.env.production'),
+      account: join(repo, 'service-account.json')
+    })
+  })
+
+  it('reports where it looked when nothing exists', () => {
+    process.env.BLOG_DEPLOY_SECRETS = mkdtempSync(join(tmpdir(), 'blog-deploy-secrets-'))
+    const files = siteSecretFiles(mkdtempSync(join(tmpdir(), 'blog-deploy-repo-')), 'site-prod')
+    expect(files.env).toBeUndefined()
+    expect(files.searched.env).toHaveLength(2)
   })
 })
 

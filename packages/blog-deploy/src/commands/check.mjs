@@ -1,6 +1,5 @@
-import { existsSync, readFileSync } from 'node:fs'
-import { join } from 'node:path'
-import { DEPLOY_SCRIPT, loadSite, secretsDir, sha256 } from '../config.mjs'
+import { readFileSync } from 'node:fs'
+import { DEPLOY_SCRIPT, loadSite, sha256, siteSecretFiles } from '../config.mjs'
 import { listSecrets, listVariables, repoFromGit } from '../github.mjs'
 import { heading, row } from '../output.mjs'
 import { runScript, sshTarget } from '../remote.mjs'
@@ -20,8 +19,9 @@ export async function check({ cwd, skipGithub }) {
     row(label, `${good ? 'ok' : '!!'}  ${text}`)
   }
 
-  const local = join(secretsDir(), config.container)
-  status('local secrets', existsSync(join(local, '.env')) && existsSync(join(local, 'service-account.json')), local)
+  const local = siteSecretFiles(cwd, config.container)
+  status('local env file', Boolean(local.env), local.env ?? `missing (${local.searched.env.join(' or ')})`)
+  status('local service account', Boolean(local.account), local.account ?? `missing (${local.searched.account.join(' or ')})`)
 
   const deploy = facts.files['deploy.sh']
   const current = deploy?.sha === sha256(readFileSync(DEPLOY_SCRIPT))

@@ -31,19 +31,26 @@ PORT=3004                              # optional: written by `site` when it pic
 EMAIL=you@example.com                  # optional: Let's Encrypt contact when the server has no account yet
 ```
 
-## Secrets: outside every repository
+## Secrets
 
-`secrets` reads them from `~/.webservices/` (or `BLOG_DEPLOY_SECRETS`):
+Never committed. Each site's files are read from the repo first, where `.gitignore` and `.dockerignore`
+already exclude them, then from `~/.webservices/<container>/` (or `BLOG_DEPLOY_SECRETS`) for anyone who
+prefers to keep production values outside every repo:
 
+| File | In the repo | Or |
+| :--- | :--- | :--- |
+| Production env file | `.env.production` (e.g. `cp .env .env.production`, then the production URLs) | `~/.webservices/<container>/.env` |
+| Firebase service account key | `service-account.json` | `~/.webservices/<container>/service-account.json` |
+
+The values every site shares live only in `~/.webservices/secrets.env`:
+
+```bash
+DOCKER_USER=you                # Docker Hub user
+DOCKER_PASS=dckr_pat_...       # Docker Hub access token with Read & Write
+CI_SSH_KEY=~/.ssh/deploy_key   # private key the CI deploys with (its public key in the server's authorized_keys)
 ```
-~/.webservices/
-  secrets.env                  # DOCKER_USER, DOCKER_PASS, CI_SSH_KEY=~/.ssh/deploy_key (shared by every site)
-  my-blog-prod/
-    .env                       # the production env file
-    service-account.json       # the Firebase service account key
-```
 
-It checks the env file against the repo's `.env.example` (missing keys, URLs still on localhost) and the
+`secrets` checks the env file against the repo's `.env.example` (missing keys, URLs still on localhost) and the
 key file, uploads both to `~/webservices/<container>.env` and `~/webservices/<container>-service-account.json`
 with mode 600 (skipped when the checksums already match), and sets `DOCKER_USER`, `DOCKER_PASS`, `SSH_KEY`,
 `SSH_HOST`, `SSH_USER` and `SSH_PORT` on the repository; the SSH values come from `ssh -G <alias>`. Values go

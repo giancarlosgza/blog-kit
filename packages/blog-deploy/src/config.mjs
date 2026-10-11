@@ -86,6 +86,20 @@ export function secretsDir() {
   return process.env.BLOG_DEPLOY_SECRETS || join(homedir(), '.webservices')
 }
 
+/** The site's production env file and service account: the repo's own (gitignored) copies first, then ~/.webservices/<container>/. */
+export function siteSecretFiles(cwd, container) {
+  const external = join(secretsDir(), container)
+  const searched = {
+    env: [join(cwd, '.env.production'), join(external, '.env')],
+    account: [join(cwd, 'service-account.json'), join(external, 'service-account.json')]
+  }
+  return {
+    env: searched.env.find(path => existsSync(path)),
+    account: searched.account.find(path => existsSync(path)),
+    searched
+  }
+}
+
 export function expandHome(path) {
   return path.replace(/^~(?=[/\\]|$)/, homedir())
 }

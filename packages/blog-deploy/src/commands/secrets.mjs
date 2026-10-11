@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { DeployError, expandHome, loadSite, localhostKeys, missingKeys, parseEnv, secretsDir, sha256 } from '../config.mjs'
+import { DeployError, expandHome, loadSite, localhostKeys, missingKeys, parseEnv, secretsDir, sha256, siteSecretFiles } from '../config.mjs'
 import { repoFromGit, setSecret } from '../github.mjs'
 import { heading, plan, row } from '../output.mjs'
 import { sshTarget, upload } from '../remote.mjs'
@@ -15,15 +15,13 @@ const SHARED_KEYS = ['DOCKER_USER', 'DOCKER_PASS', 'CI_SSH_KEY']
 export async function secrets({ cwd, dryRun, skipGithub }) {
   const config = loadSite(cwd)
   const dir = secretsDir()
-  const siteDir = join(dir, config.container)
-  heading(`Secrets for ${config.container} from ${siteDir}${dryRun ? ' [dry run]' : ''}`)
+  heading(`Secrets for ${config.container}${dryRun ? ' [dry run]' : ''}`)
 
-  const envPath = join(siteDir, '.env')
-  const accountPath = join(siteDir, 'service-account.json')
-  for (const path of [envPath, accountPath]) {
-    if (!existsSync(path))
-      throw new DeployError(`Missing ${path}`)
-  }
+  const { env: envPath, account: accountPath, searched } = siteSecretFiles(cwd, config.container)
+  if (!envPath)
+    throw new DeployError(`No production env file. Create one of:\n    ${searched.env.join('\n    ')}`)
+  if (!accountPath)
+    throw new DeployError(`No service account key. Add one of:\n    ${searched.account.join('\n    ')}`)
 
   const env = readFileSync(envPath)
   const values = parseEnv(env.toString('utf8'))
@@ -32,11 +30,11 @@ export async function secrets({ cwd, dryRun, skipGithub }) {
     ? missingKeys(parseEnv(readFileSync(examplePath, 'utf8')), values, ['GOOGLE_APPLICATION_CREDENTIALS'])
     : []
   const local = localhostKeys(values)
-  row('.env', `${Object.keys(values).length} keys`)
+  row('env file', `${envPath} (${Object.keys(values).length} keys)`)
   if (missing.length)
     row('', `not defined (from .env.example): ${missing.join(', ')}`)
   if (local.length)
-    throw new DeployError(`.env still points at localhost: ${local.join(', ')}`)
+    throw new DeployError(`${envPath} still points at localhost: ${local.join(', ')}`)
 
   const account = readFileSync(accountPath)
   let projectId
@@ -48,7 +46,7 @@ export async function secrets({ cwd, dryRun, skipGithub }) {
   } catch (error) {
     throw new DeployError(`${accountPath} is not a service account key (${error.message})`)
   }
-  row('service-account.json', `project ${projectId}`)
+  row('service account', `${accountPath} (project ${projectId})`)
 
   const facts = readFacts(config)
   const files = [
