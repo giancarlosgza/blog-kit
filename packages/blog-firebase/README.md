@@ -29,6 +29,11 @@ Point `firebase.json` at the package files:
 Staff access comes from `admins/{uid}.role` (`admin` or `editor`) in Firestore; the Storage rules read
 it too. To customize the rules, copy the files into the repo instead.
 
+That Firestore read from the Storage rules is a cross-service call, which Firebase only allows once the
+Storage service agent may read Firestore. Run the first Storage rules deploy interactively and accept the
+prompt (`--non-interactive` skips it), or click **Fix issue** on the Storage rules banner in the console.
+Without it, every upload is denied, staff included.
+
 ## Scheduled publishing
 
 Publishes posts whose `status` is `scheduled` once `publishAt` has passed, with the same steps as the
