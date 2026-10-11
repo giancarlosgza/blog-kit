@@ -327,13 +327,12 @@ async function openHistory() {
           </UiButtonTooltip>
           <AppPostsAiToolbar />
           <UiButtonTooltip
-            type="submit"
-            form="post-form"
             variant="outline"
             tooltip-text="Save draft"
             icon
             rounded
             :disabled="!meta || isBusy"
+            @click="onSaveDraft"
           >
             <template #icon>
               <UiIconMaterial icon-code="&#xe7b3;" />
