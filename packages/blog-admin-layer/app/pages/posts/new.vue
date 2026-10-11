@@ -47,9 +47,12 @@ const form = ref({
   color: defaultColor
 })
 
+const isSlugAuto = ref<boolean>(true)
+
 /** Watch */
 watch(() => form.value.title, (value) => {
-  form.value.slug = toSlug(value)
+  if (isSlugAuto.value)
+    form.value.slug = toSlug(value)
 })
 
 /** Methods */
@@ -134,7 +137,10 @@ async function onSaveForm() {
         action="#"
         @submit.prevent="onSaveForm"
       >
-        <AppPostsCreateForm v-model:form="form" />
+        <AppPostsCreateForm
+          v-model:form="form"
+          v-model:slug-auto="isSlugAuto"
+        />
       </form>
     </div>
   </div>

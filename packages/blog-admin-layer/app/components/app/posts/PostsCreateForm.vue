@@ -8,6 +8,7 @@ interface IPostCreateForm {
 
 /** Model */
 const form = defineModel<IPostCreateForm>('form', { required: true })
+const isSlugAuto = defineModel<boolean>('slugAuto', { default: true })
 
 /** Composables */
 const { blogHost } = useBlogUrl()
@@ -20,6 +21,15 @@ const missingFields = computed(() => {
   ]
   return required.filter(([, value]) => !value).map(([label]) => label)
 })
+
+/** Methods */
+function onSlugInput(): void {
+  isSlugAuto.value = false
+}
+function resetSlug(): void {
+  isSlugAuto.value = true
+  form.value.slug = toSlug(form.value.title)
+}
 </script>
 
 <template>
@@ -58,11 +68,21 @@ const missingFields = computed(() => {
               gutter="none"
             />
             <UiBadge
+              v-if="isSlugAuto"
               variant="outline"
               size="sm"
               text="Auto"
               icon-class="text-success"
               icon-code="&#xe061;"
+            />
+            <UiButton
+              v-else
+              variant="text"
+              size="sm"
+              text="Use title"
+              aria-label="Generate the slug from the title again"
+              rounded
+              @click="resetSlug"
             />
           </div>
         </template>
@@ -74,7 +94,8 @@ const missingFields = computed(() => {
             placeholder="Ex. my-new-article"
             size="sm"
             class="mb-2"
-            readonly required
+            required
+            @update="onSlugInput"
           />
           <p class="fs-3xs text-muted text-break mb-0">
             {{ blogHost }}/{{ form.slug || '…' }}
