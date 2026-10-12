@@ -75,8 +75,8 @@ Installs only take versions published at least a day ago (`minimumReleaseAge` in
 1. Bump `version` in every `packages/*/package.json` (keep them in step), commit and push.
 2. Run the **Publish to npm** workflow (Actions tab, or `gh workflow run publish.yml -f package=all`). It
    lints, tests, then packs and stages each package in dependency order (blog-core, blog-firebase,
-   blog-layer, blog-admin-layer, blog-site-layer, blog-deploy) with provenance, skipping versions already
-   on npm; `dry-run` packs and checks without staging. `workspace:^` dependencies are published as
+   blog-layer, blog-admin-layer, blog-site-layer, blog-deploy) with provenance (it needs the repository to
+   stay public), skipping versions already on npm; `dry-run` packs and checks without staging. `workspace:^` dependencies are published as
    `^<version>`.
 3. Approve each version in the npmjs.com **Staged Packages** tab in the same order.
 4. In each site, bump the package (`npm run install:latest`) and push once the release is a day old:
