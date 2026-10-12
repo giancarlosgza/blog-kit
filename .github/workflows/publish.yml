@@ -29,6 +29,7 @@ jobs:
   publish:
     name: Publish
     runs-on: ubuntu-latest
+    environment: Development # must match the environment of each package's npm trusted publisher
     permissions:
       contents: read
       id-token: write # npm trusted publishing (OIDC) and provenance
@@ -45,11 +46,9 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
 
-      - name: Check npm supports trusted publishing
-        run: |
-          version=$(npm --version)
-          node -e "const [a, b, c] = process.argv[1].split('.').map(Number); process.exit(a > 11 || (a === 11 && (b > 5 || (b === 5 && c >= 1))) ? 0 : 1)" "$version" \
-            || { echo "::error::npm $version is too old for trusted publishing (needs 11.5.1)"; exit 1; }
+      # npm stage publish needs npm 11.15 or later; Node 24 ships an older one
+      - name: Install npm
+        run: npm install -g npm@11.21.0
 
       - name: Check package versions are in step
         run: |
@@ -73,7 +72,8 @@ jobs:
       - name: Test
         run: pnpm test
 
-      # pnpm pack rewrites workspace:^ dependencies and publishConfig; npm publishes the tarball through OIDC
+      # pnpm pack rewrites workspace:^ dependencies and publishConfig; npm stages the tarball through OIDC
+      # and each version waits for approval in the npmjs.com Staged Packages tab
       - name: Publish
         env:
           SELECTED: ${{ inputs.package }}
@@ -93,9 +93,9 @@ jobs:
             fi
             tarball=$(cd "packages/$pkg" && pnpm pack --pack-destination "$RUNNER_TEMP/packs" | tail -1)
             if [ "$DRY_RUN" = true ]; then
-              npm publish "$tarball" --access public --dry-run
+              npm stage publish "$tarball" --access public --dry-run
             else
-              npm publish "$tarball" --access public --provenance
-              echo "::notice::Published $name@$version"
+              npm stage publish "$tarball" --access public --provenance
+              echo "::notice::Staged $name@$version: approve it on npmjs.com"
             fi
           done
