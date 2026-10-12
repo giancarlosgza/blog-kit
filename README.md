@@ -80,6 +80,12 @@ Installs only take versions published at least a day ago (`minimumReleaseAge` in
 4. In each site, bump the package (`npm run install:latest`) and push once the release is a day old:
    the sites' `npm audit signatures` (CI and Dockerfile) follows the same one-day rule as installs.
 
+### Upgrading a site to 0.4.4
+- The admin and site layers load the Colorffy default fonts (DM Sans, Plus Jakarta Sans) from fontsource;
+  before, they were turned off and pages fell back to system fonts. Remove any `fonts.families` entries for
+  these two names in the site: the layer's entries take precedence. Sites using other fonts are unaffected.
+- `@giancarlosgza/blog-deploy` ships the `deploy-site` Claude Code skill (see its README).
+
 ### Upgrading a site to 0.4.3
 - The admin reads its own URL from the site config, so `NUXT_SITE_URL` sets it at runtime, as on the blog
   sites. `NUXT_PUBLIC_SITE_URL` keeps working; rename it in `.env` and `nuxt.config.ts` when convenient.
