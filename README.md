@@ -72,11 +72,19 @@ Installs only take versions published at least a day ago (`minimumReleaseAge` in
 
 ## Releasing
 
-1. Bump `version` in every `packages/*/package.json` (keep them in step).
-2. `pnpm publish:layers` (needs `npm login` with access to the `@giancarlosgza` scope). `workspace:^`
-   dependencies between packages are published as `^<version>`.
-3. Approve each version in the npmjs.com **Staged Packages** tab in dependency order: blog-core, then
-   blog-layer, blog-admin-layer and blog-firebase, then blog-site-layer.
+1. Bump `version` in every `packages/*/package.json` (keep them in step), commit and push.
+2. Run the **Publish to npm** workflow (Actions tab, or `gh workflow run publish.yml -f package=all`). It
+   lints, tests, then packs and publishes each package in dependency order (blog-core, blog-firebase,
+   blog-layer, blog-admin-layer, blog-site-layer, blog-deploy) with provenance, skipping versions already on
+   npm; `dry-run` packs and checks without publishing. `workspace:^` dependencies are published as
+   `^<version>`.
+3. If the packages require approval, approve each version in the npmjs.com **Staged Packages** tab in the
+   same order.
+
+The workflow signs in with npm trusted publishing, so no npm token is stored. Each package needs it once:
+npmjs.com > the package > Settings > Trusted publishing > GitHub Actions, with owner `giancarlosgza`,
+repository `blog-kit` and workflow `publish.yml`. `pnpm publish:layers` (with `npm login`) still works
+from a local checkout.
 4. In each site, bump the package (`npm run install:latest`) and push once the release is a day old:
    the sites' `npm audit signatures` (CI and Dockerfile) follows the same one-day rule as installs.
 
