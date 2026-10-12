@@ -17,6 +17,18 @@ Run it from the site's repository. It needs `ssh <alias>` to work without a prom
 key in the ssh-agent service; the system OpenSSH is used because Git Bash's `ssh` cannot reach that agent)
 and the GitHub CLI signed in (`gh auth login`).
 
+## Claude Code skill
+
+`skill/deploy-site` is a [Claude Code](https://claude.com/claude-code) skill that runs this workflow:
+it reads `check`, proposes `site` with a dry run first, explains missing secrets and DNS records without
+opening secret files, and reads the CI runs. Install it once per machine:
+
+```bash
+cp -r node_modules/@giancarlosgza/blog-deploy/skill/deploy-site ~/.claude/skills/
+```
+
+Then ask Claude Code to deploy the site, or run `/deploy-site`, from the site's repo.
+
 ## The site: `deploy/site.env`
 
 Committed with the site; it has no secrets.
