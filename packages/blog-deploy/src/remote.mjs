@@ -34,7 +34,8 @@ export function runScript(host, script, args = []) {
 
 /** Writes `content` to `remotePath` atomically, readable only by its owner unless `mode` says otherwise. */
 export function upload(host, remotePath, content, mode = '600') {
-  const command = `umask 077 && mkdir -p "$(dirname ${remotePath})" && cat > ${remotePath}.tmp && chmod ${mode} ${remotePath}.tmp && mv ${remotePath}.tmp ${remotePath}`
+  // An update keeps the current owner: deploy.sh hands key files to the container's user
+  const command = `umask 077 && mkdir -p "$(dirname ${remotePath})" && cat > ${remotePath}.tmp && chmod ${mode} ${remotePath}.tmp && { [ ! -f ${remotePath} ] || chown --reference=${remotePath} ${remotePath}.tmp; } && mv ${remotePath}.tmp ${remotePath}`
   const result = ssh(host, command, content)
   if (!result.ok)
     throw new DeployError(`Could not write ${remotePath}: ${result.stderr}`)

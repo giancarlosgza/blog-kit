@@ -44,6 +44,12 @@ docker pull -q "${IMAGE}"
 
 PREVIOUS=$(docker inspect -f '{{.Config.Image}}' "${CONTAINER}" 2>/dev/null || true)
 
+# Images run as a non-root user: the key file stays private (600) but owned by that user so the app can read it
+if [ "$(id -u)" = 0 ]; then
+  chown "$(docker run --rm --entrypoint id "${IMAGE}" -u)" "${SERVICE_ACCOUNT_FILE}"
+  chmod 600 "${SERVICE_ACCOUNT_FILE}"
+fi
+
 echo "Replacing ${CONTAINER} on 127.0.0.1:${HOST_PORT}..."
 docker rm -f "${CONTAINER}" >/dev/null 2>&1 || true
 start "${IMAGE}"
