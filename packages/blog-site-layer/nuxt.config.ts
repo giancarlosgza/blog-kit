@@ -116,8 +116,8 @@ export default defineNuxtConfig({
     },
     families: [
       { name: 'Material Symbols Rounded', provider: 'none' },
-      { name: 'DM Sans', provider: 'none' },
-      { name: 'Plus Jakarta Sans', provider: 'none' }
+      { name: 'DM Sans', provider: 'fontsource', weights: ['400 800'] },
+      { name: 'Plus Jakarta Sans', provider: 'fontsource', weights: ['400 800'] }
     ],
     defaults: {
       weights: [400],
