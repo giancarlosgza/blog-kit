@@ -1,6 +1,6 @@
 {
   "name": "@giancarlosgza/blog-deploy",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Provisions blog sites on a Docker VPS: nginx, TLS, ports, deploy script, env files and GitHub settings",
   "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
   "license": "MIT",
