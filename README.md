@@ -88,6 +88,12 @@ repository `blog-kit`, workflow `publish.yml`, environment `Development` and the
 permission. The `Development` environment must exist in the repository settings; it needs no secrets.
 `pnpm publish:layers` (with `npm login`) still works from a local checkout.
 
+### Upgrading a site to 0.4.5
+- `blog-deploy`: containers run as a non-root user, and the service account uploaded by `secrets` was
+  readable by root only, so Firestore reads failed with `EACCES` (the blog answered 503). `deploy.sh` now
+  makes the key file owned by the image's user (still mode 600) before each deploy, and `secrets` keeps the
+  owner when it updates a key. Rerun `npx blog-deploy site` to install the new `deploy.sh` on the server.
+
 ### Upgrading a site to 0.4.4
 - The admin and site layers load the Colorffy default fonts (DM Sans, Plus Jakarta Sans) from fontsource;
   before, they were turned off and pages fell back to system fonts. Remove any `fonts.families` entries for
