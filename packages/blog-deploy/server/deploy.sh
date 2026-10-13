@@ -2,7 +2,8 @@
 # Replaces a site's container with a new image, rolls back if it does not become healthy and
 # removes the site's older images. Installed to ~/webservices/deploy.sh by `blog-deploy site`.
 # Usage: deploy.sh <image:tag> <container> [host-port]
-# Expects ~/webservices/<container>.env and ~/webservices/<container>-service-account.json.
+# Expects ~/webservices/<container>.env, and ~/webservices/<container>-service-account.json when the app uses
+# the Firebase Admin SDK (without it the container runs with no key mounted).
 set -euo pipefail
 
 IMAGE=${1:?Missing image (user/name:tag)}
@@ -12,15 +13,21 @@ REPOSITORY=${IMAGE%:*}
 ENV_FILE=~/webservices/${CONTAINER}.env
 SERVICE_ACCOUNT_FILE=~/webservices/${CONTAINER}-service-account.json
 
+KEY=()
+if [ -f "${SERVICE_ACCOUNT_FILE}" ]; then
+  KEY=(-e GOOGLE_APPLICATION_CREDENTIALS=/secrets/service-account.json -v "${SERVICE_ACCOUNT_FILE}:/secrets/service-account.json:ro")
+fi
+
 # Published on 127.0.0.1 only: the site is reached through nginx, never on the bare port
 start() {
   docker run -d \
     --name "${CONTAINER}" \
     --restart unless-stopped \
     -p "127.0.0.1:${HOST_PORT}:3000" \
+    --log-opt max-size=10m \
+    --log-opt max-file=3 \
     --env-file "${ENV_FILE}" \
-    -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/service-account.json \
-    -v "${SERVICE_ACCOUNT_FILE}:/secrets/service-account.json:ro" \
+    "${KEY[@]}" \
     "$1" >/dev/null
 }
 
@@ -45,7 +52,7 @@ docker pull -q "${IMAGE}"
 PREVIOUS=$(docker inspect -f '{{.Config.Image}}' "${CONTAINER}" 2>/dev/null || true)
 
 # Images run as a non-root user: the key file stays private (600) but owned by that user so the app can read it
-if [ "$(id -u)" = 0 ]; then
+if [ "$(id -u)" = 0 ] && [ ${#KEY[@]} -gt 0 ]; then
   chown "$(docker run --rm --entrypoint id "${IMAGE}" -u)" "${SERVICE_ACCOUNT_FILE}"
   chmod 600 "${SERVICE_ACCOUNT_FILE}"
 fi

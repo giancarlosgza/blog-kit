@@ -75,7 +75,10 @@ through stdin and are never printed: the output shows key names, project ids and
 - **Deploy script:** installs `server/deploy.sh` as `~/webservices/deploy.sh`, the script the CI runs:
   pulls the image, replaces the container, waits for its `HEALTHCHECK`, rolls back to the previous image if
   it does not become healthy, then removes the site's older images (it keeps the running one and the
-  previous one). Containers listen on `127.0.0.1` only, so the bare port is not reachable from outside.
+  previous one). Containers listen on `127.0.0.1` only, so the bare port is not reachable from outside,
+  and keep at most 3 log files of 10 MB. The service account is mounted only when
+  `~/webservices/<container>-service-account.json` exists, so apps without the Admin SDK can use it too:
+  `deploy.sh <image:tag> <container> <port>` from any CI.
 - **nginx:** creates `/etc/nginx/sites-available/<container>` (proxy to `127.0.0.1:<port>`, aliases
   redirected to the main domain), enables it and reloads nginx; a failing `nginx -t` removes it again.
 - **TLS:** once every name resolves to the server, runs `certbot --nginx --redirect`. Until then it reports
