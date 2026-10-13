@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   publish:
-    name: Publish
+    name: Publish Packages 📦
     runs-on: ubuntu-latest
     environment: Development # must match the environment of each package's npm trusted publisher
     permissions:
