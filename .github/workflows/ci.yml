@@ -1,0 +1,45 @@
+name: Dev CI 🏗️
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint, Test & Typecheck 🧹
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Install dependencies safely
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Prepare the playgrounds
+        run: pnpm run postinstall
+
+      - name: Run ESLint
+        run: pnpm lint
+
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Run typecheck
+        run: pnpm typecheck
