@@ -88,6 +88,11 @@ repository `blog-kit`, workflow `publish.yml`, environment `Development` and the
 permission. The `Development` environment must exist in the repository settings; it needs no secrets.
 `pnpm publish:layers` (with `npm login`) still works from a local checkout.
 
+### Upgrading a site to 0.4.6
+- `blog-deploy`'s `deploy.sh` mounts the service account only when the key file exists (apps without the
+  Admin SDK can deploy with it) and limits each container's logs to 3 files of 10 MB. Rerun
+  `npx blog-deploy site` to install it on the server.
+
 ### Upgrading a site to 0.4.5
 - `blog-deploy`: containers run as a non-root user, and the service account uploaded by `secrets` was
   readable by root only, so Firestore reads failed with `EACCES` (the blog answered 503). `deploy.sh` now
