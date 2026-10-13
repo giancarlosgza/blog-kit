@@ -5,12 +5,12 @@ packages and only keeps its brand, assets and deploy config.
 
 | Package | Status | What it is |
 | :--- | :--- | :--- |
-| [`@giancarlosgza/blog-layer`](packages/blog-layer) | 0.4.5 | The blog: pages under `blog.basePath`, `/api/blog/*`, RSS, sitemap, SEO. Embeds into any Nuxt site that uses `@colorffy/css` |
-| [`@giancarlosgza/blog-site-layer`](packages/blog-site-layer) | 0.4.5 | A standalone blog site: the blog layer plus app shell, navbar/footer, PWA, robots, fonts, analytics |
-| [`@giancarlosgza/blog-core`](packages/blog-core) | 0.4.5 | Firestore models, URL/date/SEO/text helpers and the post HTML sanitizer, shared by every package |
-| [`@giancarlosgza/blog-admin-layer`](packages/blog-admin-layer) | 0.4.5 | The admin app: editor, workflow, media, authors, tags, settings, analytics, AI tools. Runs as its own SSR app |
-| [`@giancarlosgza/blog-firebase`](packages/blog-firebase) | 0.4.5 | Firestore/Storage rules, indexes and the scheduled-publish Cloud Function |
-| [`@giancarlosgza/blog-deploy`](packages/blog-deploy) | 0.4.5 | CLI that provisions a site on a Docker VPS: nginx, TLS, port, deploy script, env files, GitHub settings |
+| [`@giancarlosgza/blog-layer`](packages/blog-layer) | 0.4.6 | The blog: pages under `blog.basePath`, `/api/blog/*`, RSS, sitemap, SEO. Embeds into any Nuxt site that uses `@colorffy/css` |
+| [`@giancarlosgza/blog-site-layer`](packages/blog-site-layer) | 0.4.6 | A standalone blog site: the blog layer plus app shell, navbar/footer, PWA, robots, fonts, analytics |
+| [`@giancarlosgza/blog-core`](packages/blog-core) | 0.4.6 | Firestore models, URL/date/SEO/text helpers and the post HTML sanitizer, shared by every package |
+| [`@giancarlosgza/blog-admin-layer`](packages/blog-admin-layer) | 0.4.6 | The admin app: editor, workflow, media, authors, tags, settings, analytics, AI tools. Runs as its own SSR app |
+| [`@giancarlosgza/blog-firebase`](packages/blog-firebase) | 0.4.6 | Firestore/Storage rules, indexes and the scheduled-publish Cloud Function |
+| [`@giancarlosgza/blog-deploy`](packages/blog-deploy) | 0.4.6 | CLI that provisions a site on a Docker VPS: nginx, TLS, port, deploy script, env files, GitHub settings |
 
 Which one to install:
 - **A blog is the whole site** (e.g. blog.colorffy.com): `@giancarlosgza/blog-site-layer`.
