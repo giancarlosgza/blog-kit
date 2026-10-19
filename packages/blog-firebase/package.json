@@ -56,10 +56,10 @@
     "@giancarlosgza/blog-core": "workspace:^"
   },
   "devDependencies": {
-    "@firebase/rules-unit-testing": "5.0.2",
-    "firebase": "12.19.0",
+    "@firebase/rules-unit-testing": "6.0.0",
+    "firebase": "13.0.0",
     "firebase-admin": "14.5.0",
     "firebase-functions": "7.4.0",
-    "tsdown": "0.23.0"
+    "tsdown": "0.23.1"
   }
 }
