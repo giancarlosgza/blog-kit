@@ -12,8 +12,7 @@
  *   public/icon-fonts/material-symbols-rounded-full.woff2     full font, fallback only
  *   app/assets/css/material-symbols.generated.css             @font-face pair (add it to the site's `css`)
  *
- * The fonts live under /icon-fonts/ (not /fonts/) because @nuxt/fonts owns the /fonts/ prefix
- * and its dev-server middleware 404s any file it didn't render itself.
+ * The fonts live under /icon-fonts/ so they never collide with the files @nuxt/fonts serves.
  *
  * The generated CSS declares the full font first (unicode-range: U+E000-F8FF) and the subset
  * second, so browsers use the tiny subset for every known icon and only download the full font

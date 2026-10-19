@@ -1,4 +1,5 @@
 import { getFirestore } from 'firebase-admin/firestore'
+import { defineSitemapEventHandler } from '#sitemap/server'
 
 /** Firestore reads behind the sitemap, cached for an hour (thrown errors are not cached). */
 const readSitemapUrls = defineCachedFunction(async () => {

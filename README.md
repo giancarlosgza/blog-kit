@@ -88,6 +88,21 @@ repository `blog-kit`, workflow `publish.yml`, environment `Development` and the
 permission. The `Development` environment must exist in the repository settings; it needs no secrets.
 `pnpm publish:layers` (with `npm login`) still works from a local checkout.
 
+### Upgrading a site to 0.5.0
+- The layers need Nuxt 4.6.1 or later and Node 24.15 or later (`@nuxtjs/robots` 7, `@nuxtjs/sitemap` 9 and
+  `nuxt-og-image` 7, which move to Site Config 5).
+- Generated OG images sign their URLs with `NUXT_APP_SECRET` (at least 32 characters; create one with
+  `npx nuxt-og-image generate-secret`). Rename `NUXT_OG_IMAGE_SECRET` in `.env` and on the server:
+  the old name still works but logs a deprecation warning. Existing OG image URLs change, so purge any
+  cached HTML (Cloudflare) after deploying.
+- `@nuxt/fonts` 1 serves font files from `/_nuxt/fonts/` and fails production builds when a font
+  download fails. Remove any `fonts.assets.prefix` from the site's `nuxt.config.ts`.
+- Sites that declare their own `@nuxt/fonts`, `@nuxtjs/robots` or `@nuxtjs/sitemap` should move them to
+  the layers' versions (1.0.1, 7.0.2 and 9.1.0). Their own sitemap sources import
+  `defineSitemapEventHandler` from `#sitemap/server`.
+- `@vueuse/*` 15 and, in the blog layer, `firebase-admin` 14. The admin layer stays on `firebase-admin`
+  13 and `firebase` 12 until `nuxt-vuefire` supports the new majors.
+
 ### Upgrading a site to 0.4.6
 - `blog-deploy`'s `deploy.sh` mounts the service account only when the key file exists (apps without the
   Admin SDK can deploy with it) and limits each container's logs to 3 files of 10 MB. Rerun

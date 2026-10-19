@@ -17,7 +17,7 @@ export function appendPosts(current: IPost[], next: IPost[]): IPost[] {
 export function usePaginatedPosts<T extends IPostListResponse>(key: string, url: string) {
   const { state, data, pending, error, ready } = useCachedResource<TPaginatedState<T>>(
     key,
-    async () => ({ ...(await $fetch<T>(url)), page: 1 })
+    async () => ({ ...(await $fetch<T>(url) as T), page: 1 })
   )
 
   /** State */

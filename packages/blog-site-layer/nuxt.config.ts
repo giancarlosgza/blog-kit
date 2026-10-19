@@ -111,9 +111,6 @@ export default defineNuxtConfig({
 
   // Fonts
   fonts: {
-    assets: {
-      prefix: '/fonts/'
-    },
     families: [
       { name: 'Material Symbols Rounded', provider: 'none' },
       { name: 'DM Sans', provider: 'fontsource', weights: ['400 800'] },

@@ -24,7 +24,7 @@
     "!server/tsconfig.json"
   ],
   "peerDependencies": {
-    "nuxt": "^4.5.0",
+    "nuxt": "^4.6.1",
     "vue": "^3.5.0",
     "vue-router": "^5.0.0"
   },
@@ -34,10 +34,10 @@
     "@giancarlosgza/blog-core": "workspace:^",
     "@google/genai": "2.30.0",
     "@material-symbols/font-700": "0.48.0",
-    "@nuxt/fonts": "0.14.0",
+    "@nuxt/fonts": "1.0.1",
     "@nuxtjs/color-mode": "4.0.1",
-    "@nuxtjs/robots": "6.2.4",
-    "@nuxtjs/sitemap": "8.6.1",
+    "@nuxtjs/robots": "7.0.2",
+    "@nuxtjs/sitemap": "9.1.0",
     "@tiptap/core": "3.32.0",
     "@tiptap/extension-image": "3.32.0",
     "@tiptap/pm": "3.32.0",
