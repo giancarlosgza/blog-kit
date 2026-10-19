@@ -241,16 +241,29 @@ async function runWorkflow(action: () => Promise<IPostWorkflowResponse>, success
     return false
   }
 }
-function onPublish() {
-  return runWorkflow(() => workflow.publish(slug.value), status.value === 'review' ? 'Approved and published' : 'Published', 'Failed to publish.', true)
+function publishMessage(): string {
+  if (status.value === 'review')
+    return 'Approved and published'
+  return isPublished.value ? 'Republished' : 'Published'
+}
+async function leaveToPosts(): Promise<void> {
+  const path = route.path
+  await new Promise(resolve => setTimeout(resolve, 1500))
+  if (route.path === path)
+    await navigateTo('/posts')
+}
+async function onPublish() {
+  if (await runWorkflow(() => workflow.publish(slug.value), publishMessage(), 'Failed to publish.', true))
+    await leaveToPosts()
 }
 function openSchedule() {
   publishDialog.value?.showDialog('schedule', toMillis(meta.value?.publishAt) || null)
 }
 async function onConfirmPublish(publishAt: number | null) {
-  const message = publishAt ? 'Scheduled' : (status.value === 'review' ? 'Approved and published' : 'Published')
-  if (await runWorkflow(() => workflow.publish(slug.value, publishAt), message, publishAt ? 'Failed to schedule.' : 'Failed to publish.', true))
+  if (await runWorkflow(() => workflow.publish(slug.value, publishAt), publishAt ? 'Scheduled' : publishMessage(), publishAt ? 'Failed to schedule.' : 'Failed to publish.', true)) {
     publishDialog.value?.closeDialog()
+    await leaveToPosts()
+  }
 }
 function onSubmit(note = '') {
   return runWorkflow(() => workflow.submit(slug.value, note), status.value === 'changes' ? 'Resubmitted for review' : 'Submitted for review', 'Failed to submit.', true)
