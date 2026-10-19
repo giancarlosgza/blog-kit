@@ -23,8 +23,8 @@ const missingFields = computed(() => {
 })
 
 /** Methods */
-function onSlugInput(): void {
-  isSlugAuto.value = false
+function onSlugInput(value: string): void {
+  isSlugAuto.value = value === toSlug(form.value.title)
 }
 function resetSlug(): void {
   isSlugAuto.value = true
