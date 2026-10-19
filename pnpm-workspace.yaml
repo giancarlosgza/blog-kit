@@ -5,6 +5,28 @@ packages:
 # Only install versions published at least a day ago (same policy as the sites' npm `min-release-age=1`)
 minimumReleaseAge: 1440
 
+# The playgrounds' generated types import the layers' own dependencies (components, auto-imports,
+# module options), which pnpm keeps out of their reach; unresolved, they turn into `any` and typecheck
+# misses template errors the sites (flat npm installs) catch. The first two entries are pnpm's defaults.
+publicHoistPattern:
+  - '*eslint*'
+  - '*prettier*'
+  - '@colorffy/*'
+  - '@giancarlosgza/blog-core'
+  - '@nuxt/fonts'
+  - '@nuxt/image'
+  - '@nuxt/scripts'
+  - '@nuxt/telemetry'
+  - '@nuxtjs/*'
+  - '@vite-pwa/*'
+  - '@vueuse/*'
+  - nitropack
+  - nuxt-og-image
+  - nuxt-site-config
+  - nuxt-vuefire
+  - sharp
+  - vuefire
+
 overrides:
   typescript: 6.0.3
   # 8.71.x reports every top-level const in .mjs scripts as "only used as a type"; keep the
