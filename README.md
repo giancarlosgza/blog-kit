@@ -97,6 +97,10 @@ permission. The `Development` environment must exist in the repository settings;
   cached HTML (Cloudflare) after deploying.
 - `@nuxt/fonts` 1 serves font files from `/_nuxt/fonts/` and fails production builds when a font
   download fails. Remove any `fonts.assets.prefix` from the site's `nuxt.config.ts`.
+- The admin and site layers no longer declare DM Sans and Plus Jakarta Sans (or any `fonts` defaults), so
+  a site's own `fonts.families` entries for any font now apply. Fonts named in `--font-*` variables still
+  load without an entry (`@nuxt/fonts` finds them through its default providers); add `fonts.families` or
+  `fonts.defaults` to pick the provider, weights, styles or subsets.
 - Sites that declare their own `@nuxt/fonts`, `@nuxtjs/robots` or `@nuxtjs/sitemap` should move them to
   the layers' versions (1.0.1, 7.0.2 and 9.1.0). Their own sitemap sources import
   `defineSitemapEventHandler` from `#sitemap/server`.

@@ -9,7 +9,7 @@ shell around it.
 | Navigation | Generic `TheNavbar` and `TheFooter` (blog name, logo from `settings/general`, `navLinks`/`footerLinks`) |
 | UI | Cookie banner, PWA install prompt, scroll-to-top button, theme picker |
 | Styles | The `@colorffy/css` framework, loaded before the blog and site styles |
-| Site config | Security and static-asset headers, robots, sitemap styling, fonts, PWA defaults |
+| Site config | Security and static-asset headers, robots, sitemap styling, PWA defaults |
 
 ## Use it
 

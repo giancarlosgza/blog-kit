@@ -112,17 +112,8 @@ export default defineNuxtConfig({
   // Fonts
   fonts: {
     families: [
-      { name: 'Material Symbols Rounded', provider: 'none' },
-      { name: 'DM Sans', provider: 'fontsource', weights: ['400 800'] },
-      { name: 'Plus Jakarta Sans', provider: 'fontsource', weights: ['400 800'] }
-    ],
-    defaults: {
-      weights: [400],
-      styles: ['normal'],
-      subsets: ['latin'],
-      preload: false
-    },
-    processCSSVariables: 'font-prefixed-only'
+      { name: 'Material Symbols Rounded', provider: 'none' }
+    ]
   },
 
   // PWA
