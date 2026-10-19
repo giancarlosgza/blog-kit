@@ -1,6 +1,6 @@
 {
   "name": "@giancarlosgza/blog-admin-layer",
-  "version": "0.4.6",
+  "version": "0.5.0",
   "description": "Nuxt layer for a Firebase blog admin: post editor and workflow, media, authors, tags, settings, analytics and AI tools",
   "author": "Giancarlos Garza <giancarlosgza@gmail.com> (https://github.com/giancarlosgza)",
   "license": "MIT",
